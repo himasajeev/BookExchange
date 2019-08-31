@@ -18,6 +18,7 @@ module.exports = env => {
       hot: true,
       open: false,
       port: 3000,
+      historyApiFallback: true,
     },
     module: {
       rules: [

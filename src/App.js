@@ -7,7 +7,7 @@ import store from './modules/store';
 
 import reset from './styles/reset';
 
-import Main from './routes/Main';
+import MainView from './routes/MainView';
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const App = () => {
       />
       <Provider store={store}>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <Main />
+          <MainView />
         </BrowserRouter>
       </Provider>
     </div>
