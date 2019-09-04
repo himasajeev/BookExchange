@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { uniqueId } from 'lodash';
+import BookButton from './BookButton';
+import { BOOK_POSITION } from '../../constants/bookPosition';
 
 const margin = '5px 0';
 
@@ -21,16 +24,6 @@ const Image = styled.img`
   height: auto;
   width: auto;
   margin-right: 10px;
-`;
-
-const StyledButton = styled.button`
-  padding: 8px 12px;
-  font-size: 16px;
-  border-radius: 5px;
-  background: red;
-  color: white;
-  align-self: flex-end;
-  margin-top: auto;
 `;
 
 const StyledAuthor = styled.span`
@@ -67,6 +60,26 @@ const StyledIsbn = styled.span`
   margin: ${margin};
 `;
 
+const createBasketBook = book => {
+  const basketBookId = uniqueId();
+  return {
+    [basketBookId]: {
+      ...book,
+    },
+  };
+};
+
+const getOnClick = (type, book, basketId) => {
+  switch (type) {
+    case BOOK_POSITION.STORE:
+      return createBasketBook(book);
+    case BOOK_POSITION.BASKET:
+      return basketId;
+    default:
+      return null;
+  }
+};
+
 const Book = ({
   id,
   isbn,
@@ -76,10 +89,25 @@ const Book = ({
   price,
   publisher,
   image,
+  onButtonClick,
+  type,
+  basketId,
 }) => {
-  const AddBook = React.useCallback(() => {
-    console.log(id);
-  }, [id]);
+  const book = {
+    id,
+    isbn,
+    title,
+    categories,
+    author,
+    price,
+    publisher,
+    image,
+  };
+
+  const onClick = React.useCallback(
+    () => onButtonClick(getOnClick(type, book, basketId)),
+    [basketId, book, onButtonClick, type],
+  );
 
   return (
     <Wrapper>
@@ -87,12 +115,12 @@ const Book = ({
       <RightPanel>
         <StyledTitle>{title}</StyledTitle>
         <StyledAuthor>{author}</StyledAuthor>
-        <StyledCategories>{categories.map(cat => `${cat} `)}</StyledCategories>
+        <StyledCategories>{categories.join(', ')}</StyledCategories>
         <StyledPublisher>Wydawnictwo: {publisher}</StyledPublisher>
         <StyledIsbn>ISBN: {isbn}</StyledIsbn>
         <BookBottom>
           <StyledPrice>{price} zł</StyledPrice>
-          <StyledButton>Do koszyka</StyledButton>
+          <BookButton type={type} onClick={onClick} />
         </BookBottom>
       </RightPanel>
     </Wrapper>
@@ -101,6 +129,7 @@ const Book = ({
 
 Book.defaultProps = {
   categories: [],
+  basketId: '',
 };
 
 Book.propTypes = {
@@ -112,6 +141,9 @@ Book.propTypes = {
   price: PropTypes.string.isRequired,
   publisher: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
+  type: PropTypes.number.isRequired,
+  basketId: PropTypes.string,
 };
 
 export default Book;

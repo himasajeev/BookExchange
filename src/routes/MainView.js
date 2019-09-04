@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import Navigation from './Navigation/Navigation';
-import Store from './Store/Store';
+import Navigation from './Navigation/NavigationContainer';
+import Store from './Store/StoreContainer';
 import Login from './Login/Login';
 import Add from './Add/Add';
+import Basket from './Basket/BasketContainer';
 
 const MainView = () => {
   return (
@@ -13,6 +14,7 @@ const MainView = () => {
       <Route path="/" exact component={Store} />
       <Route path="/add" component={Add} />
       <Route path="/login" component={Login} />
+      <Route path="/basket" component={Basket} />
     </div>
   );
 };

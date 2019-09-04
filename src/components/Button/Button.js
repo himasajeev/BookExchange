@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const StyledButton = styled.button`
-  height: 20px;
-  vertical-align: middle;
-  padding: 5px 10px;
   font-size: 10px;
   border-radius: 5px;
 `;
 
-const Button = ({ children, onClick, isBuy }) => {
+const Button = ({ children, onClick, className }) => {
   return (
-    <StyledButton type="button" onClick={onClick}>
+    <StyledButton type="button" className={className} onClick={onClick}>
       {children}
     </StyledButton>
   );
@@ -20,12 +17,12 @@ const Button = ({ children, onClick, isBuy }) => {
 
 Button.defaultProps = {
   children: '',
-  isBuy: false,
+  className: '',
 };
 
 Button.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  isBuy: PropTypes.bool,
 };
 export default Button;

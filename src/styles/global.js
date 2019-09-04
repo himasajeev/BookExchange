@@ -1,10 +1,19 @@
-const BACKGROUND_COLORS = {
-  main: '',
-  secondary: '',
-  title: '#1d70b7',
-  add: 'red',
+export const BACKGROUND_COLORS = {
+  MAIN: '',
+  SECONDARY: '',
+  TITLE: '#1d70b7',
+  ADD: 'red',
+  LIGHT: '#FFF',
+  DARK: '#000',
 };
 
-const FONT_COLORS = {};
+export const FONT_COLORS = {
+  LIGHT: '#FFF',
+  DARK: '#000',
+};
 
-const FONT_SIZE = {};
+export const FONT_SIZE = {
+  DEFAULT: '16px',
+  LARGE: '20px',
+  SMALL: '12px',
+};
