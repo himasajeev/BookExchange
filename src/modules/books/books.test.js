@@ -66,7 +66,7 @@ describe('Books Reducer', () => {
     expect(result).toEqual(expected);
   });
 
-  it('can handle GET_BOOKS_SUCCEEDED action type, replace old data with new and remove loading', () => {
+  it('can handle GET_BOOKS_SUCCEEDED action type, replace old data with new and change isLoading to false', () => {
     const state = {
       data: [
         {

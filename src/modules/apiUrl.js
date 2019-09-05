@@ -1,3 +1,3 @@
-const url = 'https://localhost:5000';
+const url = 'http://wpiaujplsp.cluster020.hosting.ovh.net';
 
 export default url;

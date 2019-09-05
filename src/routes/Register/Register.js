@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import NamedInput from '../../components/NamedInput/NamedInput';
 import Button from '../../components/Button/Button';
-import { LOGIN_INPUTS } from './loginConstants';
-import Link from '../../components/Link/Link';
+import { REGISTER_INPUTS } from './registerConstants';
 
 const Wrapper = styled.div`
   width: 80%;
@@ -18,39 +17,41 @@ const StyledButton = styled(Button)`
   background: aqua;
 `;
 
-const Login = ({ loginUser }) => {
-  const [loginValue, setLoginValue] = React.useState({});
+const Register = ({ registerUser }) => {
+  const [registerValue, setRegisterValue] = React.useState({});
 
-  const onLogin = () => {
-    loginUser({ ...loginValue });
+  const onRegister = () => {
+    registerUser({ ...registerValue });
   };
 
   const handleInputChange = event => {
-    setLoginValue({ ...loginValue, [event.target.name]: event.target.value });
+    setRegisterValue({
+      ...registerValue,
+      [event.target.name]: event.target.value,
+    });
   };
 
   return (
     <Wrapper>
-      <span>Login</span>
-      {LOGIN_INPUTS.map(input => (
+      <span>Register</span>
+      {REGISTER_INPUTS.map(input => (
         <NamedInput
           key={input.name}
           name={input.name}
           title={input.title}
           type={input.type}
           onChange={handleInputChange}
-          value={loginValue[input.name]}
+          value={registerValue[input.name]}
         />
       ))}
 
-      <StyledButton onClick={onLogin}>Zaloguj</StyledButton>
-      <Link to="/register">Nie masz konta?</Link>
+      <StyledButton onClick={onRegister}>Zarejestruj</StyledButton>
     </Wrapper>
   );
 };
 
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default Register;
