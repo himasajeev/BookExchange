@@ -3,7 +3,6 @@ import url from '../apiUrl';
 
 export const fetchRegisterUser = async user => {
   try {
-    console.log(user);
     const register = await axios.post(
       `${url}/authorization/register.php`,
       user,

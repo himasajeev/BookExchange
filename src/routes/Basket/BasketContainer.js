@@ -1,7 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Basket from './Basket';
-import { removeFromBasket } from '../../modules/basket/basketActions';
+import {
+  removeFromBasket,
+  orderBasket,
+} from '../../modules/basket/basketActions';
 
 const mapStateToProps = state => {
   const { basket } = state;
@@ -14,6 +17,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       removeFromBasket,
+      orderBasket,
     },
     dispatch,
   );
