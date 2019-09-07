@@ -6,6 +6,7 @@ import user from './user/userReducer';
 import authors from './authors/authorsReducer';
 import categories from './categories/categoriesReducer';
 import publishers from './publishers/publishersReducer';
+import overview from './overview/overviewReducer';
 
 export default combineReducers({
   books,
@@ -14,4 +15,5 @@ export default combineReducers({
   authors,
   categories,
   publishers,
+  overview,
 });

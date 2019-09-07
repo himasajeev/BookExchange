@@ -3,11 +3,12 @@ import { fetchGetPublishers } from './publishersApi';
 import * as actionTypes from '../actionTypes';
 
 // eslint-disable-next-line import/prefer-default-export
-export function* getPublishersSaga(token) {
+export function* getPublishersSaga({ token }) {
   try {
-    const publishers = yield call(fetchGetPublishers, token);
+    const response = yield call(fetchGetPublishers, token);
+    const data = response.result;
 
-    yield put({ type: actionTypes.GET_PUBLISHERS_SUCCEEDED, publishers });
+    yield put({ type: actionTypes.GET_PUBLISHERS_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: actionTypes.GET_PUBLISHERS_FAILED, error });
   }

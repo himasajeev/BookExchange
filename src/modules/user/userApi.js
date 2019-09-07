@@ -1,22 +1,41 @@
 import axios from 'axios';
-import url from '../apiUrl';
+import { setFetchKeys } from '../../utils/setFetchKeys';
+import { authUrl, apiUrl } from '../url';
+import { API_ACTIONS } from '../apiActions';
+import { getRequestUrlBuilder } from '../../utils/getRequestUrlBuilder';
 
 export const fetchRegisterUser = async user => {
   try {
-    const register = await axios.post(
-      `${url}/authorization/register.php`,
-      user,
+    const response = await axios.post(
+      `${authUrl}/register`,
+      setFetchKeys(user),
     );
-    return register;
+    return response.data;
   } catch (error) {
     return error;
   }
 };
 
-export const fetchLoginUser = async userData => {
+export const fetchLoginUser = async user => {
   try {
-    const user = await axios.post(`${url}/authorization/login.php`, userData);
-    return user;
+    const response = await axios.post(`${authUrl}/login`, setFetchKeys(user));
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const fetchGetUserInfo = async token => {
+  try {
+    const urlParams = {
+      action: API_ACTIONS.USER_INFO,
+      user_token: token,
+    };
+
+    const response = await axios.get(
+      `${apiUrl}/${getRequestUrlBuilder(urlParams)}`,
+    );
+    return response.data;
   } catch (error) {
     return error;
   }

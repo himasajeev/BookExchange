@@ -47,6 +47,7 @@ const Navigation = ({ basketCount }) => {
       </Link>
       <Link to="/login">Login</Link>
       <Link to="/add">Add</Link>
+      <Link to="/overview">Overview</Link>
       <Link to="/basket">
         <BasketContainer>
           <BasketCount>{basketCount}</BasketCount>

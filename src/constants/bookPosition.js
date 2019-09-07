@@ -2,4 +2,5 @@
 export const BOOK_POSITION = Object.freeze({
   STORE: 0,
   BASKET: 1,
+  STATIC: 2,
 });

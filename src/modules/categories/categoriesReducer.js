@@ -1,21 +1,23 @@
+import { omit } from 'lodash';
 import * as actionTypes from '../actionTypes';
 
 const categoriesReducer = (state = {}, action) => {
-  const { categories } = action;
+  const { data, error } = action;
   switch (action.type) {
     case actionTypes.GET_CATEGORIES_REQUESTED:
       return {
-        ...state,
+        ...omit(state, ['error']),
         isLoading: true,
       };
     case actionTypes.GET_CATEGORIES_SUCCEEDED:
       return {
-        categories,
+        data,
         isLoading: false,
       };
     case actionTypes.GET_CATEGORIES_FAILED:
       return {
-        ...state,
+        ...omit(state, ['data']),
+        error,
         isLoading: false,
       };
     default:

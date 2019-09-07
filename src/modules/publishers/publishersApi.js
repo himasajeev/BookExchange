@@ -1,14 +1,18 @@
 import axios from 'axios';
-import url from '../apiUrl';
+import { apiUrl } from '../url';
 import { API_ACTIONS } from '../apiActions';
+import { getRequestUrlBuilder } from '../../utils/getRequestUrlBuilder';
 // eslint-disable-next-line import/prefer-default-export
 export const fetchGetPublishers = async token => {
   try {
-    const authors = await axios.get(`${url}/api`, {
+    const urlParams = {
       action: API_ACTIONS.PUBLISHERS,
       user_token: token,
-    });
-    return authors;
+    };
+    const response = await axios.get(
+      `${apiUrl}/${getRequestUrlBuilder(urlParams)}`,
+    );
+    return response.data;
   } catch (error) {
     return error;
   }

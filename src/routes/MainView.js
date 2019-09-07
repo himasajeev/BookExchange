@@ -4,18 +4,21 @@ import { Route } from 'react-router-dom';
 import Navigation from './Navigation/NavigationContainer';
 import Store from './Store/StoreContainer';
 import Login from './Login/LoginContainer';
-import Add from './Add/Add';
+import Add from './Add/AddContainer';
 import Basket from './Basket/BasketContainer';
 import Register from './Register/RegisterContainer';
+import PrivateRoute from '../components/PrivateRoute/PrivateRouteContainer';
+import Overview from './Overview/OverviewContainer';
 
 const MainView = () => {
   return (
     <div>
       <Navigation />
-      <Route path="/" exact component={Store} />
-      <Route path="/add" component={Add} />
+      <PrivateRoute path="/" exact component={Store} />
+      <PrivateRoute path="/add" component={Add} />
+      <PrivateRoute path="/basket" component={Basket} />
+      <PrivateRoute path="/overview" component={Overview} />
       <Route path="/login" component={Login} />
-      <Route path="/basket" component={Basket} />
       <Route path="/register" component={Register} />
     </div>
   );

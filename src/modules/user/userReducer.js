@@ -1,7 +1,7 @@
 import * as actionTypes from '../actionTypes';
 
 const userReducer = (state = {}, action) => {
-  const { data, error } = action;
+  const { token, error, userInfo } = action;
 
   switch (action.type) {
     case actionTypes.LOGIN_USER_REQUESTED:
@@ -9,12 +9,14 @@ const userReducer = (state = {}, action) => {
       return { ...state, isLoading: true };
     case actionTypes.LOGIN_USER_SUCCEEDED:
     case actionTypes.REGISTER_USER_SUCCEEDED:
-      return { ...state, ...data, isLoading: false };
+      return { ...state, token, isLoading: false };
     case actionTypes.REGISTER_USER_FAILED:
     case actionTypes.LOGIN_USER_FAILED:
       return { ...state, isLoading: false, error };
     case actionTypes.LOGOUT_USER:
       return {};
+    case actionTypes.GET_USER_INFO_SUCCEEDED:
+      return { ...state, userInfo };
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import * as actionTypes from '../actionTypes';
 
 const publishersReducer = (state = {}, action) => {
-  const { publishers } = action;
+  const { data } = action;
   switch (action.type) {
     case actionTypes.GET_PUBLISHERS_REQUESTED:
       return {
@@ -10,7 +10,7 @@ const publishersReducer = (state = {}, action) => {
       };
     case actionTypes.GET_PUBLISHERS_SUCCEEDED:
       return {
-        publishers,
+        data,
         isLoading: false,
       };
     case actionTypes.GET_PUBLISHERS_FAILED:

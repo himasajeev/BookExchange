@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { uniqueId } from 'lodash';
 import BookButton from './BookButton';
 import { BOOK_POSITION } from '../../constants/bookPosition';
+import { getImageUrl } from '../../utils/getImageUrl';
 
 const margin = '5px 0';
 
@@ -80,44 +81,23 @@ const getOnClick = (type, book, basketId) => {
   }
 };
 
-const Book = ({
-  id,
-  isbn,
-  title,
-  categories,
-  author,
-  price,
-  publisher,
-  image,
-  onButtonClick,
-  type,
-  basketId,
-}) => {
-  const book = {
-    id,
-    isbn,
-    title,
-    categories,
-    author,
-    price,
-    publisher,
-    image,
-  };
-
+const Book = ({ book, onButtonClick, type, basketId }) => {
   const onClick = React.useCallback(
     () => onButtonClick(getOnClick(type, book, basketId)),
     [basketId, book, onButtonClick, type],
   );
 
+  const { id, iSBN, title, category, author, price, publisher } = book;
+
   return (
     <Wrapper>
-      <Image src={image} alt={title} />
+      <Image src={getImageUrl(id)} alt={title} />
       <RightPanel>
         <StyledTitle>{title}</StyledTitle>
         <StyledAuthor>{author}</StyledAuthor>
-        <StyledCategories>{categories.join(', ')}</StyledCategories>
+        <StyledCategories>{category}</StyledCategories>
         <StyledPublisher>Wydawnictwo: {publisher}</StyledPublisher>
-        <StyledIsbn>ISBN: {isbn}</StyledIsbn>
+        <StyledIsbn>ISBN: {iSBN}</StyledIsbn>
         <BookBottom>
           <StyledPrice>{price} zł</StyledPrice>
           <BookButton type={type} onClick={onClick} />
@@ -128,21 +108,22 @@ const Book = ({
 };
 
 Book.defaultProps = {
-  categories: [],
   basketId: '',
 };
 
 Book.propTypes = {
-  id: PropTypes.number.isRequired,
-  isbn: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  categories: PropTypes.arrayOf(PropTypes.string),
-  author: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
-  publisher: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  onButtonClick: PropTypes.func.isRequired,
+  book: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    iSBN: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    publisher: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+  }).isRequired,
   type: PropTypes.number.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
   basketId: PropTypes.string,
 };
 
