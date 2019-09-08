@@ -11,7 +11,7 @@ import { getPublishers } from '../../modules/publishers/publishersActions';
 const mapStateToProps = state => {
   const books = get(state, 'books.data');
   const { isLoading } = state.books;
-  const { token } = state.user;
+  // const { token } = state.user;
   const publishers = get(state, 'publishers.data');
   const categories = get(state, 'categories.data');
   const authors = get(state, 'authors.data');
@@ -19,7 +19,7 @@ const mapStateToProps = state => {
   return {
     books,
     isLoading,
-    token,
+    // token,
     publishers,
     categories,
     authors,

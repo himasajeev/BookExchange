@@ -6,21 +6,23 @@ import { getUserInfo } from '../../modules/user/userActions';
 import Overview from './Overview';
 
 const mapStateToProps = state => {
-  const { token, userInfo } = state.user;
+  const { userInfo } = state.user;
   const isLoading = get(state, 'overview.isLoading');
   const booksToBuy = get(state, 'overview.booksToBuy');
   const booksToSell = get(state, 'overview.booksToSell');
   const sell = get(state, 'overview.sell');
   const buy = get(state, 'overview.buy');
+  const phase = get(state, 'phase.value');
 
   return {
-    token,
+    // token,
     userInfo,
     isLoading,
     booksToBuy,
     booksToSell,
     sell,
     buy,
+    phase,
   };
 };
 

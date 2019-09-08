@@ -11,6 +11,7 @@ const mapStateToProps = state => {
   const registerError = isError ? error.message : null;
   return {
     registerError,
+    token,
   };
 };
 

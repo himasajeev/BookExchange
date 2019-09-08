@@ -14,3 +14,13 @@ export const getUserInfo = token => ({
   type: actionTypes.GET_USER_INFO_REQUESTED,
   token,
 });
+
+export const setUserToken = token => ({
+  type: actionTypes.SET_USER_TOKEN_REQUESTED,
+  token,
+});
+
+export const logoutUser = token => ({
+  type: actionTypes.LOGOUT_USER_REQUESTED,
+  token,
+});

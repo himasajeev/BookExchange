@@ -12,13 +12,13 @@ const Basket = ({ basket, removeFromBasket, orderBasket }) => {
 
   return (
     <div>
-      {Object.keys(basket).map(book => (
+      {Object.keys(basket).map(basketId => (
         <Book
-          {...basket[book]}
+          book={basket[basketId]}
           onButtonClick={removeFromBasket}
-          key={book}
+          key={basketId}
           type={BOOK_POSITION.BASKET}
-          basketId={book}
+          basketId={basketId}
         />
       ))}
       <Button onClick={onOrderBasket}>Potwierdź zakup</Button>
@@ -26,10 +26,14 @@ const Basket = ({ basket, removeFromBasket, orderBasket }) => {
   );
 };
 
+Basket.defaultProps = {
+  basket: {},
+};
+
 Basket.propTypes = {
   basket: PropTypes.shape({
     [PropTypes.string]: PropTypes.shape({}),
-  }).isRequired,
+  }),
   removeFromBasket: PropTypes.func.isRequired,
   orderBasket: PropTypes.func.isRequired,
 };

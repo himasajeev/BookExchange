@@ -7,7 +7,7 @@ import store from './modules/store';
 
 import reset from './styles/reset';
 
-import MainView from './routes/MainView';
+import MainView from './routes/MainViewContainer';
 
 const App = () => {
   return (

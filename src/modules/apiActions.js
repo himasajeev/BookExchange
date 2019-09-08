@@ -16,4 +16,5 @@ export const API_ACTIONS = Object.freeze({
   BOOKS_TO_SELL: 'BooksToSell',
   BOOKS_TO_BUY: 'BooksToBuy',
   BOOKS_BUY_SEARCH: 'BooksBuySearch',
+  PHASE: 'Phase',
 });

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { uniqueId } from 'lodash';
-import BookButton from './BookButton';
+
+import BookButtonStore from './BookButtonStore';
+import BookButtonBasket from './BookButtonBasket';
 import { BOOK_POSITION } from '../../constants/bookPosition';
 import { getImageUrl } from '../../utils/getImageUrl';
 
@@ -61,37 +62,29 @@ const StyledIsbn = styled.span`
   margin: ${margin};
 `;
 
-const createBasketBook = book => {
-  const basketBookId = uniqueId();
-  return {
-    [basketBookId]: {
-      ...book,
-    },
-  };
-};
-
-const getOnClick = (type, book, basketId) => {
+const getButton = (type, book, rest) => {
   switch (type) {
     case BOOK_POSITION.STORE:
-      return createBasketBook(book);
+      return (
+        <BookButtonStore book={book} {...rest}>
+          Do koszyka
+        </BookButtonStore>
+      );
     case BOOK_POSITION.BASKET:
-      return basketId;
+      return <BookButtonBasket {...rest}>Usuń z koszyka</BookButtonBasket>;
+    case BOOK_POSITION.STATIC:
+      return null;
     default:
       return null;
   }
 };
 
-const Book = ({ book, onButtonClick, type, basketId }) => {
-  const onClick = React.useCallback(
-    () => onButtonClick(getOnClick(type, book, basketId)),
-    [basketId, book, onButtonClick, type],
-  );
-
+const Book = ({ book, type, ...rest }) => {
   const { id, iSBN, title, category, author, price, publisher } = book;
-
+  const src = getImageUrl(id);
   return (
     <Wrapper>
-      <Image src={getImageUrl(id)} alt={title} />
+      <Image src={src} alt={title} />
       <RightPanel>
         <StyledTitle>{title}</StyledTitle>
         <StyledAuthor>{author}</StyledAuthor>
@@ -100,15 +93,11 @@ const Book = ({ book, onButtonClick, type, basketId }) => {
         <StyledIsbn>ISBN: {iSBN}</StyledIsbn>
         <BookBottom>
           <StyledPrice>{price} zł</StyledPrice>
-          <BookButton type={type} onClick={onClick} />
+          {getButton(type, book, rest)}
         </BookBottom>
       </RightPanel>
     </Wrapper>
   );
-};
-
-Book.defaultProps = {
-  basketId: '',
 };
 
 Book.propTypes = {
@@ -123,8 +112,6 @@ Book.propTypes = {
     image: PropTypes.string.isRequired,
   }).isRequired,
   type: PropTypes.number.isRequired,
-  onButtonClick: PropTypes.func.isRequired,
-  basketId: PropTypes.string,
 };
 
 export default Book;

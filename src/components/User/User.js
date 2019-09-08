@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const User = ({ name, surname, year, email }) => {
   return (
     <div>
+      <h1>Konto</h1>
       <span>Imie: {name}</span>
       <span>Nazwisko: {surname}</span>
       <span>year: {year}</span>

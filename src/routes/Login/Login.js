@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from '@emotion/styled';
+import { withRouter } from 'react-router-dom';
 
 import NamedInput from '../../components/NamedInput/NamedInput';
 import Button from '../../components/Button/Button';
@@ -23,8 +25,12 @@ const StyledError = styled.span`
   color: red;
 `;
 
-const Login = ({ loginUser, loginError }) => {
+const Login = ({ loginUser, loginError, token, history }) => {
   const [loginValue, setLoginValue] = React.useState({});
+
+  React.useEffect(() => {
+    if (token) history.push('/');
+  }, [history, token]);
 
   const onLogin = () => {
     loginUser({ ...loginValue });
@@ -57,10 +63,13 @@ const Login = ({ loginUser, loginError }) => {
 
 Login.defaultProps = {
   loginError: '',
+  token: '',
 };
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   loginError: PropTypes.string,
+  token: PropTypes.string,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
-export default Login;
+export default withRouter(Login);

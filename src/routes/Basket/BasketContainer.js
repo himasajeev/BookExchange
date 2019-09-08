@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { get } from 'lodash';
 import Basket from './Basket';
 import {
   removeFromBasket,
@@ -7,7 +8,7 @@ import {
 } from '../../modules/basket/basketActions';
 
 const mapStateToProps = state => {
-  const { basket } = state;
+  const basket = get(state, 'basket.data');
   return {
     basket,
   };

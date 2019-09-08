@@ -40,3 +40,15 @@ export const fetchGetUserInfo = async token => {
     return error;
   }
 };
+
+export const fetchLogoutUser = async token => {
+  try {
+    const response = await axios.post(`${authUrl}/logout`, {
+      user_token: token,
+    });
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

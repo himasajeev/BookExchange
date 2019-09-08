@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styled from '@emotion/styled';
 import User from '../../components/User/User';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 50%;
+  & span {
+    display: block;
+  }
+`;
 
 const Overview = ({
   token,
@@ -14,6 +23,7 @@ const Overview = ({
   booksToSell,
   sell,
   buy,
+  phase,
 }) => {
   React.useEffect(() => {
     getOverview(token);
@@ -23,21 +33,22 @@ const Overview = ({
   const { toReceive, received, sold, taken } = sell;
   const { ordered, bought, orderedAmount, boughtAmmount } = buy;
   return (
-    <div>
+    <Wrapper>
+      <span>Faza: {phase}</span>
       {userInfo && <User {...userInfo} />}
       <div>
         <span>Sprzedaz</span>
-        {toReceive && <span>Do otrzymania {toReceive}</span>}
-        {received && <span>Otrzymano {received}</span>}
-        {sold && <span>Sprzedano {sold}</span>}
-        {taken && <span>Zabrano {taken}</span>}
+        <span>Do otrzymania {toReceive}</span>
+        <span>Otrzymano {received}</span>
+        <span>Sprzedano {sold}</span>
+        <span>Zabrano {taken}</span>
       </div>
       <div>
         <span>Zakupy</span>
-        {ordered && <span>Zamówiono {ordered}</span>}
-        {bought && <span>Kupiono {bought}</span>}
-        {orderedAmount && <span>Ilosc zamówionych {orderedAmount}</span>}
-        {boughtAmmount && <span>Ilosc kupionych {boughtAmmount}</span>}
+        <span>Zamówiono {ordered}</span>
+        <span>Kupiono {bought}</span>
+        <span>Ilosc zamówionych {orderedAmount}</span>
+        <span>Ilosc kupionych {boughtAmmount}</span>
       </div>
       <div>
         <span>Ksiażki do kupienia</span>
@@ -52,7 +63,7 @@ const Overview = ({
         ))}
       </div>
       <div />
-    </div>
+    </Wrapper>
   );
 };
 
@@ -84,6 +95,7 @@ Overview.propTypes = {
     orderedAmount: PropTypes.string,
     boughtAmmount: PropTypes.string,
   }),
+  phase: PropTypes.string.isRequired,
 };
 
 export default Overview;

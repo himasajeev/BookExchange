@@ -10,7 +10,10 @@ import {
   registerUserSaga,
   loginUserSaga,
   getUserInfoSaga,
+  logoutUserSaga,
+  setUserTokenSaga,
 } from './user/userSaga';
+import { getPhaseSaga } from './phase/phaseSaga';
 
 // eslint-disable-next-line import/prefer-default-export
 export function* rootSaga() {
@@ -23,7 +26,9 @@ export function* rootSaga() {
     yield takeEvery(actionTypes.LOGIN_USER_REQUESTED, loginUserSaga),
     yield takeEvery(actionTypes.REGISTER_USER_REQUESTED, registerUserSaga),
     yield takeEvery(actionTypes.GET_USER_INFO_REQUESTED, getUserInfoSaga),
+    yield takeEvery(actionTypes.LOGOUT_USER_REQUESTED, logoutUserSaga),
     yield takeEvery(actionTypes.GET_OVERVIEW_REQUESTED, overviewSaga),
-    // overviewSaga(),
+    yield takeEvery(actionTypes.GET_PHASE_REQUESTED, getPhaseSaga),
+    yield takeEvery(actionTypes.SET_USER_TOKEN_REQUESTED, setUserTokenSaga),
   ]);
 }

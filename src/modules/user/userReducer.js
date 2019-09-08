@@ -9,11 +9,13 @@ const userReducer = (state = {}, action) => {
       return { ...state, isLoading: true };
     case actionTypes.LOGIN_USER_SUCCEEDED:
     case actionTypes.REGISTER_USER_SUCCEEDED:
+    case actionTypes.SET_USER_TOKEN_SUCCEEDED:
       return { ...state, token, isLoading: false };
     case actionTypes.REGISTER_USER_FAILED:
     case actionTypes.LOGIN_USER_FAILED:
+    case actionTypes.SET_USER_TOKEN_FAILED:
       return { ...state, isLoading: false, error };
-    case actionTypes.LOGOUT_USER:
+    case actionTypes.LOGOUT_USER_SUCCEEDED:
       return {};
     case actionTypes.GET_USER_INFO_SUCCEEDED:
       return { ...state, userInfo };

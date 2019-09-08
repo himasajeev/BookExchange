@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { MdShoppingCart } from 'react-icons/md';
 import Link from '../../components/Link/Link';
 import { FONT_SIZE, FONT_COLORS, BACKGROUND_COLORS } from '../../styles/global';
+import { fetchLogoutUser } from '../../modules/user/userApi';
 
 const StyledNavigation = styled.nav`
   width: 100%;
@@ -39,15 +40,24 @@ const BasketIcon = styled(MdShoppingCart)`
   }
 `;
 
-const Navigation = ({ basketCount }) => {
+const Navigation = ({ basketCount, token, logoutUser }) => {
+  const handleLogoutUser = React.useCallback(() => {
+    logoutUser(token);
+  }, [logoutUser, token]);
+
   return (
     <StyledNavigation>
       <Link to="/" exact>
         Store
       </Link>
-      <Link to="/login">Login</Link>
       <Link to="/add">Add</Link>
       <Link to="/overview">Overview</Link>
+
+      {token && (
+        <button type="button" onClick={handleLogoutUser}>
+          Logout
+        </button>
+      )}
       <Link to="/basket">
         <BasketContainer>
           <BasketCount>{basketCount}</BasketCount>
@@ -59,7 +69,13 @@ const Navigation = ({ basketCount }) => {
   );
 };
 
+Navigation.defaultProps = {
+  token: '',
+};
+
 Navigation.propTypes = {
   basketCount: PropTypes.number.isRequired,
+  token: PropTypes.string,
+  logoutUser: PropTypes.func.isRequired,
 };
 export default Navigation;

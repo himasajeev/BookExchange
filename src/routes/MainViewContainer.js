@@ -1,27 +1,27 @@
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { bindActionCreators } from 'redux';
-import { logoutUser } from '../../modules/user/userActions';
-import Navigation from './Navigation';
+import MainView from './MainView';
+import { setUserToken } from '../modules/user/userActions';
 
 const mapStateToProps = state => {
-  const basket = get(state, 'basket.data', {});
-  const basketCount = Object.keys(basket).length;
+  const stateToken = get(state, 'user.token');
+  const token = stateToken || window.localStorage.getItem('token');
   return {
-    basketCount,
+    stateToken,
+    token,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      logoutUser,
+      setUserToken,
     },
     dispatch,
   );
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Navigation);
+)(MainView);
