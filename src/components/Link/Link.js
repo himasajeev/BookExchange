@@ -9,10 +9,10 @@ const StyledLink = styled.a`
     text-decoration: underline;
     cursor: pointer;
   }
-  color: ${props => (props.isActive ? 'palevioletred' : 'lightblue')};
+  background: ${props => (props.isActive ? '#cfd8dc' : null)};
 `;
 
-const Link = ({ to, children, exact, history, location }) => {
+const Link = ({ to, children, exact, history, location, className }) => {
   const onClick = () => {
     history.push(to);
   };
@@ -20,7 +20,12 @@ const Link = ({ to, children, exact, history, location }) => {
   const isActive = location.pathname === to;
 
   return (
-    <StyledLink onClick={onClick} exact={exact} isActive={isActive}>
+    <StyledLink
+      onClick={onClick}
+      exact={exact}
+      isActive={isActive}
+      className={className}
+    >
       {children}
     </StyledLink>
   );
@@ -28,6 +33,7 @@ const Link = ({ to, children, exact, history, location }) => {
 
 Link.defaultProps = {
   exact: false,
+  className: '',
 };
 
 Link.propTypes = {
@@ -36,6 +42,7 @@ Link.propTypes = {
   children: PropTypes.node.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   location: ReactRouterPropTypes.location.isRequired,
+  className: PropTypes.string,
 };
 
 export default withRouter(Link);

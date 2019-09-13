@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './modules/store';
 
 import reset from './styles/reset';
+import global from './styles/global';
 
 import MainView from './routes/MainViewContainer';
 
@@ -15,6 +16,7 @@ const App = () => {
       <Global
         styles={css`
           ${reset}
+          ${global}
         `}
       />
       <Provider store={store}>

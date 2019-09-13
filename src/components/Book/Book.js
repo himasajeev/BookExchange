@@ -6,12 +6,16 @@ import BookButtonStore from './BookButtonStore';
 import BookButtonBasket from './BookButtonBasket';
 import { BOOK_POSITION } from '../../constants/bookPosition';
 import { getImageUrl } from '../../utils/getImageUrl';
+import { PADDING } from '../../styles/padding';
+import { findStateVariant } from '../../utils/findStateVariant';
+import Select from '../Select/Select';
 
 const margin = '5px 0';
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   height: 200px;
   display: flex;
+  margin: ${PADDING.LARGE} 0;
 `;
 
 const RightPanel = styled.div`
@@ -79,24 +83,55 @@ const getButton = (type, book, rest) => {
   }
 };
 
+const getSelectOptions = (prices, quants) => {
+  const list = prices.filter((price, index) => {
+    const priceQuantity = Number(quants[index]);
+    if (priceQuantity !== 0)
+      return {
+        id: index,
+        value: `${price}zł ${findStateVariant(index)} ${quants[index]}`,
+      };
+    return null;
+  });
+  return list;
+};
+
+const isBookAvaliable = quants => {
+  return quants.some(quant => Number(quant) > 0);
+};
+
 const Book = ({ book, type, ...rest }) => {
-  const { id, iSBN, title, category, author, price, publisher } = book;
-  const src = getImageUrl(id);
+  const { id, iSBN, title, category, author, prices, quants, publisher } = book;
+  // const src = getImageUrl(id);
+  const selectOptions = getSelectOptions(prices, quants);
+
+  const changeSelected = () => {};
+
   return (
-    <Wrapper>
-      <Image src={src} alt={title} />
+    <StyledWrapper>
+      <Image src="/images/book-placeholder.jpg" alt={title} />
       <RightPanel>
         <StyledTitle>{title}</StyledTitle>
         <StyledAuthor>{author}</StyledAuthor>
         <StyledCategories>{category}</StyledCategories>
-        <StyledPublisher>Wydawnictwo: {publisher}</StyledPublisher>
-        <StyledIsbn>ISBN: {iSBN}</StyledIsbn>
+        {isBookAvaliable(quants) ? (
+          <Select
+            options={selectOptions}
+            defaultValue="Wybierz rodzaj"
+            onChange={changeSelected}
+          />
+        ) : (
+          <span>Wyprzedana</span>
+        )}
+        {/* <StyledPublisher>Wydawnictwo: {publisher}</StyledPublisher>
+        <StyledIsbn>ISBN: {iSBN}</StyledIsbn> */}
+
         <BookBottom>
-          <StyledPrice>{price} zł</StyledPrice>
+          {/* <StyledPrice>{price} zł</StyledPrice> */}
           {getButton(type, book, rest)}
         </BookBottom>
       </RightPanel>
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 
@@ -107,7 +142,8 @@ Book.propTypes = {
     title: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
+    prices: PropTypes.arrayOf.isRequired,
+    quants: PropTypes.arrayOf.isRequired,
     publisher: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
   }).isRequired,

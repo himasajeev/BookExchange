@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const StyledButton = styled.button`
-  font-size: 10px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
   border-radius: 5px;
+  border: 0;
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    outline: none;
+  }
 `;
 
 const Button = ({ children, onClick, className }) => {

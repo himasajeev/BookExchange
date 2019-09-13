@@ -12,7 +12,6 @@ const mapStateToProps = state => {
   const booksToSell = get(state, 'overview.booksToSell');
   const sell = get(state, 'overview.sell');
   const buy = get(state, 'overview.buy');
-  const phase = get(state, 'phase.value');
 
   return {
     // token,
@@ -22,7 +21,6 @@ const mapStateToProps = state => {
     booksToSell,
     sell,
     buy,
-    phase,
   };
 };
 

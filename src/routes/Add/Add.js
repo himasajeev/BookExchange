@@ -10,7 +10,7 @@ import Select from '../../components/Select/Select';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 90%;
   margin: 0 auto;
 `;
 

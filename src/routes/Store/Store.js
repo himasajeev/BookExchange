@@ -2,11 +2,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
+import styled from '@emotion/styled';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
 import Loading from '../../components/Loading/Loading';
 import Select from '../../components/Select/Select';
 import SearchBar from '../../components/SearchBar/SearchBar';
+
+const Wrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 const Store = ({
   books,
@@ -40,7 +49,7 @@ const Store = ({
   };
 
   return (
-    <div>
+    <Wrapper>
       <SearchBar
         name="search"
         value={searchValue.search}
@@ -85,7 +94,7 @@ const Store = ({
           ))}
         </div>
       </Loading>
-    </div>
+    </Wrapper>
   );
 };
 

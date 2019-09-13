@@ -22,10 +22,11 @@ const Select = ({ value, name, onChange, defaultValue, options, title }) => {
 Select.defaultProps = {
   title: '',
   value: '',
+  defaultValue: '',
 };
 
 Select.propTypes = {
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

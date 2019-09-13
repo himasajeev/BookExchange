@@ -2,17 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from '@emotion/styled';
-import User from '../../components/User/User';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
+import { PADDING } from '../../styles/padding';
 
-const Wrapper = styled.div`
-  margin: 0 auto;
-  width: 50%;
+const StyledWrapper = styled.div`
+  margin: ${PADDING.BASE} auto;
+  width: 90%;
   & span {
     display: block;
   }
+  max-width: 450px;
 `;
+
+const StyledTitle = styled.h1`
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: ${PADDING.BASE};
+`;
+
+const StyledSectionTitle = styled.h2`
+  text-align: center;
+  font-size: 18px;
+  margin: ${PADDING.BASE} 0;
+`;
+
+const nullToZero = value => {
+  if (value === null) return 0;
+  return value;
+};
 
 const Overview = ({
   token,
@@ -23,7 +41,6 @@ const Overview = ({
   booksToSell,
   sell,
   buy,
-  phase,
 }) => {
   React.useEffect(() => {
     getOverview(token);
@@ -31,39 +48,53 @@ const Overview = ({
   }, [getOverview, getUserInfo, token]);
 
   const { toReceive, received, sold, taken } = sell;
-  const { ordered, bought, orderedAmount, boughtAmmount } = buy;
+  const { ordered, bought, orderedAmount, boughtAmount } = buy;
+  const { name, surname, year, email } = userInfo;
+
   return (
-    <Wrapper>
-      <span>Faza: {phase}</span>
-      {userInfo && <User {...userInfo} />}
-      <div>
-        <span>Sprzedaz</span>
-        <span>Do otrzymania {toReceive}</span>
-        <span>Otrzymano {received}</span>
-        <span>Sprzedano {sold}</span>
-        <span>Zabrano {taken}</span>
-      </div>
-      <div>
-        <span>Zakupy</span>
-        <span>Zamówiono {ordered}</span>
-        <span>Kupiono {bought}</span>
-        <span>Ilosc zamówionych {orderedAmount}</span>
-        <span>Ilosc kupionych {boughtAmmount}</span>
-      </div>
-      <div>
-        <span>Ksiażki do kupienia</span>
-        {booksToBuy.map(book => (
-          <Book book={book} key={book.id} type={BOOK_POSITION.STATIC} />
-        ))}
-      </div>
-      <div>
-        <span>Ksiażki do sprzedania</span>
-        {booksToSell.map(book => (
-          <Book book={book} key={book.id} type={BOOK_POSITION.STATIC} />
-        ))}
-      </div>
+    <StyledWrapper>
+      <StyledTitle>Podsumowanie konta</StyledTitle>
+      {userInfo && (
+        <section>
+          <StyledSectionTitle>Użytkownik</StyledSectionTitle>
+          <span>Imie: {name}</span>
+          <span>Nazwisko: {surname}</span>
+          <span>Rok: {year}</span>
+          <span>Email: {email}</span>
+        </section>
+      )}
+      <section>
+        <StyledSectionTitle>Sprzedaż</StyledSectionTitle>
+        <span>Do otrzymania: {`${nullToZero(toReceive)} zł`}</span>
+        <span>Otrzymano: {`${nullToZero(received)} zł`}</span>
+        <span>Sprzedano: {`${nullToZero(sold)} zł`}</span>
+        <span>Zabrano: {`${nullToZero(taken)} zł`}</span>
+      </section>
+      <section>
+        <StyledSectionTitle>Zakupy</StyledSectionTitle>
+        <span>Zamówiono {nullToZero(ordered)}</span>
+        <span>Kupiono {nullToZero(bought)}</span>
+        <span>Ilosc zamówionych {nullToZero(orderedAmount)}</span>
+        <span>Ilosc kupionych {nullToZero(boughtAmount)}</span>
+      </section>
+      {booksToBuy.length > 0 && (
+        <section>
+          <StyledSectionTitle>Ksiażki do kupienia</StyledSectionTitle>
+          {booksToBuy.map(book => (
+            <Book book={book} key={book.id} type={BOOK_POSITION.STATIC} />
+          ))}
+        </section>
+      )}
+      {booksToSell.length > 0 && (
+        <section>
+          <StyledSectionTitle>Ksiażki do sprzedania</StyledSectionTitle>
+          {booksToSell.map(book => (
+            <Book book={book} key={book.id} type={BOOK_POSITION.STATIC} />
+          ))}
+        </section>
+      )}
       <div />
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 
@@ -80,7 +111,12 @@ Overview.propTypes = {
   token: PropTypes.string,
   getOverview: PropTypes.func.isRequired,
   getUserInfo: PropTypes.func.isRequired,
-  userInfo: PropTypes.shape({}),
+  userInfo: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    surname: PropTypes.string.isRequired,
+    year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    email: PropTypes.string.isRequired,
+  }),
   booksToBuy: PropTypes.arrayOf({}),
   booksToSell: PropTypes.arrayOf({}),
   sell: PropTypes.shape({
@@ -93,9 +129,8 @@ Overview.propTypes = {
     ordered: PropTypes.string,
     bought: PropTypes.string,
     orderedAmount: PropTypes.string,
-    boughtAmmount: PropTypes.string,
+    boughtAmount: PropTypes.string,
   }),
-  phase: PropTypes.string.isRequired,
 };
 
 export default Overview;
