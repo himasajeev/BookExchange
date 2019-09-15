@@ -32,10 +32,10 @@ export const fetchGetBooksSearch = async (token, searchData) => {
     const urlParams = {
       action: API_ACTIONS.BOOKS_BUY_SEARCH,
       user_token: token,
-      ':search': search,
-      ':cat_search': category,
-      ':aut_search': author,
-      ':pub_search': publisher,
+      ':search': search || '%',
+      ':cat_search': category || '%',
+      ':aut_search': author || '%',
+      ':pub_search': publisher || '%',
     };
     const response = await axios.get(
       `${apiUrl}/${getRequestUrlBuilder(urlParams)}`,

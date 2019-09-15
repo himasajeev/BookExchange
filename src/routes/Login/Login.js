@@ -48,7 +48,9 @@ const Login = ({ loginUser, loginError, token, history }) => {
 
         <StyledButton onClick={onLogin}>Zaloguj</StyledButton>
         <StyledError>{loginError}</StyledError>
-        <StyledLink to="/register">Nie masz konta?</StyledLink>
+        <StyledLink isNavbar={false} to="/register">
+          Nie masz konta?
+        </StyledLink>
       </Wrapper>
     </Background>
   );

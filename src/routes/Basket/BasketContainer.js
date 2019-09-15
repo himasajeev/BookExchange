@@ -9,8 +9,11 @@ import {
 
 const mapStateToProps = state => {
   const basket = get(state, 'basket.data');
+  const phase = get(state, 'phase.value');
+
   return {
     basket,
+    phase,
   };
 };
 

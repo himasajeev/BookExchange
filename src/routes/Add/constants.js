@@ -2,22 +2,28 @@
 export const ADD_INPUTS = [
   {
     name: 'isbn',
-    title: 'ISBN',
+    title: 'ISBN:',
     type: 'text',
   },
   {
     name: 'author',
-    title: 'Autor',
+    title: 'Autor:',
     type: 'text',
   },
   {
     name: 'publisher',
-    title: 'Wydawnictwo',
+    title: 'Wydawnictwo:',
     type: 'text',
   },
   {
     name: 'title',
-    title: 'Tytuł',
+    title: 'Tytuł:',
     type: 'text',
   },
 ];
+
+export const RESPONSES = {
+  ERROR: { text: 'Wypełnij wszystkie pola!', isSucces: false },
+  SUCCESS: { text: 'Ksiażka dodana pomyślnie!', isSuccess: true },
+  SERVER_ERROR: { text: 'Błąd serwera!', isSucces: false },
+};

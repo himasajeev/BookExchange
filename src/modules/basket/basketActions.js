@@ -10,7 +10,9 @@ export const removeFromBasket = id => ({
   id,
 });
 
-export const orderBasket = basket => ({
+export const orderBasket = (basket, phase, token) => ({
   type: actionTypes.ORDER_BASKET_REQUESTED,
   basket,
+  phase,
+  token,
 });

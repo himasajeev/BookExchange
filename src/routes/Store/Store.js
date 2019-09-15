@@ -1,20 +1,25 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { debounce } from 'lodash';
 import styled from '@emotion/styled';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
 import Loading from '../../components/Loading/Loading';
 import Select from '../../components/Select/Select';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import SearchInput from '../../components/SearchInput/SearchInput';
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
+`;
+
+const StyledBookWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 const Store = ({
@@ -30,6 +35,7 @@ const Store = ({
   publishers,
   categories,
   authors,
+  phase,
 }) => {
   React.useEffect(() => {
     // getBooks(token);
@@ -49,8 +55,8 @@ const Store = ({
   };
 
   return (
-    <Wrapper>
-      <SearchBar
+    <StyledWrapper>
+      <SearchInput
         name="search"
         value={searchValue.search}
         setValue={handleSearchChange}
@@ -83,18 +89,19 @@ const Store = ({
         />
       </div>
       <Loading isLoading={isLoading}>
-        <div>
+        <StyledBookWrapper>
           {books.map(book => (
             <Book
               book={book}
               onButtonClick={addToBasket}
               key={book.id}
               type={BOOK_POSITION.STORE}
+              phase={phase}
             />
           ))}
-        </div>
+        </StyledBookWrapper>
       </Loading>
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 

@@ -24,7 +24,7 @@ const createBasketBook = book => {
   };
 };
 
-const BookButton = ({ onButtonClick, book, children }) => {
+const BookButtonStore = ({ onButtonClick, book, children }) => {
   const onClick = React.useCallback(
     () => onButtonClick(createBasketBook(book)),
     [book, onButtonClick],
@@ -33,10 +33,10 @@ const BookButton = ({ onButtonClick, book, children }) => {
   return <StyledButton onClick={onClick}>{children}</StyledButton>;
 };
 
-BookButton.propTypes = {
+BookButtonStore.propTypes = {
   book: PropTypes.shape({}).isRequired,
   onButtonClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default BookButton;
+export default BookButtonStore;

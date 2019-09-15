@@ -1,26 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { ADD_INPUTS } from './constants';
+import { ADD_INPUTS, RESPONSES } from './constants';
 import NamedInput from '../../components/NamedInput/NamedInput';
 import Button from '../../components/Button/Button';
 import { fetchAddBook } from '../../modules/add/addApi';
 import Select from '../../components/Select/Select';
+import { PADDING } from '../../styles/padding';
+import { COLORS, FONT_SIZE } from '../../styles/globalVariables';
+import { successMessage } from '../../constants/successMessage';
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 0 auto;
+  margin: ${PADDING.BASE} auto;
 `;
+
+const StyledButton = styled(Button)`
+  padding: ${PADDING.BASE};
+  background: ${COLORS.NAVBAR_MAIN};
+  &:hover,
+  &:focus {
+    background: ${COLORS.NAVBAR_SECONDARY};
+  }
+`;
+
+const StyledResponse = styled.span`
+  color: ${props => (props.isSuccess ? COLORS.SUCCESS : COLORS.ERROR)};
+  font-size: ${FONT_SIZE.LARGE};
+`;
+
+const numberOfInputFields = 5;
 
 const Add = ({ token, categories }) => {
   const [addValue, setAddValue] = React.useState({});
-  const [status, setStatus] = React.useState();
+
+  const [status, setStatus] = React.useState({ text: '', isSuccess: false });
 
   const onAdd = async () => {
-    const response = await fetchAddBook(token, { ...addValue });
-    setStatus(response.result);
+    if (Object.values(addValue).length === numberOfInputFields) {
+      setAddValue({});
+      const response = await fetchAddBook(token, { ...addValue });
+      if (response.result === successMessage) {
+        setStatus(RESPONSES.SUCCESS);
+      } else {
+        setStatus(RESPONSES.SERVER_ERROR);
+      }
+    } else {
+      setStatus(RESPONSES.ERROR);
+    }
   };
 
   const handleAddChange = event => {
@@ -28,7 +57,7 @@ const Add = ({ token, categories }) => {
   };
 
   return (
-    <Wrapper>
+    <StyledWrapper>
       {ADD_INPUTS.map(input => (
         <NamedInput
           key={input.name}
@@ -45,12 +74,14 @@ const Add = ({ token, categories }) => {
         onChange={handleAddChange}
         value={addValue.categories}
         options={categories}
-        title="Kategoria"
+        title="Kategoria:"
       />
 
-      <Button onClick={onAdd}>Dodaj ksiażke</Button>
-      <span>{status}</span>
-    </Wrapper>
+      <StyledButton onClick={onAdd}>Dodaj ksiażke </StyledButton>
+      <StyledResponse isSuccess={status.isSuccess}>
+        {status.text}
+      </StyledResponse>
+    </StyledWrapper>
   );
 };
 

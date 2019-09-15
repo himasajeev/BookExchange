@@ -14,6 +14,7 @@ import {
   setUserTokenSaga,
 } from './user/userSaga';
 import { getPhaseSaga } from './phase/phaseSaga';
+import { orderBasketSaga } from './basket/basketSaga';
 
 // eslint-disable-next-line import/prefer-default-export
 export function* rootSaga() {
@@ -30,5 +31,6 @@ export function* rootSaga() {
     yield takeEvery(actionTypes.GET_OVERVIEW_REQUESTED, overviewSaga),
     yield takeEvery(actionTypes.GET_PHASE_REQUESTED, getPhaseSaga),
     yield takeEvery(actionTypes.SET_USER_TOKEN_REQUESTED, setUserTokenSaga),
+    yield takeEvery(actionTypes.ORDER_BASKET_REQUESTED, orderBasketSaga),
   ]);
 }

@@ -1,4 +1,5 @@
-const PHASES = {
+// eslint-disable-next-line import/prefer-default-export
+export const PHASES = {
   REGISTER_SELLERS: 1,
   RETURN_BOOKS: 2,
   REGISTER_BUYERS: 3,

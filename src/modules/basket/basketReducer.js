@@ -14,7 +14,7 @@ const basketReducer = (state = {}, action) => {
     case actionTypes.ORDER_BASKET_REQUESTED:
       return { ...state, isLoading: true };
     case actionTypes.ORDER_BASKET_SUCCEEDED:
-      return { ...state, isLoading: false };
+      return { ...omit(state, ['data']), isLoading: false };
     case actionTypes.ORDER_BASKET_FAILED:
       return { ...state, isLoading: false, error };
     default:

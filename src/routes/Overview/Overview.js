@@ -56,7 +56,7 @@ const Overview = ({
       <StyledTitle>Podsumowanie konta</StyledTitle>
       {userInfo && (
         <section>
-          <StyledSectionTitle>Użytkownik</StyledSectionTitle>
+          <StyledSectionTitle>Dane</StyledSectionTitle>
           <span>Imie: {name}</span>
           <span>Nazwisko: {surname}</span>
           <span>Rok: {year}</span>
@@ -65,17 +65,17 @@ const Overview = ({
       )}
       <section>
         <StyledSectionTitle>Sprzedaż</StyledSectionTitle>
-        <span>Do otrzymania: {`${nullToZero(toReceive)} zł`}</span>
-        <span>Otrzymano: {`${nullToZero(received)} zł`}</span>
-        <span>Sprzedano: {`${nullToZero(sold)} zł`}</span>
-        <span>Zabrano: {`${nullToZero(taken)} zł`}</span>
+        <span>Do przyniesienia: {nullToZero(toReceive)}</span>
+        <span>Przyniesione: {nullToZero(received)}</span>
+        <span>Sprzedane: {nullToZero(sold)}</span>
+        <span>Odebrane: {nullToZero(taken)}</span>
       </section>
       <section>
         <StyledSectionTitle>Zakupy</StyledSectionTitle>
-        <span>Zamówiono {nullToZero(ordered)}</span>
-        <span>Kupiono {nullToZero(bought)}</span>
-        <span>Ilosc zamówionych {nullToZero(orderedAmount)}</span>
-        <span>Ilosc kupionych {nullToZero(boughtAmount)}</span>
+        <span>Zamówiono: {`${nullToZero(ordered)} zł`}</span>
+        <span>Kupiono: {`${nullToZero(bought)} zł`}</span>
+        <span>Ilosc zamówionych: {nullToZero(orderedAmount)}</span>
+        <span>Ilosc kupionych: {nullToZero(boughtAmount)}</span>
       </section>
       {booksToBuy.length > 0 && (
         <section>

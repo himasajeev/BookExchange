@@ -50,7 +50,9 @@ const Register = ({ registerUser, registerError, token, history }) => {
         ))}
         <StyledButton onClick={onRegister}>Zarejestruj</StyledButton>
         <StyledError>{registerError}</StyledError>
-        <StyledLink to="/login">Wróć do logowania</StyledLink>
+        <StyledLink isNavbar={false} to="/login">
+          Wróć do logowania
+        </StyledLink>
       </Wrapper>
     </Background>
   );

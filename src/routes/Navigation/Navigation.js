@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { MdShoppingCart } from 'react-icons/md';
 import Link from '../../components/Link/Link';
-import { FONT_COLORS, BACKGROUND_COLORS } from '../../styles/globalVariables';
 import { PADDING } from '../../styles/padding';
+import { COLORS } from '../../styles/globalVariables';
+import Button from '../../components/Button/Button';
 
 const StyledNavigation = styled.nav`
   width: 100%;
@@ -28,26 +29,16 @@ const BasketContainer = styled.div`
   width: 30px;
 `;
 
-const StyledLink = styled(Link, {
-  shouldforwardprop: prop => prop !== 'as',
-})`
-  display: inline-flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  padding: 0 ${PADDING.SMALL};
-`;
-
 const BasketCount = styled.span`
   position: absolute;
   top: 0;
   right: 0;
-  color: ${FONT_COLORS.LIGHT};
-  background: ${BACKGROUND_COLORS.DARK};
+  color: #fff;
+  background: #000;
   border-radius: 50%;
-  height: 15px;
-  width: 15px;
-  font-size: 20px;
+  height: 16px;
+  width: 16px;
+  font-size: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -61,6 +52,30 @@ const BasketIcon = styled(MdShoppingCart)`
   }
 `;
 
+const StyledButton = styled(Button)`
+  display: inline-flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0 ${PADDING.SMALL};
+  position: relative;
+  background: ${COLORS.NAVBAR_MAIN};
+  &::after {
+    position: absolute;
+    bottom: 0;
+    content: '';
+    width: 100%;
+    border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  &:hover {
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+`;
+
 const Navigation = ({ basketCount, token, logoutUser }) => {
   const handleLogoutUser = React.useCallback(() => {
     logoutUser(token);
@@ -69,22 +84,23 @@ const Navigation = ({ basketCount, token, logoutUser }) => {
   return (
     <StyledNavigation>
       <StyledWrapper>
-        <StyledLink to="/" exact>
+        <Link to="/" exact>
           Sklep
-        </StyledLink>
-        <StyledLink to="/add">Dodaj</StyledLink>
-        <StyledLink to="/overview">Konto</StyledLink>
-        <StyledLink to="/basket">
+        </Link>
+        <Link to="/add">Dodaj</Link>
+        <Link to="/overview">Konto</Link>
+        <Link to="/basket">
           <BasketContainer>
             <BasketCount>{basketCount}</BasketCount>
 
             <BasketIcon />
           </BasketContainer>
-        </StyledLink>
+        </Link>
         {token && (
-          <StyledLink type="button" onClick={handleLogoutUser}>
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <StyledButton as="button" type="button" onClick={handleLogoutUser}>
             Wyloguj
-          </StyledLink>
+          </StyledButton>
         )}
       </StyledWrapper>
     </StyledNavigation>

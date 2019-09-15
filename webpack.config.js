@@ -14,7 +14,10 @@ module.exports = env => {
     },
     devtool: env.development ? 'eval-source-map' : 'source-map',
     devServer: {
-      contentBase: [path.join(__dirname, 'public'), path.join(__dirname, 'dist')],
+      contentBase: [
+        path.join(__dirname, 'public'),
+        path.join(__dirname, 'dist'),
+      ],
       hot: true,
       open: false,
       port: 3000,

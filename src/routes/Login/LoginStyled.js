@@ -4,6 +4,7 @@ import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import Link from '../../components/Link/Link';
 import { PADDING } from '../../styles/padding';
+import { COLORS, FONT_COLORS, LOGIN_IMAGE } from '../../styles/globalVariables';
 
 export const Background = styled.div`
   width: 100vw;
@@ -13,12 +14,11 @@ export const Background = styled.div`
       rgba(0, 0, 0, 0.7) 0%,
       rgba(0, 0, 0, 0.7) 100%
     ),
-    url('/images/login-bg.jpg') no-repeat center center fixed;
+    url(${LOGIN_IMAGE}) no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
 `;
 
 export const Wrapper = styled.div`
@@ -28,22 +28,26 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  background: linear-gradient(to bottom, #fb8c00dd, #ff9800dd 100%);
-  color: #fff;
+  background: linear-gradient(
+    to bottom,
+    ${COLORS.LOGIN_MAIN},
+    ${COLORS.LOGIN_MAIN_VARIANT} 100%
+  );
+  color: ${FONT_COLORS.LIGHT};
   border-radius: 15px;
 `;
 
 export const StyledButton = styled(Button)`
   margin-top: ${PADDING.BASE};
   padding: ${PADDING.BASE};
-  background: #3d5afe;
-  color: #fff;
+  background: ${COLORS.LOGIN_SECONDARY};
+  color: ${FONT_COLORS.LIGHT};
   border-radius: 8px;
   font-size: 20px;
 
   &:hover,
   &:focus {
-    background: #536dfe;
+    background: ${COLORS.LOGIN_SECONDARY_VARIANT};
   }
 `;
 
@@ -57,7 +61,7 @@ export const StyledInput = styled(Input)`
 
 export const StyledLink = styled(Link)`
   display: inline-block;
-  color: #fff;
+  color: ${FONT_COLORS.LIGHT};
   margin-left: ${PADDING.SMALL};
 `;
 
@@ -68,7 +72,7 @@ export const StyledTitle = styled.span`
 
 export const StyledError = styled.span`
   display: block;
-  color: #b00020;
+  color: ${COLORS.ERROR};
   height: ${PADDING.BASE};
   margin-bottom: ${PADDING.SMALL};
 `;

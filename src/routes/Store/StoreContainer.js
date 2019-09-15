@@ -15,7 +15,7 @@ const mapStateToProps = state => {
   const publishers = get(state, 'publishers.data');
   const categories = get(state, 'categories.data');
   const authors = get(state, 'authors.data');
-
+  const phase = get(state, 'phase.value');
   return {
     books,
     isLoading,
@@ -23,6 +23,7 @@ const mapStateToProps = state => {
     publishers,
     categories,
     authors,
+    phase,
   };
 };
 

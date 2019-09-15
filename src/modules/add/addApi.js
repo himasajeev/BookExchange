@@ -5,7 +5,7 @@ import { API_ACTIONS } from '../apiActions';
 // eslint-disable-next-line import/prefer-default-export
 export const fetchAddBook = async (token, book) => {
   try {
-    const { isbn, author, publisher, title, category } = book;
+    const { isbn, author, publisher, title, categories } = book;
     const urlParams = {
       action: API_ACTIONS.ADD_BOOK,
       user_token: token,
@@ -13,7 +13,7 @@ export const fetchAddBook = async (token, book) => {
       ':Author': author,
       ':Publisher': publisher,
       ':Title': title,
-      ':Category': category,
+      ':Category': categories,
     };
 
     const response = await axios.post(`${apiUrl}/`, {

@@ -1,17 +1,24 @@
 import { put, call } from 'redux-saga/effects';
-import { fetchOrderBasket } from './basketApi';
+import { fetchRegisterBookBuy, fetchRegisterBookSell } from './basketApi';
 import * as actionTypes from '../actionTypes';
+import { PHASES } from '../../constants/phases';
+import { isSell, isBuy } from '../../utils/phaseToBool';
 
 // eslint-disable-next-line import/prefer-default-export
-export function* orderBasketSaga(basket) {
+export function* orderBasketSaga({ basket, phase, token }) {
   try {
-    const orderArray = Object.keys(basket).map(key => {
-      return { id: basket[key].id, state: basket[key].state };
-    });
+    // TODO
+    if (isSell(phase)) {
+      const response = yield call(fetchRegisterBookSell, basket, token);
 
-    const response = yield call(fetchOrderBasket, orderArray);
+      yield put({ type: actionTypes.ORDER_BASKET_SUCCEEDED, response });
+    }
 
-    yield put({ type: actionTypes.ORDER_BASKET_SUCCEEDED, response });
+    if (isBuy(phase)) {
+      const response = yield call(fetchRegisterBookBuy, basket, token);
+
+      yield put({ type: actionTypes.ORDER_BASKET_SUCCEEDED, response });
+    }
   } catch (error) {
     yield put({ type: actionTypes.ORDER_BASKET_FAILED, error });
   }
