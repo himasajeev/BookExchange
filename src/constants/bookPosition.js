@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const BOOK_POSITION = Object.freeze({
   STATIC: 0,
   STORE: 1,

@@ -97,7 +97,6 @@ const Navigation = ({ basketCount, token, logoutUser }) => {
           </BasketContainer>
         </Link>
         {token && (
-          // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <StyledButton as="button" type="button" onClick={handleLogoutUser}>
             Wyloguj
           </StyledButton>

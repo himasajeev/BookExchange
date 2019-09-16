@@ -3,7 +3,6 @@ import { fetchRegisterBookBuy, fetchRegisterBookSell } from './basketApi';
 import * as actionTypes from '../actionTypes';
 import { isSell, isBuy } from '../../utils/phaseToBool';
 
-// eslint-disable-next-line import/prefer-default-export
 export function* orderBasketSaga({ basket, phase, token }) {
   try {
     // TODO

@@ -2,7 +2,6 @@ import { put, call } from 'redux-saga/effects';
 import { fetchGetPublishers } from './publishersApi';
 import * as actionTypes from '../actionTypes';
 
-// eslint-disable-next-line import/prefer-default-export
 export function* getPublishersSaga({ token }) {
   try {
     const response = yield call(fetchGetPublishers, token);

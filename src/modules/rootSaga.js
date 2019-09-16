@@ -16,7 +16,6 @@ import {
 import { getPhaseSaga } from './phase/phaseSaga';
 import { orderBasketSaga } from './basket/basketSaga';
 
-// eslint-disable-next-line import/prefer-default-export
 export function* rootSaga() {
   yield all([
     yield takeEvery(actionTypes.GET_BOOKS_REQUESTED, getBooksSaga),

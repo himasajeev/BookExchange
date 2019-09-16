@@ -1,6 +1,5 @@
 const paddingBase = '12';
 
-// eslint-disable-next-line import/prefer-default-export
 export const PADDING = {
   SMALL: `${paddingBase / 2}px`,
   BASE: `${paddingBase}px`,

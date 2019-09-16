@@ -3,7 +3,6 @@ import { apiUrl } from '../url';
 import { API_ACTIONS } from '../apiActions';
 import { getRequestUrlBuilder } from '../../utils/getRequestUrlBuilder';
 
-// eslint-disable-next-line import/prefer-default-export
 export const fetchGetCategories = async token => {
   try {
     const urlParams = {

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { apiUrl } from '../url';
 import { API_ACTIONS } from '../apiActions';
 
-// eslint-disable-next-line import/prefer-default-export
 export const fetchRegisterBookBuy = async (basket, token) => {
   try {
     const orderArray = Object.keys(basket).map(key => {

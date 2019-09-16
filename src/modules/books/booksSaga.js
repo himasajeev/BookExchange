@@ -9,7 +9,6 @@ import {
 import * as actionTypes from '../actionTypes';
 import { isBuy, isSell } from '../../utils/phaseToBool';
 
-// eslint-disable-next-line import/prefer-default-export
 export function* getBooksSaga({ token, search, phase }) {
   try {
     let response;

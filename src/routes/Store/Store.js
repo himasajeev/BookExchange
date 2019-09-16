@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
@@ -127,6 +126,7 @@ Store.defaultProps = {
   authors: [],
   isLoading: false,
   token: '',
+  phase: 0,
 };
 
 Store.propTypes = {
@@ -138,6 +138,10 @@ Store.propTypes = {
   getBooks: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   token: PropTypes.string,
+  getAuthors: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  getPublishers: PropTypes.func.isRequired,
+  phase: PropTypes.number,
 };
 
 export default Store;

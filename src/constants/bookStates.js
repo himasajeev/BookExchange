@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const BOOK_STATES = [
   {
     id: 0,

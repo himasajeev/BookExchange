@@ -20,7 +20,6 @@ BookButtonStore.propTypes = {
   book: PropTypes.shape({}).isRequired,
   onButtonClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  // eslint-disable-next-line react/require-default-props
   isDisabled: PropTypes.bool,
 };
 
