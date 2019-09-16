@@ -22,6 +22,8 @@ module.exports = {
       },
     ],
     'react/destructuring-assignment': ['never'],
+    'import/prefer-default-export':['never'],
+    'react/require-default-props':['never']
   },
   env: {
     browser: true,
