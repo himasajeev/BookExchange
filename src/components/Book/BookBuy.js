@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BookButtonStoreBuy from './BookButtonStore';
-import BookButtonBasket from './BookButtonBasket';
-import { BOOK_POSITION } from '../../constants/bookPosition';
 import { getImageUrl } from '../../utils/getImageUrl';
 import { findStateVariant } from '../../utils/findStateVariant';
 
@@ -71,7 +69,11 @@ const BookBuy = ({ book, ...rest }) => {
           )}
           <StyledBottomSection>
             <StyledIcon onClick={handleCollapse} />
-            <BookButtonStoreBuy book={{ ...book, selectedState }} {...rest}>
+            <BookButtonStoreBuy
+              book={{ ...book, selectedState }}
+              isDisabled={selectedState === null}
+              {...rest}
+            >
               Kup
             </BookButtonStoreBuy>
           </StyledBottomSection>

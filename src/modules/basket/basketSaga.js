@@ -1,7 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { fetchRegisterBookBuy, fetchRegisterBookSell } from './basketApi';
 import * as actionTypes from '../actionTypes';
-import { PHASES } from '../../constants/phases';
 import { isSell, isBuy } from '../../utils/phaseToBool';
 
 // eslint-disable-next-line import/prefer-default-export

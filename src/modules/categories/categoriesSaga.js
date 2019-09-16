@@ -7,8 +7,8 @@ export function* getCategoriesSaga({ token }) {
   try {
     const response = yield call(fetchGetCategories, token);
 
-    const values = response.result;
-    const data = [{ value: '' }, ...values];
+    const data = response.result;
+
     yield put({ type: actionTypes.GET_CATEGORIES_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: actionTypes.GET_CATEGORIES_FAILED, error });

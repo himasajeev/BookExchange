@@ -2,11 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+
+import { omit } from 'lodash';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
 import Loading from '../../components/Loading/Loading';
-import Select from '../../components/Select/Select';
 import SearchInput from '../../components/SearchInput/SearchInput';
+import Select from '../../components/Select/Select';
 
 const StyledWrapper = styled.div`
   width: 90%;
@@ -25,11 +27,10 @@ const StyledBookWrapper = styled.div`
 const Store = ({
   books,
   addToBasket,
-  // getBooks,
   getAuthors,
   getCategories,
   getPublishers,
-  getBooksSearch,
+  getBooks,
   isLoading,
   token,
   publishers,
@@ -37,55 +38,69 @@ const Store = ({
   authors,
   phase,
 }) => {
+  const [searchValue, setSearchValue] = React.useState({});
+
   React.useEffect(() => {
-    // getBooks(token);
     getAuthors(token);
     getCategories(token);
     getPublishers(token);
   }, [getAuthors, getCategories, getPublishers, token]);
 
-  const [searchValue, setSearchValue] = React.useState({});
-
   React.useEffect(() => {
-    getBooksSearch(token, searchValue);
-  }, [getBooksSearch, searchValue, token]);
+    if (phase) getBooks(token, searchValue, phase);
+  }, [getBooks, phase, searchValue, token]);
 
-  const handleSearchChange = event => {
-    setSearchValue({ ...searchValue, [event.target.name]: event.target.value });
+  const handleSearchInputChange = search => {
+    setSearchValue({ ...searchValue, search });
   };
 
+  const handleSearchChange = (selected, element) => {
+    const { name, action } = element;
+    switch (action) {
+      case 'select-option':
+        setSearchValue({ ...searchValue, [name]: selected.value });
+        break;
+      case 'clear':
+        setSearchValue({ ...omit(searchValue, [name]) });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const { search } = searchValue;
   return (
     <StyledWrapper>
       <SearchInput
         name="search"
-        value={searchValue.search}
-        setValue={handleSearchChange}
+        value={search}
+        setValue={handleSearchInputChange}
         type="text"
       />
       <div>
         <Select
           name="publisher"
           onChange={handleSearchChange}
-          value={searchValue.publisher}
-          defaultValue="Wybierz wydawnictwo"
+          placeholder="Wybierz wydawnictwo"
           options={publishers}
           title="Wydawnictwo"
+          isClearable
         />
         <Select
           name="category"
           onChange={handleSearchChange}
-          defaultValue="Wybierz kategorie"
-          value={searchValue.category}
+          placeholder="Wybierz kategorie"
           options={categories}
           title="Kategorie"
+          isClearable
         />
         <Select
           name="author"
           onChange={handleSearchChange}
-          defaultValue="Wybierz autora"
-          value={searchValue.author}
+          placeholder="Wybierz autora"
           options={authors}
           title="Autor"
+          isClearable
         />
       </div>
       <Loading isLoading={isLoading}>
@@ -120,8 +135,9 @@ Store.propTypes = {
   publishers: PropTypes.arrayOf(PropTypes.shape({})),
   categories: PropTypes.arrayOf(PropTypes.shape({})),
   authors: PropTypes.arrayOf(PropTypes.shape({})),
-  // getBooks: PropTypes.func.isRequired,
+  getBooks: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   token: PropTypes.string,
 };
+
 export default Store;

@@ -4,6 +4,7 @@ import { MdArrowDropDown } from 'react-icons/md';
 import Select from 'react-select';
 import { PADDING } from '../../styles/padding';
 import { COLORS } from '../../styles/globalVariables';
+import Button from '../Button/Button';
 
 export const StyledSelect = styled(Select)`
   margin-top: auto;
@@ -73,5 +74,14 @@ export const StyledIcon = styled(MdArrowDropDown)`
 
 export const StyledTopContainer = styled.div`
   display: flex;
-  /* flex-direction: column; */
+`;
+
+export const StyledButton = styled(Button)`
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  background: red;
+  color: white;
+  align-self: flex-end;
+  margin-top: auto;
 `;

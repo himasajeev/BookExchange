@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { omit } from 'lodash';
 import { ADD_INPUTS, RESPONSES } from './constants';
 import NamedInput from '../../components/NamedInput/NamedInput';
 import Button from '../../components/Button/Button';
@@ -40,7 +41,7 @@ const Add = ({ token, categories }) => {
 
   const onAdd = async () => {
     if (Object.values(addValue).length === numberOfInputFields) {
-      setAddValue({});
+      setAddValue({ categories: addValue.categories });
       const response = await fetchAddBook(token, { ...addValue });
       if (response.result === successMessage) {
         setStatus(RESPONSES.SUCCESS);
@@ -54,6 +55,20 @@ const Add = ({ token, categories }) => {
 
   const handleAddChange = event => {
     setAddValue({ ...addValue, [event.target.name]: event.target.value });
+  };
+
+  const handleSearchChange = (selected, element) => {
+    const { name, action } = element;
+    switch (action) {
+      case 'select-option':
+        setAddValue({ ...addValue, [name]: selected.value });
+        break;
+      case 'clear':
+        setAddValue({ ...omit(addValue, [name]) });
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -70,11 +85,10 @@ const Add = ({ token, categories }) => {
       ))}
       <Select
         name="categories"
-        defaultValue="Wybierz Kategorie"
-        onChange={handleAddChange}
+        placeholder="Wybierz Kategorie"
+        onChange={handleSearchChange}
         value={addValue.categories}
         options={categories}
-        title="Kategoria:"
       />
 
       <StyledButton onClick={onAdd}>Dodaj ksiażke </StyledButton>

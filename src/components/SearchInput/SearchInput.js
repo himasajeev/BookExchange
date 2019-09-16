@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const debounceTimer = 500;
+const debounceTimer = 300;
 
 const SearchInput = ({ name, setValue, placeholder, type }) => {
   const debounceUpdate = debounce(

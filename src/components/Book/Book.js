@@ -20,12 +20,12 @@ const Book = ({ phase, type, ...rest }) => {
 };
 
 Book.defaultProps = {
-  phase: '0',
+  phase: 0,
   type: 0,
 };
 
 Book.propTypes = {
-  phase: PropTypes.string,
+  phase: PropTypes.number,
   type: PropTypes.number,
 };
 

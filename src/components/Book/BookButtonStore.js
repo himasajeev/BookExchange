@@ -1,42 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
-import { uniqueId } from 'lodash';
+import { createBasketBook } from '../../utils/createBasketBook';
+import { StyledButton } from './BookStyled';
 
-import Button from '../Button/Button';
-
-const StyledButton = styled(Button)`
-  padding: 8px 12px;
-  font-size: 16px;
-  border-radius: 5px;
-  background: red;
-  color: white;
-  align-self: flex-end;
-  margin-top: auto;
-`;
-
-const createBasketBook = book => {
-  const basketBookId = uniqueId();
-  return {
-    [basketBookId]: {
-      ...book,
-    },
-  };
-};
-
-const BookButtonStore = ({ onButtonClick, book, children }) => {
+const BookButtonStore = ({ onButtonClick, book, isDisabled, children }) => {
   const onClick = React.useCallback(
     () => onButtonClick(createBasketBook(book)),
     [book, onButtonClick],
   );
 
-  return <StyledButton onClick={onClick}>{children}</StyledButton>;
+  return isDisabled ? (
+    <StyledButton>{children}</StyledButton>
+  ) : (
+    <StyledButton onClick={onClick}>{children}</StyledButton>
+  );
 };
 
 BookButtonStore.propTypes = {
   book: PropTypes.shape({}).isRequired,
   onButtonClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  isDisabled: PropTypes.bool,
 };
 
 export default BookButtonStore;

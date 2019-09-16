@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { PADDING } from '../../styles/padding';
 
 const StyledInput = styled.input`
+  margin: ${PADDING.SMALL} 0;
+
+  font-size: 20px;
+  padding: ${PADDING.SMALL} ${PADDING.X_LARGE} ${PADDING.SMALL} ${PADDING.SMALL};
+  border: 1px black solid;
+
   &:focus {
     outline: none;
   }
