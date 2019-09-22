@@ -15,21 +15,28 @@ import {
   StyledError,
 } from './LoginStyled';
 
+const numberOfInputFields = 2;
+
 const Login = ({ loginUser, loginError, token, history }) => {
   const [loginValue, setLoginValue] = React.useState({});
+  const [missingInputError, setMissingInputError] = React.useState('');
 
   React.useEffect(() => {
     if (token) history.push('/');
   }, [history, token]);
 
   const onLogin = () => {
-    loginUser({ ...loginValue });
+    if (Object.values(loginValue).length === numberOfInputFields) {
+      loginUser({ ...loginValue });
+      setMissingInputError('');
+    } else setMissingInputError('Wypełnij wszystkie pola');
   };
 
   const handleInputChange = event => {
     setLoginValue({ ...loginValue, [event.target.name]: event.target.value });
   };
 
+  const error = loginError || missingInputError;
   return (
     <Background>
       <Wrapper>
@@ -47,7 +54,11 @@ const Login = ({ loginUser, loginError, token, history }) => {
         ))}
 
         <StyledButton onClick={onLogin}>Zaloguj</StyledButton>
-        <StyledError>{loginError}</StyledError>
+        {error ? (
+          <StyledError data-testid="login-error">{error}</StyledError>
+        ) : (
+          <StyledError />
+        )}
         <StyledLink isNavbar={false} to="/register">
           Nie masz konta?
         </StyledLink>

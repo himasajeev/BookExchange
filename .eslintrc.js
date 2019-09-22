@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   parser: 'babel-eslint',
-  plugins: ['react-hooks', 'prettier'],
+  plugins: ['react-hooks', 'prettier', 'cypress'],
   extends: ['airbnb', 'prettier', 'prettier/react'],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
@@ -22,13 +22,14 @@ module.exports = {
       },
     ],
     'react/destructuring-assignment': ['never'],
-    'import/prefer-default-export':['never'],
-    'react/require-default-props':['never']
+    'import/prefer-default-export': ['never'],
+    'react/require-default-props': ['never'],
   },
   env: {
     browser: true,
     node: true,
     jest: true,
+    'cypress/globals': true,
   },
   overrides: [
     {

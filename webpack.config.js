@@ -7,7 +7,7 @@ module.exports = env => {
     mode: env.development ? 'development' : 'production',
     entry: path.resolve(__dirname, './src/index.js'),
     output: {
-      publicPath: '/',
+      publicPath: env.development ? '/' : './',
       filename: 'bundle.[hash].js',
       chunkFilename: 'chunk.[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),

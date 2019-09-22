@@ -16,15 +16,21 @@ import {
   StyledError,
 } from '../Login/LoginStyled';
 
+const numberOfInputFields = 5;
+
 const Register = ({ registerUser, registerError, token, history }) => {
   const [registerValue, setRegisterValue] = React.useState({});
+  const [missingInputError, setMissingInputError] = React.useState('');
 
   React.useEffect(() => {
     if (token) history.push('/');
   }, [history, token]);
 
   const onRegister = () => {
-    registerUser({ ...registerValue });
+    if (Object.values(registerValue).length === numberOfInputFields) {
+      registerUser({ ...registerValue });
+      setMissingInputError('');
+    } else setMissingInputError('Wypełnij wszystkie pola');
   };
 
   const handleInputChange = event => {
@@ -33,6 +39,7 @@ const Register = ({ registerUser, registerError, token, history }) => {
       [event.target.name]: event.target.value,
     });
   };
+  const error = registerError || missingInputError;
 
   return (
     <Background>
@@ -49,7 +56,11 @@ const Register = ({ registerUser, registerError, token, history }) => {
           />
         ))}
         <StyledButton onClick={onRegister}>Zarejestruj</StyledButton>
-        <StyledError>{registerError}</StyledError>
+        {error ? (
+          <StyledError data-testid="register-error">{error}</StyledError>
+        ) : (
+          <StyledError />
+        )}
         <StyledLink isNavbar={false} to="/login">
           Wróć do logowania
         </StyledLink>

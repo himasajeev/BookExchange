@@ -57,7 +57,9 @@ const Basket = ({ basket, removeFromBasket, orderBasket, phase, token }) => {
           basketId={basketId}
         />
       ))}
-      <StyledButton onClick={onOrderBasket}>{buttonText}</StyledButton>
+      <StyledButton onClick={onOrderBasket} testId="order_basket">
+        {buttonText}
+      </StyledButton>
     </StyledWrapper>
   );
 };

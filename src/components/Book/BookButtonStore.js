@@ -10,15 +10,17 @@ const BookButtonStore = ({ onButtonClick, book, isDisabled, children }) => {
   );
 
   return isDisabled ? (
-    <StyledButton>{children}</StyledButton>
+    <StyledButton testId="add_to_basket">{children}</StyledButton>
   ) : (
-    <StyledButton onClick={onClick}>{children}</StyledButton>
+    <StyledButton onClick={onClick} testId="add_to_basket">
+      {children}
+    </StyledButton>
   );
 };
 
 BookButtonStore.propTypes = {
   book: PropTypes.shape({}).isRequired,
-  onButtonClick: PropTypes.func.isRequired,
+  onButtonClick: PropTypes.func,
   children: PropTypes.node.isRequired,
   isDisabled: PropTypes.bool,
 };

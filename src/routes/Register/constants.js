@@ -11,7 +11,7 @@ export const REGISTER_INPUTS = [
   },
   {
     name: 'name',
-    title: 'Imie',
+    title: 'Imię',
     type: 'text',
   },
   {

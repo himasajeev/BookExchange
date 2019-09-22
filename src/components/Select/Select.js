@@ -15,6 +15,7 @@ const Select = ({
   defaultValue,
   className,
   placeholder,
+  id,
 }) => {
   return (
     <StyledContainer className={className}>
@@ -24,6 +25,7 @@ const Select = ({
         options={options}
         defaultValue={defaultValue}
         placeholder={placeholder}
+        id={id}
         isClearable
       />
     </StyledContainer>
@@ -48,6 +50,7 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   className: PropTypes.string,
   placeholder: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default Select;

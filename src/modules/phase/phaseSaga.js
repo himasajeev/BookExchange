@@ -6,8 +6,11 @@ export function* getPhaseSaga({ token }) {
   try {
     const response = yield call(fetchGetPhase, token);
 
-    // const [phase] = response.result;
-    const phase = { value: 3 };
+    const [value] = response.result;
+
+    const phase = { value: Number(value.value) };
+    // console.log(phase);
+    // const phase = { value: 4 };
     yield put({
       type: actionTypes.GET_PHASE_SUCCEEDED,
       phase,

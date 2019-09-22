@@ -15,9 +15,14 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, onClick, className }) => {
+const Button = ({ children, onClick, className, testId }) => {
   return (
-    <StyledButton type="button" className={className} onClick={onClick}>
+    <StyledButton
+      type="button"
+      className={className}
+      onClick={onClick}
+      data-testId={testId}
+    >
       {children}
     </StyledButton>
   );
@@ -26,11 +31,13 @@ const Button = ({ children, onClick, className }) => {
 Button.defaultProps = {
   children: '',
   className: '',
+  testId: '',
 };
 
 Button.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  testId: PropTypes.string,
 };
 export default Button;

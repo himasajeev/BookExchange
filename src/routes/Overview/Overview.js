@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from '@emotion/styled';
-import Book from '../../components/Book/Book';
-import { BOOK_POSITION } from '../../constants/bookPosition';
 import { PADDING } from '../../styles/padding';
 
 const StyledWrapper = styled.div`
@@ -24,7 +22,12 @@ const StyledTitle = styled.h1`
 const StyledSectionTitle = styled.h2`
   text-align: center;
   font-size: 18px;
-  margin: ${PADDING.BASE} 0;
+  margin: ${PADDING.BASE} 0 ${PADDING.SMALL};
+`;
+
+const StyledTable = styled.table`
+  width: 100%;
+  text-align: center;
 `;
 
 const nullToZero = value => {
@@ -78,19 +81,49 @@ const Overview = ({
         <span>Ilosc kupionych: {nullToZero(boughtAmount)}</span>
       </section>
       {booksToBuy.length > 0 && (
-        <section>
+        <section data-testid="books_to_buy">
           <StyledSectionTitle>Ksiażki do kupienia</StyledSectionTitle>
-          {booksToBuy.map(book => (
-            <Book book={book} key={book.id} type={BOOK_POSITION.STATIC} />
-          ))}
+          <StyledTable>
+            <thead>
+              <tr>
+                <th>ID ksiażki</th>
+                <th>Tytuł</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {booksToBuy.map(book => (
+                <tr key={book.bookProt}>
+                  <td>{book.bookProt}</td>
+                  <td>{book.title}</td>
+                  <td>{book.state}</td>
+                </tr>
+              ))}
+            </tbody>
+          </StyledTable>
         </section>
       )}
       {booksToSell.length > 0 && (
-        <section>
+        <section data-testid="books_to_sell">
           <StyledSectionTitle>Ksiażki do sprzedania</StyledSectionTitle>
-          {booksToSell.map(book => (
-            <Book book={book} key={book.id} type={BOOK_POSITION.STATIC} />
-          ))}
+          <StyledTable>
+            <thead>
+              <tr>
+                <th>ID ksiażki</th>
+                <th>Tytuł</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {booksToSell.map(book => (
+                <tr key={book.bookProt}>
+                  <td>{book.bookProt}</td>
+                  <td>{book.title}</td>
+                  <td>{book.state}</td>
+                </tr>
+              ))}
+            </tbody>
+          </StyledTable>
         </section>
       )}
       <div />
@@ -112,13 +145,13 @@ Overview.propTypes = {
   getOverview: PropTypes.func.isRequired,
   getUserInfo: PropTypes.func.isRequired,
   userInfo: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    surname: PropTypes.string.isRequired,
-    year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    email: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    surname: PropTypes.string,
+    year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    email: PropTypes.string,
   }),
-  booksToBuy: PropTypes.arrayOf({}),
-  booksToSell: PropTypes.arrayOf({}),
+  booksToBuy: PropTypes.arrayOf(PropTypes.shape({})),
+  booksToSell: PropTypes.arrayOf(PropTypes.shape({})),
   sell: PropTypes.shape({
     toReceive: PropTypes.string,
     received: PropTypes.string,

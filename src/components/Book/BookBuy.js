@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BookButtonStoreBuy from './BookButtonStore';
-import { getImageUrl } from '../../utils/getImageUrl';
 import { findStateVariant } from '../../utils/findStateVariant';
 
 import {
@@ -12,24 +11,23 @@ import {
   StyledContainer,
   StyledDescription,
   StyledIcon,
-  StyledTitle,
   StyledSelect,
+  StyledTitle,
   StyledTopContainer,
   StyledUnavailable,
 } from './BookStyled';
 
 const getSelectOptions = (prices, quants) => {
-  const list = prices.map((price, index) => {
+  const options = [];
+  prices.forEach((price, index) => {
     const priceQuantity = Number(quants[index]);
-    // if (priceQuantity !== 0)
-    return {
-      value: index,
-      label: `${price}zł ${findStateVariant(index)}`,
-    };
-    // return null;
+    if (priceQuantity !== 0)
+      options.push({
+        value: index,
+        label: `${price}zł ${findStateVariant(index)}`,
+      });
   });
-
-  return list;
+  return options;
 };
 
 const BookBuy = ({ book, ...rest }) => {
@@ -62,6 +60,7 @@ const BookBuy = ({ book, ...rest }) => {
               value={selectedState}
               onChange={handleChange}
               options={options}
+              className="add_book_select"
               isClearable
             />
           ) : (

@@ -91,13 +91,17 @@ const Navigation = ({ basketCount, token, logoutUser }) => {
         <Link to="/overview">Konto</Link>
         <Link to="/basket">
           <BasketContainer>
-            <BasketCount>{basketCount}</BasketCount>
-
+            <BasketCount data-testid="basket_count">{basketCount}</BasketCount>
             <BasketIcon />
           </BasketContainer>
         </Link>
         {token && (
-          <StyledButton as="button" type="button" onClick={handleLogoutUser}>
+          <StyledButton
+            as="button"
+            type="button"
+            onClick={handleLogoutUser}
+            data-testid="logout-button"
+          >
             Wyloguj
           </StyledButton>
         )}

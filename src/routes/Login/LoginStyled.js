@@ -62,7 +62,7 @@ export const StyledInput = styled(Input)`
 export const StyledLink = styled(Link)`
   display: inline-block;
   color: ${FONT_COLORS.LIGHT};
-  margin-left: ${PADDING.SMALL};
+  // margin-left: ${PADDING.SMALL};margin-left: ${PADDING.SMALL};
 `;
 
 export const StyledTitle = styled.span`

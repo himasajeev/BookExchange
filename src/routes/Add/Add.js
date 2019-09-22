@@ -89,10 +89,14 @@ const Add = ({ token, categories }) => {
         onChange={handleSearchChange}
         value={addValue.categories}
         options={categories}
+        id="add-select"
       />
 
       <StyledButton onClick={onAdd}>Dodaj ksiażke </StyledButton>
-      <StyledResponse isSuccess={status.isSuccess}>
+      <StyledResponse
+        data-testid={status.isSuccess ? 'add_success' : 'add_error'}
+        isSuccess={status.isSuccess}
+      >
         {status.text}
       </StyledResponse>
     </StyledWrapper>

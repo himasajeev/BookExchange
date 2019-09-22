@@ -18,7 +18,7 @@ export function* loginUserSaga({ user }) {
     if (operationSuccessful) {
       window.localStorage.setItem('token', token);
       yield put({ type: actionTypes.LOGIN_USER_SUCCEEDED, token });
-      yield put({ type: actionTypes.GET_PHASE_REQUESTED, token });
+      yield put({ type: actionTypes.LOAD_INITIAL_DATA, token });
     } else {
       yield put({
         type: actionTypes.LOGIN_USER_FAILED,
@@ -43,7 +43,7 @@ export function* registerUserSaga({ user }) {
     if (operation_successful) {
       window.localStorage.setItem('token', token);
       yield put({ type: actionTypes.REGISTER_USER_SUCCEEDED, token });
-      yield put({ type: actionTypes.GET_PHASE_REQUESTED, token });
+      yield put({ type: actionTypes.LOAD_INITIAL_DATA, token });
     } else {
       yield put({
         type: actionTypes.REGISTER_USER_FAILED,
@@ -94,7 +94,7 @@ export function* setUserTokenSaga({ token }) {
       type: actionTypes.SET_USER_TOKEN_SUCCEEDED,
       token,
     });
-    yield put({ type: actionTypes.GET_PHASE_REQUESTED, token });
+    if (token) yield put({ type: actionTypes.LOAD_INITIAL_DATA, token });
   } catch (error) {
     yield put({
       type: actionTypes.SET_USER_TOKEN_FAILED,
