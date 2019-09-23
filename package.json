@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint src",
     "start": "webpack-dev-server --env.development",
+    "build": "webpack --env.production",
     "test": "jest --watch",
     "cy": "cypress run",
     "cy:o": "cypress open"
