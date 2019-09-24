@@ -4,7 +4,7 @@ import { API_ACTIONS } from '../apiActions';
 
 export const fetchRegisterBookBuy = async (basket, token) => {
   try {
-    const orderArray = Object.keys(basket).map(key => {
+    const ArrayData = Object.keys(basket).map(key => {
       return {
         ':id_book_prot': basket[key].id,
         ':state_variant': basket[key].selectedState.value,
@@ -13,7 +13,7 @@ export const fetchRegisterBookBuy = async (basket, token) => {
 
     const response = await axios.post(`${apiUrl}/`, {
       action: API_ACTIONS.REGISTER_BOOK_BUY,
-      orderArray,
+      ArrayData,
       user_token: token,
     });
     return response;
@@ -24,7 +24,7 @@ export const fetchRegisterBookBuy = async (basket, token) => {
 
 export const fetchRegisterBookSell = async (basket, token) => {
   try {
-    const orderArray = Object.keys(basket).map(key => {
+    const ArrayData = Object.keys(basket).map(key => {
       return {
         ':id_book_prot': basket[key].id,
       };
@@ -32,7 +32,7 @@ export const fetchRegisterBookSell = async (basket, token) => {
 
     const response = await axios.post(`${apiUrl}/`, {
       action: API_ACTIONS.REGISTER_BOOK_SELL,
-      orderArray,
+      ArrayData,
       user_token: token,
     });
     return response;
