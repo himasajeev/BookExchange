@@ -7,6 +7,7 @@
     "lint": "eslint src",
     "start": "webpack-dev-server --env.development",
     "test": "jest --watch",
+    "build": "webpack --env.production",
     "cy": "cypress run",
     "cy:o": "cypress open"
   },
@@ -22,6 +23,7 @@
     "react-router-dom": "^5.0.1",
     "react-router-prop-types": "^1.0.4",
     "react-select": "^3.0.4",
+    "react-spinners": "^0.6.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.0.5"
   },
