@@ -10,6 +10,7 @@ import Basket from './Basket/BasketContainer';
 import Register from './Register/RegisterContainer';
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 import Overview from './Overview/OverviewContainer';
+import BasketOverlay from './BasketOverlay';
 
 const MainView = ({ token, stateToken, setUserToken }) => {
   React.useEffect(() => {
@@ -22,6 +23,7 @@ const MainView = ({ token, stateToken, setUserToken }) => {
   return (
     <div>
       {token && <Navigation token={token} />}
+      {token && <BasketOverlay />}
       <PrivateRoute path="/" token={token} exact component={Store} />
       <PrivateRoute path="/add" token={token} component={Add} />
       <PrivateRoute path="/basket" token={token} component={Basket} />

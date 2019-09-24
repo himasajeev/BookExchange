@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
+import Loading from '../../components/Loading/Loading';
 
 const StyledWrapper = styled.div`
   margin: ${PADDING.BASE} auto;
@@ -44,6 +45,7 @@ const Overview = ({
   booksToSell,
   sell,
   buy,
+  isLoading,
 }) => {
   React.useEffect(() => {
     getOverview(token);
@@ -55,79 +57,79 @@ const Overview = ({
   const { name, surname, year, email } = userInfo;
 
   return (
-    <StyledWrapper>
-      <StyledTitle>Podsumowanie konta</StyledTitle>
-      {userInfo && (
+    <Loading isLoading={isLoading}>
+      <StyledWrapper>
+        <StyledTitle>Podsumowanie konta</StyledTitle>
+        {userInfo && (
+          <section>
+            <StyledSectionTitle>Dane</StyledSectionTitle>
+            <span>Imie: {name}</span>
+            <span>Nazwisko: {surname}</span>
+            <span>Rok: {year}</span>
+            <span>Email: {email}</span>
+          </section>
+        )}
         <section>
-          <StyledSectionTitle>Dane</StyledSectionTitle>
-          <span>Imie: {name}</span>
-          <span>Nazwisko: {surname}</span>
-          <span>Rok: {year}</span>
-          <span>Email: {email}</span>
+          <StyledSectionTitle>Sprzedaż</StyledSectionTitle>
+          <span>Do przyniesienia: {nullToZero(toReceive)}</span>
+          <span>Przyniesione: {nullToZero(received)}</span>
+          <span>Sprzedane: {nullToZero(sold)}</span>
+          <span>Odebrane: {nullToZero(taken)}</span>
         </section>
-      )}
-      <section>
-        <StyledSectionTitle>Sprzedaż</StyledSectionTitle>
-        <span>Do przyniesienia: {nullToZero(toReceive)}</span>
-        <span>Przyniesione: {nullToZero(received)}</span>
-        <span>Sprzedane: {nullToZero(sold)}</span>
-        <span>Odebrane: {nullToZero(taken)}</span>
-      </section>
-      <section>
-        <StyledSectionTitle>Zakupy</StyledSectionTitle>
-        <span>Zamówiono: {`${nullToZero(ordered)} zł`}</span>
-        <span>Kupiono: {`${nullToZero(bought)} zł`}</span>
-        <span>Ilosc zamówionych: {nullToZero(orderedAmount)}</span>
-        <span>Ilosc kupionych: {nullToZero(boughtAmount)}</span>
-      </section>
-      {booksToBuy.length > 0 && (
-        <section data-testid="books_to_buy">
-          <StyledSectionTitle>Ksiażki do kupienia</StyledSectionTitle>
-          <StyledTable>
-            <thead>
-              <tr>
-                <th>ID ksiażki</th>
-                <th>Tytuł</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {booksToBuy.map(book => (
-                <tr key={book.bookProt}>
-                  <td>{book.bookProt}</td>
-                  <td>{book.title}</td>
-                  <td>{book.state}</td>
+        <section>
+          <StyledSectionTitle>Zakupy</StyledSectionTitle>
+          <span>Ilosc zamówionych: {nullToZero(ordered)}</span>
+          <span>Do zapłacenia: {`${nullToZero(orderedAmount)} zł`}</span>
+          <span>Kupiono: {`${nullToZero(bought)}`}</span>
+          <span>Do odebrania: {`${nullToZero(boughtAmount)} zł`}</span>
+        </section>
+        {booksToBuy.length > 0 && (
+          <section data-testid="books_to_buy">
+            <StyledSectionTitle>Ksiażki do kupienia</StyledSectionTitle>
+            <StyledTable>
+              <thead>
+                <tr>
+                  <th>Tytuł</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </StyledTable>
-        </section>
-      )}
-      {booksToSell.length > 0 && (
-        <section data-testid="books_to_sell">
-          <StyledSectionTitle>Ksiażki do sprzedania</StyledSectionTitle>
-          <StyledTable>
-            <thead>
-              <tr>
-                <th>ID ksiażki</th>
-                <th>Tytuł</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {booksToSell.map(book => (
-                <tr key={book.bookProt}>
-                  <td>{book.bookProt}</td>
-                  <td>{book.title}</td>
-                  <td>{book.state}</td>
+              </thead>
+              <tbody>
+                {booksToBuy.map(book => (
+                  <tr key={book.bookProt}>
+                    <td>{book.title}</td>
+                    <td>{book.state}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </StyledTable>
+          </section>
+        )}
+        {booksToSell.length > 0 && (
+          <section data-testid="books_to_sell">
+            <StyledSectionTitle>Ksiażki do sprzedania</StyledSectionTitle>
+            <StyledTable>
+              <thead>
+                <tr>
+                  <th>ID ksiażki</th>
+                  <th>Tytuł</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </StyledTable>
-        </section>
-      )}
-      <div />
-    </StyledWrapper>
+              </thead>
+              <tbody>
+                {booksToSell.map(book => (
+                  <tr key={book.bookProt}>
+                    <td>{book.bookProt}</td>
+                    <td>{book.title}</td>
+                    <td>{book.state}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </StyledTable>
+          </section>
+        )}
+        <div />
+      </StyledWrapper>
+    </Loading>
   );
 };
 
@@ -164,6 +166,7 @@ Overview.propTypes = {
     orderedAmount: PropTypes.string,
     boughtAmount: PropTypes.string,
   }),
+  isLoading: PropTypes.bool,
 };
 
 export default Overview;

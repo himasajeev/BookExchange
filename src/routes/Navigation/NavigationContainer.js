@@ -7,8 +7,10 @@ import Navigation from './Navigation';
 const mapStateToProps = state => {
   const basket = get(state, 'basket.data', {});
   const basketCount = Object.keys(basket).length;
+  const phase = get(state, 'phase.value');
   return {
     basketCount,
+    phase,
   };
 };
 

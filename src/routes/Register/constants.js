@@ -21,7 +21,7 @@ export const REGISTER_INPUTS = [
   },
   {
     name: 'year',
-    title: 'Rok',
-    type: 'number',
+    title: 'Nr. indeksu',
+    type: 'text',
   },
 ];

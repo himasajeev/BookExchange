@@ -97,7 +97,6 @@ BookBuy.propTypes = {
     prices: PropTypes.arrayOf.isRequired,
     quants: PropTypes.arrayOf.isRequired,
     publisher: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
   }).isRequired,
 };
 

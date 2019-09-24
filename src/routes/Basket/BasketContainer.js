@@ -6,14 +6,24 @@ import {
   removeFromBasket,
   orderBasket,
 } from '../../modules/basket/basketActions';
+import { isBuy } from '../../utils/phaseToBool';
 
 const mapStateToProps = state => {
-  const basket = get(state, 'basket.data');
+  const basket = get(state, 'basket.data', {});
   const phase = get(state, 'phase.value');
+
+  const payAmount = isBuy(phase)
+    ? Object.keys(basket).reduce((total, basketId) => {
+        const book = basket[basketId];
+        const selectedStatePosition = book.selectedState.value;
+        return total + Number(book.prices[selectedStatePosition]);
+      }, 0)
+    : null;
 
   return {
     basket,
     phase,
+    payAmount,
   };
 };
 

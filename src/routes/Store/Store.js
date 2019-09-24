@@ -65,6 +65,7 @@ const Store = ({
         value={search}
         setValue={handleSearchInputChange}
         type="text"
+        placeholder="Szukaj..."
       />
       <div>
         <Select
@@ -78,7 +79,7 @@ const Store = ({
         <Select
           name="category"
           onChange={handleSearchChange}
-          placeholder="Wybierz kategorie"
+          placeholder="Wybierz przedmiot"
           options={categories}
           title="Kategorie"
           isClearable

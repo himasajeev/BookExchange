@@ -85,14 +85,14 @@ const Add = ({ token, categories }) => {
       ))}
       <Select
         name="categories"
-        placeholder="Wybierz Kategorie"
+        placeholder="Wybierz przedmiot"
         onChange={handleSearchChange}
         value={addValue.categories}
         options={categories}
         id="add-select"
       />
 
-      <StyledButton onClick={onAdd}>Dodaj ksiażke </StyledButton>
+      <StyledButton onClick={onAdd}>Dodaj ksiażkę </StyledButton>
       <StyledResponse
         data-testid={status.isSuccess ? 'add_success' : 'add_error'}
         isSuccess={status.isSuccess}

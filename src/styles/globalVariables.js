@@ -1,13 +1,14 @@
 export const COLORS = {
   NAVBAR_MAIN: '#b0bec5',
   NAVBAR_SECONDARY: '#cfd8dc',
-  NAVBAR_BORDER: '#f5f5f5',
+  NAVBAR_BORDER: '#ffffff',
   LOGIN_MAIN: '#fb8c00dd',
   LOGIN_MAIN_VARIANT: '#ff9800dd',
   LOGIN_SECONDARY: '#3d5afe',
   LOGIN_SECONDARY_VARIANT: '#536dfe',
   ERROR: '#b00020',
   SUCCESS: '#64dd17',
+  OVERLAY_COLOR: '#f9aa33',
 };
 
 export const FONT_COLORS = {

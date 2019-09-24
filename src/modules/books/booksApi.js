@@ -37,17 +37,12 @@ export const fetchGetBooksBuy = async token => {
 
 export const fetchGetBooksSellSearch = async (token, searchData) => {
   try {
-    const {
-      category = searchPlaceholder,
-      author = searchPlaceholder,
-      publisher = searchPlaceholder,
-      search = searchPlaceholder,
-    } = searchData;
+    const { category, author, publisher, search } = searchData;
 
     const urlParams = {
       action: API_ACTIONS.BOOKS_SELL_SEARCH,
       user_token: token,
-      ':search': search || '%',
+      ':search': `%${search}%` || '%',
       ':cat_search': category || '%',
       ':aut_search': author || '%',
       ':pub_search': publisher || '%',
@@ -63,17 +58,12 @@ export const fetchGetBooksSellSearch = async (token, searchData) => {
 
 export const fetchGetBooksBuySearch = async (token, searchData) => {
   try {
-    const {
-      category = searchPlaceholder,
-      author = searchPlaceholder,
-      publisher = searchPlaceholder,
-      search = searchPlaceholder,
-    } = searchData;
+    const { category, author, publisher, search } = searchData;
 
     const urlParams = {
       action: API_ACTIONS.BOOKS_BUY_SEARCH,
       user_token: token,
-      ':search': search || '%',
+      ':search': `%${search}%` || '%',
       ':cat_search': category || '%',
       ':aut_search': author || '%',
       ':pub_search': publisher || '%',

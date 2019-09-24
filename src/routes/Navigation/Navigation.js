@@ -4,15 +4,16 @@ import styled from '@emotion/styled';
 import { MdShoppingCart } from 'react-icons/md';
 import Link from '../../components/Link/Link';
 import { PADDING } from '../../styles/padding';
-import { COLORS } from '../../styles/globalVariables';
+import { COLORS, FONT_COLORS } from '../../styles/globalVariables';
 import Button from '../../components/Button/Button';
+import { isSell } from '../../utils/phaseToBool';
 
 const StyledNavigation = styled.nav`
   width: 100%;
   position: sticky;
   top: 0;
   height: 50px;
-  background: #b0bec5;
+  background: ${COLORS.NAVBAR_MAIN};
   z-index: 1000;
 `;
 
@@ -45,7 +46,7 @@ const BasketCount = styled.span`
   user-select: none;
 `;
 
-const BasketIcon = styled(MdShoppingCart)`
+export const BasketIcon = styled(MdShoppingCart)`
   font-size: 30px;
   &:hover {
     cursor: pointer;
@@ -63,6 +64,7 @@ const StyledButton = styled(Button)`
   &::after {
     position: absolute;
     bottom: 0;
+    left: 0;
     content: '';
     width: 100%;
     border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};
@@ -76,7 +78,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Navigation = ({ basketCount, token, logoutUser }) => {
+const Navigation = ({ basketCount, token, logoutUser, phase }) => {
   const handleLogoutUser = React.useCallback(() => {
     logoutUser(token);
   }, [logoutUser, token]);
@@ -112,11 +114,13 @@ const Navigation = ({ basketCount, token, logoutUser }) => {
 
 Navigation.defaultProps = {
   token: '',
+  phase: 0,
 };
 
 Navigation.propTypes = {
   basketCount: PropTypes.number.isRequired,
   token: PropTypes.string,
   logoutUser: PropTypes.func.isRequired,
+  phase: PropTypes.number,
 };
 export default Navigation;

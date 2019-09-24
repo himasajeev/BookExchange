@@ -8,7 +8,6 @@ import { COLORS } from '../../styles/globalVariables';
 
 const StyledLink = styled.a`
   &:hover {
-    text-decoration: underline;
     cursor: pointer;
   }
 `;
@@ -23,6 +22,7 @@ const StyledNavLink = styled(StyledLink)`
   &::after {
     position: absolute;
     bottom: 0;
+    left: 0;
     content: '';
     width: 100%;
     border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};

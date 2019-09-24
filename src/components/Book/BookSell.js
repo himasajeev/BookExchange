@@ -57,9 +57,7 @@ BookSell.propTypes = {
     title: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-
     publisher: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
   }).isRequired,
 };
 
