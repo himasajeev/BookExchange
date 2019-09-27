@@ -1,14 +1,14 @@
 export const BOOK_STATES = [
   {
     id: 0,
-    value: 'Nowa',
+    value: 'Bardzo dobry',
   },
   {
     id: 1,
-    value: 'Używana',
+    value: 'Dobry',
   },
   {
     id: 2,
-    value: 'Zniszczona',
+    value: 'Dostateczny',
   },
 ];

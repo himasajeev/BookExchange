@@ -1,30 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
 import styled from '@emotion/styled';
-import Input from '../Input/Input';
+import { PADDING } from '../../styles/padding';
 
-const StyledSpan = styled.span`
-  padding-top: 10px;
+const StyledTextField = styled(TextField)`
+  margin: ${PADDING.BASE} 0;
 `;
 
-const NamedInput = ({ value, name, onChange, title, type }) => {
+const NamedInput = ({ value, name, onChange, label, type }) => {
   return (
-    <React.Fragment>
-      <StyledSpan>{title}</StyledSpan>
-      <Input type={type} name={name} value={value} onChange={onChange} />
-    </React.Fragment>
+    <StyledTextField
+      label={label}
+      value={value}
+      onChange={onChange}
+      name={name}
+      type={type}
+    />
   );
 };
 NamedInput.defaultProps = {
   value: '',
+  type: '',
 };
 
 NamedInput.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 export default NamedInput;

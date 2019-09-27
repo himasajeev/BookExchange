@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 
 import { MdArrowDropDown } from 'react-icons/md';
 import Select from 'react-select';
+import Button from '@material-ui/core/Button';
 import { PADDING } from '../../styles/padding';
 import { COLORS } from '../../styles/globalVariables';
-import Button from '../Button/Button';
+// import Button from '../Button/Button';
 
 export const StyledSelect = styled(Select)`
   margin-top: auto;
@@ -77,11 +78,11 @@ export const StyledTopContainer = styled.div`
 `;
 
 export const StyledButton = styled(Button)`
-  padding: 8px 12px;
+  margin-left: auto;
+  background: ${COLORS.MAIN};
+  color: #fff;
   font-size: 16px;
-  border-radius: 5px;
-  background: red;
-  color: white;
-  align-self: flex-end;
-  margin-top: auto;
+  &:hover {
+    background: #69a2ff;
+  }
 `;

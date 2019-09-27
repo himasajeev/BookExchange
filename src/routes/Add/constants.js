@@ -1,23 +1,19 @@
 export const ADD_INPUTS = [
   {
     name: 'isbn',
-    title: 'ISBN:',
-    type: 'text',
+    label: 'ISBN',
   },
   {
     name: 'author',
-    title: 'Autor:',
-    type: 'text',
+    label: 'Autor',
   },
   {
     name: 'publisher',
-    title: 'Wydawnictwo:',
-    type: 'text',
+    label: 'Wydawnictwo',
   },
   {
     name: 'title',
-    title: 'Tytuł:',
-    type: 'text',
+    label: 'Tytuł',
   },
 ];
 

@@ -9,7 +9,6 @@ export function* getPhaseSaga({ token }) {
     const [value] = response.result;
 
     const phase = { value: Number(value.value) };
-    // console.log(phase);
     // const phase = { value: 4 };
     yield put({
       type: actionTypes.GET_PHASE_SUCCEEDED,

@@ -1,9 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import styled from '@emotion/styled';
-import { PADDING } from '../../styles/padding';
+import BookIcon from '@material-ui/icons/Book';
+import EventIcon from '@material-ui/icons/Event';
+import Avatar from '@material-ui/core/Avatar';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import PersonIcon from '@material-ui/icons/Person';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Loading from '../../components/Loading/Loading';
+import { PADDING } from '../../styles/padding';
+import { STATUS_TRANSLATIONS } from '../../constants/statusTranslations';
 
 const StyledWrapper = styled.div`
   margin: ${PADDING.BASE} auto;
@@ -17,18 +27,15 @@ const StyledWrapper = styled.div`
 const StyledTitle = styled.h1`
   text-align: center;
   font-size: 24px;
-  margin-bottom: ${PADDING.BASE};
+`;
+
+const StyledSection = styled.section`
+  margin: ${PADDING.BASE} 0;
 `;
 
 const StyledSectionTitle = styled.h2`
   text-align: center;
   font-size: 18px;
-  margin: ${PADDING.BASE} 0 ${PADDING.SMALL};
-`;
-
-const StyledTable = styled.table`
-  width: 100%;
-  text-align: center;
 `;
 
 const nullToZero = value => {
@@ -63,69 +70,95 @@ const Overview = ({
         {userInfo && (
           <section>
             <StyledSectionTitle>Dane</StyledSectionTitle>
-            <span>Imie: {name}</span>
-            <span>Nazwisko: {surname}</span>
-            <span>Rok: {year}</span>
-            <span>Email: {email}</span>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <Avatar>
+                    <PersonIcon />
+                  </Avatar>
+                </ListItemIcon>
+                <ListItemText primary="Imię" secondary={name} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <Avatar>
+                    <SupervisorAccountIcon />
+                  </Avatar>
+                </ListItemIcon>
+                <ListItemText primary="Nazwisko" secondary={surname} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <Avatar>
+                    <AlternateEmailIcon />
+                  </Avatar>
+                </ListItemIcon>
+                <ListItemText primary="Email" secondary={email} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <Avatar>
+                    <EventIcon />
+                  </Avatar>
+                </ListItemIcon>
+                <ListItemText primary="Rok" secondary={year} />
+              </ListItem>
+            </List>
           </section>
         )}
-        <section>
+        <StyledSection>
           <StyledSectionTitle>Sprzedaż</StyledSectionTitle>
           <span>Do przyniesienia: {nullToZero(toReceive)}</span>
           <span>Przyniesione: {nullToZero(received)}</span>
           <span>Sprzedane: {nullToZero(sold)}</span>
           <span>Odebrane: {nullToZero(taken)}</span>
-        </section>
-        <section>
+        </StyledSection>
+        <StyledSection>
           <StyledSectionTitle>Zakupy</StyledSectionTitle>
           <span>Ilosc zamówionych: {nullToZero(ordered)}</span>
           <span>Do zapłacenia: {`${nullToZero(orderedAmount)} zł`}</span>
           <span>Kupiono: {`${nullToZero(bought)}`}</span>
           <span>Do odebrania: {`${nullToZero(boughtAmount)} zł`}</span>
-        </section>
+        </StyledSection>
         {booksToBuy.length > 0 && (
-          <section data-testid="books_to_buy">
+          <StyledSection data-testid="books_to_buy">
             <StyledSectionTitle>Ksiażki do kupienia</StyledSectionTitle>
-            <StyledTable>
-              <thead>
-                <tr>
-                  <th>Tytuł</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {booksToBuy.map(book => (
-                  <tr key={book.bookProt}>
-                    <td>{book.title}</td>
-                    <td>{book.state}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </StyledTable>
-          </section>
+            <List>
+              {booksToBuy.map(book => (
+                <ListItem key={book.protId}>
+                  <ListItemIcon>
+                    <Avatar>
+                      <BookIcon />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={book.title}
+                    secondary={STATUS_TRANSLATIONS[book.state]}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </StyledSection>
         )}
         {booksToSell.length > 0 && (
-          <section data-testid="books_to_sell">
+          <StyledSection data-testid="books_to_sell">
             <StyledSectionTitle>Ksiażki do sprzedania</StyledSectionTitle>
-            <StyledTable>
-              <thead>
-                <tr>
-                  <th>ID ksiażki</th>
-                  <th>Tytuł</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {booksToSell.map(book => (
-                  <tr key={book.bookProt}>
-                    <td>{book.bookProt}</td>
-                    <td>{book.title}</td>
-                    <td>{book.state}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </StyledTable>
-          </section>
+            <List>
+              {booksToSell.map(book => (
+                <ListItem key={book.protId}>
+                  <ListItemIcon>
+                    <Avatar>
+                      <BookIcon />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={book.title}
+                    secondary={STATUS_TRANSLATIONS[book.state]}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </StyledSection>
         )}
         <div />
       </StyledWrapper>

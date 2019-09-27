@@ -4,95 +4,91 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { PADDING } from '../../styles/padding';
-import { COLORS } from '../../styles/globalVariables';
+import { COLORS, SCREEN_SIZES } from '../../styles/globalVariables';
 
-const StyledLink = styled.a`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const StyledNavLink = styled(StyledLink)`
-  display: inline-flex;
-  height: 100%;
+const StyledNavLink = styled.a`
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 ${PADDING.SMALL};
+  padding: 0 ${PADDING.BASE_LARGER};
+  color: #fff;
   position: relative;
+  min-height: 20px;
+
+  @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
+    padding: ${PADDING.X_SMALL} 0;
+    margin: ${PADDING.SMALL} 0;
+  }
+
   &::after {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left:0;
+    right:0;
     content: '';
-    width: 100%;
+    width: calc(100% - ${PADDING.SMALL});
     border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};
-    transform: scaleX(0);
     transform: ${props => (props.isActive ? 'scaleX(1)' : 'scaleX(0)')};
     transition: transform 250ms ease-in-out;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
+    @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
+      width: calc(50% - ${PADDING.SMALL});
+      margin:0 auto;
+      align-items: unset;
+    }
   }
+  }
+
   &:hover {
+    cursor: pointer;
     &::after {
       transform: scaleX(1);
     }
   }
-  background: ${props =>
-    props.isActive ? COLORS.NAVBAR_SECONDARY : COLORS.NAVBAR_MAIN};
 `;
 
-const Link = ({
+const NavLink = ({
   to,
-  as,
   children,
   exact,
   history,
   location,
   className,
-  isNavbar,
+  handleHideMenu,
 }) => {
   const onClick = () => {
     history.push(to);
+    handleHideMenu();
   };
 
   const isActive = location.pathname === to;
 
-  return isNavbar ? (
+  return (
     <StyledNavLink
       onClick={onClick}
       exact={exact}
       isActive={isActive}
       className={className}
-      as={as}
     >
       {children}
     </StyledNavLink>
-  ) : (
-    <StyledLink
-      onClick={onClick}
-      exact={exact}
-      isActive={isActive}
-      className={className}
-    >
-      {children}
-    </StyledLink>
   );
 };
 
-Link.defaultProps = {
+NavLink.defaultProps = {
   exact: false,
   className: '',
-  as: '',
-  isNavbar: true,
 };
 
-Link.propTypes = {
+NavLink.propTypes = {
   exact: PropTypes.bool,
   to: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   location: ReactRouterPropTypes.location.isRequired,
   className: PropTypes.string,
-  as: PropTypes.string,
-  isNavbar: PropTypes.bool,
+  handleHideMenu: PropTypes.func.isRequired,
 };
 
-export default withRouter(Link);
+export default withRouter(NavLink);

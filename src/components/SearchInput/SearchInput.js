@@ -1,35 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import { debounce } from 'lodash';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import clsx from 'clsx';
 
-import { MdSearch } from 'react-icons/md';
-import { PADDING } from '../../styles/padding';
-
-const StyledInput = styled.input`
-  margin: ${PADDING.SMALL} 0;
-  width: 100%;
-  font-size: 20px;
-  padding: ${PADDING.SMALL} ${PADDING.X_LARGE} ${PADDING.SMALL} ${PADDING.SMALL};
-  border: 1px black solid;
-`;
-
-const Icon = styled(MdSearch)`
-  position: absolute;
-  right: 0;
-  top: 10px;
-  font-size: 30px;
-`;
-
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  display: flex;
-`;
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  // margin: {
+  //   margin: theme.spacing(1),
+  // },
+  textField: {
+    width: '100%',
+  },
+}));
 
 const debounceTimer = 300;
 
-const SearchInput = ({ name, setValue, placeholder, type }) => {
+const SearchInput = ({ name, setValue, type }) => {
+  const classes = useStyles();
+
   const debounceUpdate = debounce(
     newValue => setValue(newValue),
     debounceTimer,
@@ -43,27 +38,32 @@ const SearchInput = ({ name, setValue, placeholder, type }) => {
   );
 
   return (
-    <Wrapper>
-      <StyledInput
-        placeholder={placeholder}
-        onChange={searchUpdate}
-        name={name}
-        type={type}
-      />
-      <Icon />
-    </Wrapper>
+    <TextField
+      onChange={searchUpdate}
+      placeholder="Szukaj..."
+      className={clsx(classes.textField)}
+      name={name}
+      type={type}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 
-SearchInput.defaultProps = {
-  placeholder: 'Search...',
-  // value: '',
-};
+// SearchInput.defaultProps = {
+//   placeholder: 'Search...',
+//   // value: '',
+// };
 
 SearchInput.propTypes = {
   // value: PropTypes.string,
   setValue: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
+  // placeholder: PropTypes.string,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };

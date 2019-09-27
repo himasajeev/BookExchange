@@ -1,5 +1,8 @@
 export const COLORS = {
-  NAVBAR_MAIN: '#b0bec5',
+  MAIN: '#4d8cf5',
+  LOADER_COLOR: '#36D7B7',
+  BACKGROUND: '#f5f5f5',
+
   NAVBAR_SECONDARY: '#cfd8dc',
   NAVBAR_BORDER: '#ffffff',
   LOGIN_MAIN: '#fb8c00dd',
@@ -11,12 +14,22 @@ export const COLORS = {
   OVERLAY_COLOR: '#f9aa33',
 };
 
+export const BUTTON_GRADIENT =
+  'linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)';
+
+export const SCREEN_SIZES = {
+  MOBILE: '600px',
+};
+
+export const NAVBAR_HEIGHT = {
+  DESKTOP: '64px',
+  MOBILE: '56px',
+};
+
 export const FONT_COLORS = {
   LIGHT: '#FFF',
   DARK: '#000',
 };
-
-export const LOGIN_IMAGE = '/images/login-bg.jpg';
 
 export const FONT_SIZE = {
   NORMAL: '16px',

@@ -1,36 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import { withRouter } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-
-import { REGISTER_INPUTS } from './constants';
-
+import { toast } from 'react-toastify';
+import NamedInput from '../../components/NamedInput/NamedInput';
 import {
-  Background,
-  Wrapper,
+  StyledBackground,
   StyledButton,
-  StyledInput,
-  StyledLink,
+  StyledLoginLink,
   StyledTitle,
-  StyledError,
+  StyledWrapper,
 } from '../Login/LoginStyled';
+import { isFormValid } from '../../utils/validateForm';
+import PassInput from '../../components/PasswordInput/PassInput';
 
 const numberOfInputFields = 5;
 
-const Register = ({ registerUser, registerError, token, history }) => {
+const Register = ({ registerUser, token, history }) => {
   const [registerValue, setRegisterValue] = React.useState({});
-  const [missingInputError, setMissingInputError] = React.useState('');
 
   React.useEffect(() => {
     if (token) history.push('/');
   }, [history, token]);
 
   const onRegister = () => {
-    if (Object.values(registerValue).length === numberOfInputFields) {
+    if (isFormValid(registerValue, numberOfInputFields)) {
       registerUser({ ...registerValue });
-      setMissingInputError('');
-    } else setMissingInputError('Wypełnij wszystkie pola');
+    } else toast.error('Wypełnij wszystkie pola.');
   };
 
   const handleInputChange = event => {
@@ -39,44 +35,61 @@ const Register = ({ registerUser, registerError, token, history }) => {
       [event.target.name]: event.target.value,
     });
   };
-  const error = registerError || missingInputError;
 
+  const { password, year, email, name, surname } = registerValue;
   return (
-    <Background>
-      <Wrapper>
+    <StyledBackground>
+      <StyledWrapper>
         <StyledTitle>Rejestracja</StyledTitle>
-        {REGISTER_INPUTS.map(input => (
-          <StyledInput
-            key={input.name}
-            name={input.name}
-            placeholder={input.title}
-            type={input.type}
-            onChange={handleInputChange}
-            value={registerValue[input.name]}
-          />
-        ))}
-        <StyledButton onClick={onRegister}>Zarejestruj</StyledButton>
-        {error ? (
-          <StyledError data-testid="register-error">{error}</StyledError>
-        ) : (
-          <StyledError />
-        )}
-        <StyledLink isNavbar={false} to="/login">
-          Wróć do logowania
-        </StyledLink>
-      </Wrapper>
-    </Background>
+        <NamedInput
+          name="email"
+          label="E-mail"
+          type="text"
+          onChange={handleInputChange}
+          value={email}
+        />
+        <PassInput
+          name="password"
+          label="Hasło"
+          onChange={handleInputChange}
+          value={password}
+        />
+        <NamedInput
+          name="name"
+          label="Imię"
+          type="text"
+          onChange={handleInputChange}
+          value={name}
+        />
+        <NamedInput
+          name="surname"
+          label="Nazwisko"
+          type="text"
+          onChange={handleInputChange}
+          value={surname}
+        />
+        <NamedInput
+          name="year"
+          label="Nr. indeksu"
+          type="number"
+          onChange={handleInputChange}
+          value={year}
+        />
+        <StyledLoginLink to="/login">Wróć do logowania</StyledLoginLink>
+        <StyledButton variant="primary" onClick={onRegister}>
+          Zarejestruj
+        </StyledButton>
+      </StyledWrapper>
+    </StyledBackground>
   );
 };
 
 Register.defaultProps = {
-  registerError: '',
   token: '',
 };
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  registerError: PropTypes.string,
   token: PropTypes.string,
   history: ReactRouterPropTypes.history.isRequired,
 };

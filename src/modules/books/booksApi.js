@@ -5,6 +5,16 @@ import { getRequestUrlBuilder } from '../../utils/getRequestUrlBuilder';
 
 const searchPlaceholder = '%';
 
+const replaceSearchWithPlaceholder = search => {
+  if (search === undefined) return searchPlaceholder;
+  return `%${search}%`;
+};
+
+const replaceWithPlaceholder = value => {
+  if (value === undefined) return searchPlaceholder;
+  return value;
+};
+
 export const fetchGetBooksSell = async token => {
   try {
     const urlParams = {
@@ -38,14 +48,15 @@ export const fetchGetBooksBuy = async token => {
 export const fetchGetBooksSellSearch = async (token, searchData) => {
   try {
     const { category, author, publisher, search } = searchData;
+    console.log(replaceSearchWithPlaceholder(search));
 
     const urlParams = {
       action: API_ACTIONS.BOOKS_SELL_SEARCH,
       user_token: token,
-      ':search': `%${search}%` || '%',
-      ':cat_search': category || '%',
-      ':aut_search': author || '%',
-      ':pub_search': publisher || '%',
+      ':search': replaceSearchWithPlaceholder(search),
+      ':cat_search': replaceWithPlaceholder(category),
+      ':aut_search': replaceWithPlaceholder(author),
+      ':pub_search': replaceWithPlaceholder(publisher),
     };
     const response = await axios.get(
       `${apiUrl}/${getRequestUrlBuilder(urlParams)}`,
@@ -63,10 +74,10 @@ export const fetchGetBooksBuySearch = async (token, searchData) => {
     const urlParams = {
       action: API_ACTIONS.BOOKS_BUY_SEARCH,
       user_token: token,
-      ':search': `%${search}%` || '%',
-      ':cat_search': category || '%',
-      ':aut_search': author || '%',
-      ':pub_search': publisher || '%',
+      ':search': replaceSearchWithPlaceholder(search),
+      ':cat_search': replaceWithPlaceholder(category),
+      ':aut_search': replaceWithPlaceholder(author),
+      ':pub_search': replaceWithPlaceholder(publisher),
     };
     const response = await axios.get(
       `${apiUrl}/${getRequestUrlBuilder(urlParams)}`,

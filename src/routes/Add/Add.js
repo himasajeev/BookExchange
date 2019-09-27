@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { omit } from 'lodash';
+import Button from '@material-ui/core/Button';
+import { toast } from 'react-toastify';
 import { ADD_INPUTS, RESPONSES } from './constants';
 import NamedInput from '../../components/NamedInput/NamedInput';
-import Button from '../../components/Button/Button';
+// import Button from '../../components/Button/Button';
 import { fetchAddBook } from '../../modules/add/addApi';
 import Select from '../../components/Select/Select';
 import { PADDING } from '../../styles/padding';
@@ -18,14 +20,14 @@ const StyledWrapper = styled.div`
   margin: ${PADDING.BASE} auto;
 `;
 
-const StyledButton = styled(Button)`
-  padding: ${PADDING.BASE};
-  background: ${COLORS.NAVBAR_MAIN};
-  &:hover,
-  &:focus {
-    background: ${COLORS.NAVBAR_SECONDARY};
-  }
-`;
+// const StyledButton = styled(Button)`
+//   padding: ${PADDING.BASE};
+//   background: ${COLORS.NAVBAR_MAIN};
+//   &:hover,
+//   &:focus {
+//     background: ${COLORS.NAVBAR_SECONDARY};
+//   }
+// `;
 
 const StyledResponse = styled.span`
   color: ${props => (props.isSuccess ? COLORS.SUCCESS : COLORS.ERROR)};
@@ -45,11 +47,14 @@ const Add = ({ token, categories }) => {
       const response = await fetchAddBook(token, { ...addValue });
       if (response.result === successMessage) {
         setStatus(RESPONSES.SUCCESS);
+        toast.success(RESPONSES.SUCCESS.text);
       } else {
         setStatus(RESPONSES.SERVER_ERROR);
+        toast.error(RESPONSES.SERVER_ERROR.text);
       }
     } else {
       setStatus(RESPONSES.ERROR);
+      toast.error(RESPONSES.ERROR.text);
     }
   };
 
@@ -59,6 +64,7 @@ const Add = ({ token, categories }) => {
 
   const handleSearchChange = (selected, element) => {
     const { name, action } = element;
+    console.log(name, selected);
     switch (action) {
       case 'select-option':
         setAddValue({ ...addValue, [name]: selected.value });
@@ -77,8 +83,7 @@ const Add = ({ token, categories }) => {
         <NamedInput
           key={input.name}
           name={input.name}
-          title={input.title}
-          type={input.type}
+          label={input.label}
           onChange={handleAddChange}
           value={addValue[input.name]}
         />
@@ -90,9 +95,12 @@ const Add = ({ token, categories }) => {
         value={addValue.categories}
         options={categories}
         id="add-select"
+        label="Przedmiot"
       />
 
-      <StyledButton onClick={onAdd}>Dodaj ksiażkę </StyledButton>
+      <Button variant="contained" onClick={onAdd}>
+        Dodaj ksiażkę
+      </Button>
       <StyledResponse
         data-testid={status.isSuccess ? 'add_success' : 'add_error'}
         isSuccess={status.isSuccess}

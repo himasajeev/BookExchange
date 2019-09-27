@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { put, call } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 import {
   fetchRegisterUser,
   fetchLoginUser,
@@ -24,6 +25,7 @@ export function* loginUserSaga({ user }) {
         type: actionTypes.LOGIN_USER_FAILED,
         error: { type: USER_ERROR_TYPES.LOGIN, message },
       });
+      toast.error(message);
     }
   } catch (error) {
     yield put({
@@ -49,12 +51,14 @@ export function* registerUserSaga({ user }) {
         type: actionTypes.REGISTER_USER_FAILED,
         error: { type: USER_ERROR_TYPES.REGISTER, message },
       });
+      toast.error(message);
     }
   } catch (error) {
     yield put({
       type: actionTypes.REGISTER_USER_FAILED,
       error: { type: USER_ERROR_TYPES.REGISTER, error },
     });
+    toast.error(error);
   }
 }
 

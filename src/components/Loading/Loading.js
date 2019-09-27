@@ -1,17 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FaSpinner } from 'react-icons/fa';
-import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
-
-const spin = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
+import BounceLoader from 'react-spinners/BounceLoader';
+import { COLORS } from '../../styles/globalVariables';
 
 const Wrapper = styled.div`
-  position: relative;
+  //position: relative;
 `;
 
 const SpinnerWrapper = styled.div`
@@ -26,18 +20,17 @@ const SpinnerWrapper = styled.div`
   background: rgba(255, 255, 255, 0.6);
 `;
 
-const Spinner = styled(FaSpinner)`
-  animation: ${spin} 1.5s infinite linear;
-  width: 25%;
-  height: 25%;
-`;
-
 const Loading = ({ isLoading, children }) => {
   return (
     <Wrapper>
       {isLoading && (
         <SpinnerWrapper>
-          <Spinner />
+          <BounceLoader
+            loading={isLoading}
+            color={COLORS.LOADER_COLOR}
+            sizeUnit="px"
+            size={150}
+          />
         </SpinnerWrapper>
       )}
       {children}
@@ -51,7 +44,7 @@ Loading.defaultProps = {
 
 Loading.propTypes = {
   isLoading: PropTypes.bool,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node,
 };
 
 export default Loading;

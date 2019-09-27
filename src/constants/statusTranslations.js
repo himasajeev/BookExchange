@@ -1,4 +1,4 @@
 export const STATUS_TRANSLATIONS = {
-  ordered: 'zamówiona',
-  sold: 'sprzedana',
+  ordered: 'Zamówiona',
+  sold: 'Sprzedana',
 };

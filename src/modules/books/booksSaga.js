@@ -13,15 +13,14 @@ export function* getBooksSaga({ token, search, phase }) {
   try {
     let response;
     const isSearch = !isEmpty(search);
-
     switch (true) {
-      case isSell(phase) && isSearch:
+      case isSell(phase) && isSearch && search.search !== '':
         response = yield call(fetchGetBooksSellSearch, token, search);
         break;
       case isSell(phase):
         response = yield call(fetchGetBooksSell, token);
         break;
-      case isBuy(phase) && isSearch:
+      case isBuy(phase) && isSearch && search.search !== '':
         response = yield call(fetchGetBooksBuySearch, token, search);
         break;
       case isBuy(phase):
