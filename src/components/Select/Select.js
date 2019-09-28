@@ -7,7 +7,6 @@ import Selects from 'react-select';
 
 import { emphasize, makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import NoSsr from '@material-ui/core/NoSsr';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
@@ -338,11 +337,10 @@ Select.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      value: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }).isRequired,
   ).isRequired,
   onChange: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
   className: PropTypes.string,
   placeholder: PropTypes.string,
   label: PropTypes.string,

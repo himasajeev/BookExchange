@@ -5,15 +5,11 @@ import BookButtonStoreBuy from './BookButtonStore';
 import { findStateVariant } from '../../utils/findStateVariant';
 
 import {
-  StyledAuthor,
-  StyledBottomSection,
-  StyledCollapsedMenu,
-  StyledContainer,
-  StyledDescription,
-  StyledIcon,
+  StyledCard,
+  StyledCardActions,
+  StyledCardContent,
   StyledSelect,
-  StyledTitle,
-  StyledTopContainer,
+  StyledTopography,
   StyledUnavailable,
 } from './BookStyled';
 
@@ -33,12 +29,7 @@ const getSelectOptions = (prices, quants) => {
 const BookBuy = ({ book, ...rest }) => {
   const { iSBN, title, category, author, prices, quants, publisher } = book;
 
-  const [isCollapsed, setIsCollapsed] = React.useState(true);
   const [selectedState, setSelectedState] = React.useState(null);
-
-  const handleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-  };
 
   const handleChange = selected => {
     setSelectedState(selected);
@@ -46,44 +37,50 @@ const BookBuy = ({ book, ...rest }) => {
 
   const options = getSelectOptions(prices, quants);
 
+  const isUnavailable = options.length <= 0;
   return (
-    <StyledContainer>
-      <StyledTopContainer>
-        <div>
-          <img src="/images/book-placeholder.jpg" alt="xd" />
-        </div>
-        <StyledDescription>
-          <StyledTitle>{title}</StyledTitle>
-          <StyledAuthor>{author}</StyledAuthor>
-          {options.length > 0 ? (
-            <StyledSelect
-              value={selectedState}
-              onChange={handleChange}
-              options={options}
-              className="add_book_select"
-              isClearable
-            />
-          ) : (
-            <StyledUnavailable>Niedostępna</StyledUnavailable>
-          )}
-          <StyledBottomSection>
-            <StyledIcon onClick={handleCollapse} />
-            <BookButtonStoreBuy
-              book={{ ...book, selectedState }}
-              isDisabled={selectedState === null}
-              {...rest}
-            >
-              Kup
-            </BookButtonStoreBuy>
-          </StyledBottomSection>
-        </StyledDescription>
-      </StyledTopContainer>
-      <StyledCollapsedMenu isCollapsed={isCollapsed}>
-        <span>ISBN: {iSBN}</span>
-        <span>Kategoria: {category}</span>
-        <span>Wydawnictwo: {publisher}</span>
-      </StyledCollapsedMenu>
-    </StyledContainer>
+    <StyledCard>
+      <StyledCardContent>
+        <StyledTopography variant="h5" component="h2">
+          {title}
+        </StyledTopography>
+        <StyledTopography color="textSecondary" gutterBottom>
+          {author}
+        </StyledTopography>
+        <StyledTopography isFirst variant="body2" component="p">
+          {category}
+        </StyledTopography>
+        <StyledTopography variant="body2" component="p">
+          {publisher}
+        </StyledTopography>
+        <StyledTopography variant="body2" component="p">
+          {iSBN}
+        </StyledTopography>
+      </StyledCardContent>
+      <StyledCardActions>
+        {isUnavailable ? (
+          <StyledUnavailable>Niedostępna</StyledUnavailable>
+        ) : (
+          <StyledSelect
+            value={selectedState}
+            onChange={handleChange}
+            options={options}
+            className="add_book_select"
+            label="Stan ksiażki"
+            isClearable
+          />
+        )}
+
+        <BookButtonStoreBuy
+          book={{ ...book, selectedState }}
+          isSelected={selectedState !== null}
+          isUnavailable={isUnavailable}
+          {...rest}
+        >
+          Kup
+        </BookButtonStoreBuy>
+      </StyledCardActions>
+    </StyledCard>
   );
 };
 

@@ -92,7 +92,7 @@ function BasketOverlay({ history, basketCount, payAmount }) {
 
   return (
     <StyledOverlay>
-      <Zoom in={basketCount}>
+      <Zoom in={!!basketCount}>
         <StyledFab color="secondary" onClick={redirectToBasket}>
           {payAmount ? (
             <StyledBadge

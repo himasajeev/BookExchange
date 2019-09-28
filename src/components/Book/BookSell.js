@@ -1,50 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import BookButtonStore from './BookButtonStore';
-import {
-  StyledAuthor,
-  StyledBottomSection,
-  StyledCollapsedMenu,
-  StyledContainer,
-  StyledDescription,
-  StyledIcon,
-  StyledTitle,
-  StyledTopContainer,
-  StyledSelectedState,
-} from './BookStyled';
+import { StyledCard, StyledCardContent, StyledTopography } from './BookStyled';
 
 const BookSell = ({ book, ...rest }) => {
   const { iSBN, title, category, author, publisher } = book;
 
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h5" component="h2">
+    <StyledCard>
+      <StyledCardContent>
+        <StyledTopography variant="h5" component="h2">
           {title}
-        </Typography>
-        <Typography color="textSecondary" gutterBottom>
+        </StyledTopography>
+        <StyledTopography color="textSecondary" gutterBottom>
           {author}
-        </Typography>
-        <Typography color="textSecondary">{category}</Typography>
-        <Typography variant="body2" component="p">
+        </StyledTopography>
+        <StyledTopography isFirst variant="body2" component="p">
+          {category}
+        </StyledTopography>
+        <StyledTopography variant="body2" component="p">
           {publisher}
-        </Typography>
-        <Typography variant="body2" component="p">
+        </StyledTopography>
+        <StyledTopography variant="body2" component="p">
           {iSBN}
-        </Typography>
-      </CardContent>
+        </StyledTopography>
+      </StyledCardContent>
       <CardActions>
-        <BookButtonStore book={book} {...rest}>
+        <BookButtonStore isFloatingRight isSelected book={book} {...rest}>
           Sprzedaj
         </BookButtonStore>
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };
 

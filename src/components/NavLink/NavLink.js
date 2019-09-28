@@ -16,8 +16,8 @@ const StyledNavLink = styled.a`
   min-height: 20px;
 
   @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
-    padding: ${PADDING.X_SMALL} 0;
-    margin: ${PADDING.SMALL} 0;
+    padding: ${PADDING.SMALL} 0;
+    margin: ${PADDING.X_SMALL} 0;
   }
 
   &::after {
@@ -26,7 +26,7 @@ const StyledNavLink = styled.a`
     left:0;
     right:0;
     content: '';
-    width: calc(100% - ${PADDING.SMALL});
+    width: 100%;
     border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};
     transform: ${props => (props.isActive ? 'scaleX(1)' : 'scaleX(0)')};
     transition: transform 250ms ease-in-out;

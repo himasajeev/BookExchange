@@ -1,7 +1,9 @@
 export const COLORS = {
-  MAIN: '#4d8cf5',
+  MAIN: '#1976d2',
+  MAIN_SECONDARY: '#4791db',
   LOADER_COLOR: '#36D7B7',
   BACKGROUND: '#f5f5f5',
+  ERROR: '#F44336',
 
   NAVBAR_SECONDARY: '#cfd8dc',
   NAVBAR_BORDER: '#ffffff',
@@ -9,7 +11,7 @@ export const COLORS = {
   LOGIN_MAIN_VARIANT: '#ff9800dd',
   LOGIN_SECONDARY: '#3d5afe',
   LOGIN_SECONDARY_VARIANT: '#536dfe',
-  ERROR: '#b00020',
+
   SUCCESS: '#64dd17',
   OVERLAY_COLOR: '#f9aa33',
 };

@@ -1,88 +1,70 @@
 import styled from '@emotion/styled';
 
-import { MdArrowDropDown } from 'react-icons/md';
-import Select from 'react-select';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Select from '../Select/Select';
 import { PADDING } from '../../styles/padding';
 import { COLORS } from '../../styles/globalVariables';
-// import Button from '../Button/Button';
-
-export const StyledSelect = styled(Select)`
-  margin-top: auto;
-  margin-bottom: ${PADDING.SMALL};
-`;
-
-export const StyledSelectedState = styled.span`
-  margin-top: auto;
-  margin-bottom: ${PADDING.SMALL};
-`;
-
-export const StyledUnavailable = styled.span`
-  margin-top: auto;
-  margin-bottom: ${PADDING.SMALL};
-  color: ${COLORS.ERROR};
-`;
-
-export const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${PADDING.SMALL};
-  width: 100%;
-  max-width: 400px;
-  margin: ${PADDING.BASE} auto;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
-    0 3px 1px -2px rgba(0, 0, 0, 0.2);
-`;
-
-export const StyledDescription = styled.div`
-  margin-left: ${PADDING.BASE};
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const StyledTitle = styled.h1`
-  font-size: 20px;
-`;
-
-export const StyledAuthor = styled.h2`
-  font-size: 16px;
-  margin: ${PADDING.SMALL} 0;
-`;
-
-export const StyledBottomSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const StyledCollapsedMenu = styled.div`
-  height: ${props => (props.isCollapsed ? '0' : '60px')};
-  overflow: hidden;
-  padding-top: ${props => (props.isCollapsed ? '0' : PADDING.SMALL)};
-  transition: height 0.15s ease-out;
-  & > span {
-    display: block;
-    text-align: center;
-  }
-`;
-
-export const StyledIcon = styled(MdArrowDropDown)`
-  font-size: 24px;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const StyledTopContainer = styled.div`
-  display: flex;
-`;
 
 export const StyledButton = styled(Button)`
-  margin-left: auto;
+  margin: ${props =>
+    props.isFloatingRight
+      ? `${PADDING.BASE} 16px ${PADDING.BASE} auto`
+      : ` 0  0 ${PADDING.BASE} 0`};
+
   background: ${COLORS.MAIN};
   color: #fff;
   font-size: 16px;
-  &:hover {
-    background: #69a2ff;
+  align-self: flex-end;
+
+  &:hover,
+  &:active {
+    background: ${COLORS.MAIN_SECONDARY};
   }
+`;
+
+export const StyledCard = styled(Card)`
+  max-width: 400px;
+  display: inline-block;
+  margin: ${PADDING.BASE} auto ${PADDING.BASE} auto;
+  text-align: left;
+  width: 100%;
+  overflow: visible;
+`;
+
+export const StyledSelect = styled(Select)`
+  width: 100%;
+  margin: ${PADDING.LARGE} ${PADDING.BASE} ${PADDING.BASE} 0;
+  align-self: flex-start;
+`;
+
+export const StyledTopography = styled(Typography)`
+  padding-top: ${props => props.isFirst && PADDING.SMALL};
+  margin: ${PADDING.X_SMALL};
+`;
+
+export const StyledCardActions = styled(CardActions)`
+  padding: 0 16px ${PADDING.BASE};
+  display: flex;
+  align-items: center;
+`;
+
+export const StyledUnavailable = styled.span`
+  flex: 1;
+  align-self: center;
+  padding: ${PADDING.BASE} 0;
+  color: ${COLORS.ERROR};
+`;
+
+export const StyledSelectedState = styled(StyledUnavailable)`
+  color: #000;
+  padding-left: 14px;
+  font-size: 16px;
+`;
+
+export const StyledCardContent = styled(CardContent)`
+  padding-bottom: 0;
 `;

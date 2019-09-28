@@ -21,7 +21,7 @@ const Button = ({ children, onClick, className, testId }) => {
       type="button"
       className={className}
       onClick={onClick}
-      data-testId={testId}
+      data-testid={testId}
     >
       {children}
     </StyledButton>

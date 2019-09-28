@@ -9,15 +9,16 @@ const Wrapper = styled.div`
 `;
 
 const SpinnerWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  bottom: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.6);
+  z-index: 100;
 `;
 
 const Loading = ({ isLoading, children }) => {

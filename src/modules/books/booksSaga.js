@@ -8,6 +8,8 @@ import {
 } from './booksApi';
 import * as actionTypes from '../actionTypes';
 import { isBuy, isSell } from '../../utils/phaseToBool';
+// import data from '../../../cypress/support/bookResponse';
+// import datas from '../../../cypress/support/bookResponse.json';
 
 export function* getBooksSaga({ token, search, phase }) {
   try {
@@ -29,8 +31,8 @@ export function* getBooksSaga({ token, search, phase }) {
       default:
         yield put({ type: actionTypes.GET_BOOKS_FAILED, error: 'error' });
     }
-
     const data = response.result;
+    // const data = datas.result;
 
     yield put({ type: actionTypes.GET_BOOKS_SUCCEEDED, data });
   } catch (error) {

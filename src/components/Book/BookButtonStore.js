@@ -4,27 +4,55 @@ import { toast } from 'react-toastify';
 import { createBasketBook } from '../../utils/createBasketBook';
 import { StyledButton } from './BookStyled';
 
-const BookButtonStore = ({ onButtonClick, book, isDisabled, children }) => {
+const BookButtonStore = ({
+  onButtonClick,
+  book,
+  isSelected,
+  children,
+  isFloatingRight,
+  isUnavailable,
+}) => {
   const onClick = React.useCallback(() => {
     onButtonClick(createBasketBook(book));
-    /* eslint react/prop-types:0 */
-    toast.success(`Dodano do koszyka: ${book.title}`);
+    toast.success(`Dodano do koszyka "${book.title}".`);
   }, [book, onButtonClick]);
 
-  return isDisabled ? (
-    <StyledButton testId="add_to_basket">{children}</StyledButton>
-  ) : (
-    <StyledButton onClick={onClick} testId="add_to_basket">
+  const displayError = () => {
+    toast.error('Wybierz stan książki');
+  };
+
+  if (isUnavailable) return null;
+
+  if (isSelected)
+    return (
+      <StyledButton
+        onClick={onClick}
+        isFloatingRight={isFloatingRight}
+        data-testid="add_to_basket"
+      >
+        {children}
+      </StyledButton>
+    );
+
+  return (
+    <StyledButton
+      isFloatingRight={isFloatingRight}
+      data-testid="add_to_basket"
+      onClick={displayError}
+    >
       {children}
     </StyledButton>
   );
 };
 
 BookButtonStore.propTypes = {
-  book: PropTypes.shape({}).isRequired,
+  book: PropTypes.shape({ title: PropTypes.string }).isRequired,
   onButtonClick: PropTypes.func,
   children: PropTypes.node.isRequired,
-  isDisabled: PropTypes.bool,
+  isSelected: PropTypes.bool,
+  title: PropTypes.string.isRequired,
+  isFloatingRight: PropTypes.bool,
+  isUnavailable: PropTypes.bool,
 };
 
 export default BookButtonStore;

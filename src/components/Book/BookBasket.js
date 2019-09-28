@@ -1,54 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  StyledAuthor,
-  StyledBottomSection,
-  StyledCollapsedMenu,
-  StyledContainer,
-  StyledDescription,
-  StyledIcon,
-  StyledTitle,
-  StyledTopContainer,
-  StyledSelectedState,
-} from './BookStyled';
 
+import CardActions from '@material-ui/core/CardActions';
 import BookButtonBasket from './BookButtonBasket';
+import {
+  StyledSelectedState,
+  StyledCard,
+  StyledTopography,
+  StyledCardContent,
+} from './BookStyled';
 
 const BookBasket = ({ book, ...rest }) => {
   const { iSBN, title, category, author, selectedState, publisher } = book;
 
-  const [isCollapsed, setIsCollapsed] = React.useState(true);
-
-  const handleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
   return (
-    <StyledContainer>
-      <StyledTopContainer>
-        <div>
-          <img src="/images/book-placeholder.jpg" alt="xd" />
-        </div>
-        <StyledDescription>
-          <StyledTitle>{title}</StyledTitle>
-          <StyledAuthor>{author}</StyledAuthor>
-          {selectedState ? (
-            <StyledSelectedState>{selectedState.label}</StyledSelectedState>
-          ) : (
-            <StyledSelectedState />
-          )}
-          <StyledBottomSection>
-            <StyledIcon onClick={handleCollapse} />
-            <BookButtonBasket {...rest}>Usuń</BookButtonBasket>
-          </StyledBottomSection>
-        </StyledDescription>
-      </StyledTopContainer>
-      <StyledCollapsedMenu isCollapsed={isCollapsed}>
-        <span>ISBN: {iSBN}</span>
-        <span>Kategoria: {category}</span>
-        <span>Wydawnictwo: {publisher}</span>
-      </StyledCollapsedMenu>
-    </StyledContainer>
+    <StyledCard>
+      <StyledCardContent>
+        <StyledTopography variant="h5" component="h2">
+          {title}
+        </StyledTopography>
+        <StyledTopography color="textSecondary" gutterBottom>
+          {author}
+        </StyledTopography>
+        <StyledTopography isFirst variant="body2" component="p">
+          {category}
+        </StyledTopography>
+        <StyledTopography variant="body2" component="p">
+          {publisher}
+        </StyledTopography>
+        <StyledTopography variant="body2" component="p">
+          {iSBN}
+        </StyledTopography>
+      </StyledCardContent>
+      <CardActions>
+        {selectedState ? (
+          <StyledSelectedState>{selectedState.label}</StyledSelectedState>
+        ) : (
+          <StyledSelectedState />
+        )}
+        <BookButtonBasket bookTitle={title} isFloatingRight {...rest}>
+          Usuń
+        </BookButtonBasket>
+      </CardActions>
+    </StyledCard>
   );
 };
 

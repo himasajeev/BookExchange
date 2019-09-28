@@ -4,17 +4,20 @@ import styled from '@emotion/styled';
 import { isEmpty } from 'lodash';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
-import Button from '../../components/Button/Button';
+
 import { PADDING } from '../../styles/padding';
-import { FONT_SIZE, COLORS, FONT_COLORS } from '../../styles/globalVariables';
+import { COLORS, FONT_SIZE } from '../../styles/globalVariables';
 import { isBuy, isSell } from '../../utils/phaseToBool';
 
 const StyledWrapper = styled.section`
   width: 90%;
   margin: ${PADDING.BASE} auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledPlaceholder = styled.h1`
@@ -26,19 +29,23 @@ const StyledNotice = styled.span`
 
 const StyledToPay = styled.div`
   margin: ${PADDING.BASE} 0;
+
   > span {
     display: block;
     margin: ${PADDING.SMALL} 0;
   }
 `;
 
-const StyledButton = styled(Button)`
-  background: ${COLORS.SUCCESS};
-  &:hover {
-    background: #76ff03;
+export const StyledButton = styled(Button)`
+  background: ${COLORS.MAIN};
+  color: #fff;
+  font-size: 16px;
+  align-self: center;
+
+  &:hover,
+  &:active {
+    background: ${COLORS.MAIN_SECONDARY};
   }
-  padding: ${PADDING.BASE};
-  color: ${FONT_COLORS.LIGHT};
 `;
 
 const Basket = ({

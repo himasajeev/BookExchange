@@ -1,8 +1,9 @@
-const paddingBase = '12';
+const paddingBase = 12;
 
 export const PADDING = {
   X_SMALL: `${paddingBase / 4}px`,
   SMALL: `${paddingBase / 2}px`,
+  BASE_SMALLER: `${(paddingBase * 2) / 3}px`,
   BASE: `${paddingBase}px`,
   BASE_LARGER: `${paddingBase * 1.5}px`,
   LARGE: `${paddingBase * 2}px`,

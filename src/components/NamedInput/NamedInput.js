@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
 
 const StyledTextField = styled(TextField)`
-  margin: ${PADDING.BASE} 0;
+  margin: ${PADDING.SMALL} 0;
 `;
 
 const NamedInput = ({ value, name, onChange, label, type }) => {

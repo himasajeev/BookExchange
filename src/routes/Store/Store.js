@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { omit } from 'lodash';
 import InfiniteScroll from 'react-infinite-scroller';
 import BounceLoader from 'react-spinners/BounceLoader';
+import Paper from '@material-ui/core/Paper';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
 import Loading from '../../components/Loading/Loading';
@@ -24,6 +25,7 @@ const StyledBookWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
 `;
 
 const StyledLoaderContainer = styled.div`
@@ -32,7 +34,13 @@ const StyledLoaderContainer = styled.div`
   align-items: center;
 `;
 
-const LOAD_AMOUNT = 10;
+const StyledPaper = styled(Paper)`
+  padding: ${PADDING.LARGE};
+  display: flex;
+  flex-direction: column;
+`;
+
+const LOAD_AMOUNT = 20;
 
 const Store = ({
   books,
@@ -48,9 +56,13 @@ const Store = ({
   const [searchValue, setSearchValue] = React.useState({});
   const [loadedBooks, setLoadedBooks] = React.useState(0);
 
-  React.useEffect(() => {
-    if (phase) getBooks(token, searchValue, phase);
+  const getBooksWithData = React.useCallback(() => {
+    getBooks(token, searchValue, phase);
   }, [getBooks, phase, searchValue, token]);
+
+  React.useEffect(() => {
+    if (phase) getBooksWithData();
+  }, [getBooks, getBooksWithData, phase, searchValue, token]);
 
   const handleSearchInputChange = search => {
     setSearchValue({ ...searchValue, search });
@@ -90,13 +102,13 @@ const Store = ({
   return (
     <StyledWrapper>
       <Loading isLoading={isLoading}>
-        <SearchInput
-          name="search"
-          value={search}
-          setValue={handleSearchInputChange}
-          type="text"
-        />
-        <div>
+        <StyledPaper>
+          <SearchInput
+            name="search"
+            setValue={handleSearchInputChange}
+            onClick={getBooksWithData}
+            type="text"
+          />
           <Select
             name="publisher"
             onChange={handleSearchChange}
@@ -121,8 +133,7 @@ const Store = ({
             label="Autor"
             isClearable
           />
-        </div>
-
+        </StyledPaper>
         <InfiniteScroll
           pageStart={0}
           loadMore={loadMore}

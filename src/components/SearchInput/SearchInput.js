@@ -4,27 +4,17 @@ import { debounce } from 'lodash';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import clsx from 'clsx';
+import IconButton from '@material-ui/core/IconButton';
+import styled from '@emotion/styled';
+import { PADDING } from '../../styles/padding';
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  // margin: {
-  //   margin: theme.spacing(1),
-  // },
-  textField: {
-    width: '100%',
-  },
-}));
+const StyledTextField = styled(TextField)`
+  margin: ${PADDING.SMALL} 0;
+`;
 
 const debounceTimer = 300;
 
-const SearchInput = ({ name, setValue, type }) => {
-  const classes = useStyles();
-
+const SearchInput = ({ name, setValue, type, onClick }) => {
   const debounceUpdate = debounce(
     newValue => setValue(newValue),
     debounceTimer,
@@ -37,33 +27,27 @@ const SearchInput = ({ name, setValue, type }) => {
     [debounceUpdate],
   );
 
+  const endAdornment = (
+    <InputAdornment position="end">
+      <IconButton onClick={onClick}>
+        <SearchIcon />
+      </IconButton>
+    </InputAdornment>
+  );
   return (
-    <TextField
+    <StyledTextField
       onChange={searchUpdate}
       placeholder="Szukaj..."
-      className={clsx(classes.textField)}
       name={name}
       type={type}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
+      InputProps={{ endAdornment }}
     />
   );
 };
 
-// SearchInput.defaultProps = {
-//   placeholder: 'Search...',
-//   // value: '',
-// };
-
 SearchInput.propTypes = {
-  // value: PropTypes.string,
   setValue: PropTypes.func.isRequired,
-  // placeholder: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };

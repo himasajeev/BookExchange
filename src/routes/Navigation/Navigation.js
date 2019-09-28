@@ -20,7 +20,7 @@ const StyledNavigation = styled.nav`
   top: 0;
   background: ${COLORS.MAIN};
   z-index: 1000;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   min-height: ${NAVBAR_HEIGHT.DESKTOP};
@@ -45,7 +45,7 @@ const StyledWrapper = styled.div`
     ${props =>
       props.isMenuOpen
         ? `
-      height: 192px;
+      height: 196px;
       flex-direction: column;
       background: ${COLORS.MAIN};
         `
@@ -73,7 +73,6 @@ const StyledTitle = styled(Link)`
 
 const StyledHamburger = styled(MenuIcon)`
   color: #fff;
-
   &:hover {
     cursor: pointer;
   }
@@ -115,11 +114,16 @@ const StyledButton = styled(Button)`
     border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};
     transform: scaleX(0);
     transition: transform 250ms ease-in-out;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
     @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
       width: calc(50% - ${PADDING.SMALL});
+      margin: 0 auto;
+      align-items: unset;
     }
   }
   &:hover {
+    cursor: pointer;
     &::after {
       transform: scaleX(1);
     }
