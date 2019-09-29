@@ -41,10 +41,10 @@ describe('Books Reducer', () => {
       isLoading: true,
     };
 
-    const data = { email: 'gurgul@wp.pl', token: 'abcd' };
-    const expected = { email: 'gurgul@wp.pl', token: 'abcd', isLoading: false };
+    const data = { token: 'abcd' };
+    const expected = { token: 'abcd', isLoading: false };
 
-    const action = { type: actionTypes.LOGIN_USER_SUCCEEDED, data };
+    const action = { type: actionTypes.LOGIN_USER_SUCCEEDED, ...data };
     const result = userReducer(state, action);
     expect(result).toEqual(expected);
   });
@@ -62,7 +62,7 @@ describe('Books Reducer', () => {
     expect(result).toEqual(expected);
   });
 
-  it('can handle LOGOUT_USER action type, and change isLoading to false', () => {
+  it('can handle LOGOUT_USER_SUCCEEDED, REMOVE_TOKEN action types, and change isLoading to false', () => {
     const state = {
       email: 'gurgul@wp.pl',
       token: 'abcd',
@@ -71,7 +71,7 @@ describe('Books Reducer', () => {
 
     const expected = {};
 
-    const action = { type: actionTypes.LOGOUT_USER };
+    const action = { type: actionTypes.LOGOUT_USER_SUCCEEDED };
     const result = userReducer(state, action);
     expect(result).toEqual(expected);
   });

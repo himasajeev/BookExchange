@@ -9,11 +9,11 @@ import { PADDING } from '../../styles/padding';
 import {
   BUTTON_GRADIENT,
   COLORS,
-  FONT_COLORS,
+  NAVBAR_OFFSET,
 } from '../../styles/globalVariables';
 
 export const StyledBackground = styled.div`
-  margin-top: -70px;
+  margin-top: -${NAVBAR_OFFSET};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +28,6 @@ export const StyledWrapper = styled(Paper)`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  color: ${FONT_COLORS.DARK};
 `;
 
 export const StyledButton = styled(Button)`

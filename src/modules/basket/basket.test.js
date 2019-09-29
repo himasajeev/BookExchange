@@ -33,7 +33,7 @@ describe('Basket Reducer', () => {
     expect(result).toEqual(state);
   });
 
-  it('can handle ADD_TO_BASKET action type', () => {
+  it('can handle ADD_TO_BASKET_SUCCEEDED action type', () => {
     const state = {
       data: {
         '1': {
@@ -77,7 +77,7 @@ describe('Basket Reducer', () => {
       },
     };
 
-    const action = { type: actionTypes.ADD_TO_BASKET, book: newBook };
+    const action = { type: actionTypes.ADD_TO_BASKET_SUCCEEDED, book: newBook };
     const result = basketReducer(state, action);
     expect(result).toEqual(expected);
   });
@@ -168,18 +168,6 @@ describe('Basket Reducer', () => {
     };
 
     const expected = {
-      data: {
-        '1': {
-          book: 'Matematyka dla kierunkow ekonomicznych',
-          author: 'Henryk Gurgul',
-          state: 'used',
-        },
-        '2': {
-          book: 'Analiza zdarzen na rynkach akcji',
-          author: 'Henryk Gurgul',
-          state: 'new',
-        },
-      },
       isLoading: false,
     };
 

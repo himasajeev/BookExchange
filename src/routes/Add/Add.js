@@ -7,12 +7,11 @@ import { toast } from 'react-toastify';
 import Paper from '@material-ui/core/Paper';
 import { ADD_INPUTS, RESPONSES } from './constants';
 import NamedInput from '../../components/NamedInput/NamedInput';
-import { fetchAddBook } from '../../modules/add/addApi';
 import Select from '../../components/Select/Select';
 import { PADDING } from '../../styles/padding';
 import { COLORS, MAX_WIDTH } from '../../styles/globalVariables';
-import { isResponseWithArrayValid } from '../../utils/validateResponse';
 import { isFormValid } from '../../utils/validateForm';
+import { handleAddBook } from '../../modules/add/addHandler';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -45,21 +44,10 @@ const numberOfInputFields = 5;
 const Add = ({ token, categories, addToBasket }) => {
   const [addValue, setAddValue] = React.useState({});
 
-  const onAdd = async () => {
+  const onAdd = () => {
     if (isFormValid(addValue, numberOfInputFields)) {
       setAddValue({ categories: addValue.categories });
-      try {
-        const response = await fetchAddBook(token, { ...addValue });
-        const [responseBook] = response.result;
-
-        if (isResponseWithArrayValid(response.result)) {
-          addToBasket(responseBook, token);
-        } else {
-          toast.error(RESPONSES.SERVER_ERROR.text);
-        }
-      } catch (error) {
-        toast.error(RESPONSES.SERVER_ERROR.text);
-      }
+      handleAddBook(token, addValue, addToBasket);
     } else {
       toast.error(RESPONSES.ERROR.text);
     }

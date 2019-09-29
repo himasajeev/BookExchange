@@ -147,7 +147,6 @@ const Store = ({
             />
           </StyledPaper>
         </StyledInputContainer>
-
         <InfiniteScroll
           pageStart={0}
           loadMore={loadMore}

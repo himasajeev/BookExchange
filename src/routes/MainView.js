@@ -11,12 +11,12 @@ import Basket from './Basket/BasketContainer';
 import Register from './Register/RegisterContainer';
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 import Overview from './Overview/OverviewContainer';
-import BasketOverlay from './BasketOverlayContainer';
+import BasketOverlay from './Overlay/OverlayContainer';
 import 'react-toastify/dist/ReactToastify.css';
-import { SCREEN_SIZES } from '../styles/globalVariables';
+import { NAVBAR_OFFSET, SCREEN_SIZES } from '../styles/globalVariables';
 
 const StyledContainer = styled.div`
-  padding-top: 70px;
+  padding-top: ${NAVBAR_OFFSET};
 `;
 
 const StyledToast = styled(ToastContainer)`

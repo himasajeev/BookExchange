@@ -23,8 +23,8 @@ const StyledNavLink = styled.a`
   &::after {
     position: absolute;
     bottom: 0;
-    left:0;
-    right:0;
+    left: 0;
+    right: 0;
     content: '';
     width: 100%;
     border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};
@@ -34,15 +34,13 @@ const StyledNavLink = styled.a`
     border-top-left-radius: 1px;
     @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
       width: calc(50% - ${PADDING.SMALL});
-      margin:0 auto;
+      margin: 0 auto;
       align-items: unset;
     }
   }
-  }
-
   &:hover {
     cursor: pointer;
-    color:#fff;
+    color: #fff;
     &::after {
       transform: scaleX(1);
     }

@@ -4,8 +4,10 @@ export const COLORS = {
   LOADER_COLOR: '#36D7B7',
   BACKGROUND: '#f5f5f5',
   ERROR: '#F44336',
-  OVERLAY_COLOR: '#ff9800',
+  OVERLAY_COLOR: '#ffc107',
 };
+
+export const NAVBAR_OFFSET = '70px';
 
 export const MAX_WIDTH = '450px';
 
@@ -19,11 +21,6 @@ export const SCREEN_SIZES = {
 export const NAVBAR_HEIGHT = {
   DESKTOP: '64px',
   MOBILE: '56px',
-};
-
-export const FONT_COLORS = {
-  LIGHT: '#FFF',
-  DARK: '#000',
 };
 
 export const FONT_SIZE = {

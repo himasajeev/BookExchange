@@ -12,7 +12,7 @@ const BookButtonBasket = ({
 }) => {
   const onClick = React.useCallback(() => {
     onButtonClick(basketId);
-    toast.info(`Usunięto "${bookTitle}" z koszyka`);
+    toast.info(`Usunięto "${bookTitle}" z koszyka.`);
   }, [onButtonClick, basketId, bookTitle]);
 
   return (

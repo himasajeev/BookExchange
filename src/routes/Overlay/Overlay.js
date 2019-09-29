@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { withRouter } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
-
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { throttle } from 'lodash';
-import { PADDING } from '../styles/padding';
+import { PADDING } from '../../styles/padding';
 
 const StyledBadge = styled(Badge)`
   padding: 0 4px;
@@ -51,7 +49,15 @@ const StyledScrollFab = styled(Fab)`
 
 const THROTTLE_TIMER = 500;
 
-function BasketOverlay({ history, basketCount, payAmount }) {
+const scrollTop = () => {
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+};
+
+function Overlay({ history, basketCount, payAmount }) {
   const [showScrollUp, setShowScrollUp] = React.useState(false);
 
   const handleScrolling = () => {
@@ -62,6 +68,7 @@ function BasketOverlay({ history, basketCount, payAmount }) {
       setShowScrollUp(false);
     }
   };
+
   React.useEffect(() => {
     document.addEventListener(
       'scroll',
@@ -75,13 +82,6 @@ function BasketOverlay({ history, basketCount, payAmount }) {
   const redirectToBasket = () => {
     history.push('/basket');
     setShowScrollUp(false);
-  };
-  const scrollTop = () => {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
   };
 
   const basketFab = (
@@ -117,10 +117,10 @@ function BasketOverlay({ history, basketCount, payAmount }) {
   );
 }
 
-BasketOverlay.propTypes = {
+Overlay.propTypes = {
   history: ReactRouterPropTypes.history,
   basketCount: PropTypes.number,
   payAmount: PropTypes.number,
 };
 
-export default withRouter(BasketOverlay);
+export default withRouter(Overlay);

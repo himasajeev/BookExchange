@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { get } from 'lodash';
-import { isBuy } from '../utils/phaseToBool';
-import BasketOverlay from './BasketOverlay';
+import { isBuy } from '../../utils/phaseToBool';
+import BasketOverlay from './Overlay';
 
 const mapStateToProps = state => {
   const basket = get(state, 'basket.data', {});

@@ -56,7 +56,9 @@ module.exports = env => {
         chunkFilename: 'chunk.[chunkhash].css',
       }),
       new webpack.BannerPlugin({
-        banner: 'Copyright (c) 2019 Krzysztof Olipra and Karol Oleszek.\n',
+        banner:
+          'Copyright (c) 2019 Krzysztof Olipra and Karol Oleszek.\n' +
+          'Source Code available @ https://github.com/Nalhin/BookAuction \n',
       }),
     ],
     performance: {

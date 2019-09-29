@@ -12,7 +12,6 @@ import { removeToken } from '../../utils/removeToken';
 export function* getCategoriesSaga({ token }) {
   try {
     const response = yield call(fetchGetCategories, token);
-
     const data = response.result;
 
     if (isResponseWithArrayValid(data)) {

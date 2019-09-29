@@ -6,11 +6,9 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { TransitionGroup } from 'react-transition-group';
-
 import Paper from '@material-ui/core/Paper';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
-
 import { PADDING } from '../../styles/padding';
 import { COLORS, FONT_SIZE, MAX_WIDTH } from '../../styles/globalVariables';
 import { isBuy, isSell } from '../../utils/phaseToBool';

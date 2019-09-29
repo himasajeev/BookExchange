@@ -5,12 +5,13 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import { isBuy } from '../../../utils/phaseToBool';
+import { isBuy, isSell } from '../../../utils/phaseToBool';
 import { INSTRUCTIONS } from '../../../constants/Instructions';
 
 const getInstructions = phase => {
   if (isBuy(phase)) return INSTRUCTIONS.BUY;
-  return INSTRUCTIONS.SELL;
+  if (isSell(phase)) return INSTRUCTIONS.SELL;
+  return '';
 };
 
 const Instructions = ({ phase }) => {

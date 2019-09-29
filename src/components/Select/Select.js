@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Selects from 'react-select';
-import { emphasize, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
-import CancelIcon from '@material-ui/icons/Cancel';
 import { PADDING } from '../../styles/padding';
 
 /*eslint-disable */
@@ -17,67 +14,15 @@ const StyledContainer = styled.div`
   margin: ${PADDING.BASE} 0;
 `;
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    height: 250,
-    minWidth: 290,
-  },
-  input: {
-    display: 'flex',
-    padding: 0,
-    height: 'auto',
-  },
-  valueContainer: {
-    display: 'flex',
-    flex: 1,
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
-  chip: {
-    margin: theme.spacing(0.5, 0.25),
-  },
-  chipFocused: {
-    backgroundColor: emphasize(
-      theme.palette.type === 'light'
-        ? theme.palette.grey[300]
-        : theme.palette.grey[700],
-      0.08,
-    ),
-  },
-  noOptionsMessage: {
-    padding: theme.spacing(1, 2),
-  },
-  singleValue: {
-    fontSize: 16,
-  },
-  placeholder: {
-    position: 'absolute',
-    left: 2,
-    bottom: 6,
-    fontSize: 16,
-  },
-  paper: {
-    position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing(1),
-    left: 0,
-    right: 0,
-  },
-  divider: {
-    height: theme.spacing(2),
-  },
-}));
+const StyledNoOptionsMessage = styled(Typography)`
+  padding: ${PADDING.SMALL} ${PADDING.BASE};
+`;
 
 const NoOptionsMessage = props => {
   return (
-    <Typography
-      color="textSecondary"
-      className={props.selectProps.classes.noOptionsMessage}
-      {...props.innerProps}
-    >
+    <StyledNoOptionsMessage color="textSecondary" {...props.innerProps}>
       {props.children}
-    </Typography>
+    </StyledNoOptionsMessage>
   );
 };
 
@@ -105,7 +50,7 @@ const Control = props => {
     children,
     innerProps,
     innerRef,
-    selectProps: { classes, TextFieldProps },
+    selectProps: { TextFieldProps },
   } = props;
 
   return (
@@ -114,7 +59,7 @@ const Control = props => {
       InputProps={{
         inputComponent,
         inputProps: {
-          className: classes.input,
+          style: { display: 'flex', padding: '0', height: 'auto' },
           ref: innerRef,
           children,
           ...innerProps,
@@ -185,16 +130,18 @@ Option.propTypes = {
   isSelected: PropTypes.bool.isRequired,
 };
 
+const StyledPlaceholder = styled(Typography)`
+  position: absolute;
+  bottom: 6px;
+  font-size: 16px;
+`;
+
 const Placeholder = props => {
-  const { selectProps, innerProps = {}, children } = props;
+  const { innerProps = {}, children } = props;
   return (
-    <Typography
-      color="textSecondary"
-      className={selectProps.classes.placeholder}
-      {...innerProps}
-    >
+    <StyledPlaceholder color="textSecondary" {...innerProps}>
       {children}
-    </Typography>
+    </StyledPlaceholder>
   );
 };
 
@@ -204,14 +151,15 @@ Placeholder.propTypes = {
   selectProps: PropTypes.object.isRequired,
 };
 
+const StyledSingleValue = styled(Typography)`
+  font-size: 16px;
+`;
+
 const SingleValue = props => {
   return (
-    <Typography
-      className={props.selectProps.classes.singleValue}
-      {...props.innerProps}
-    >
+    <StyledSingleValue {...props.innerProps}>
       {props.children}
-    </Typography>
+    </StyledSingleValue>
   );
 };
 
@@ -221,12 +169,15 @@ SingleValue.propTypes = {
   selectProps: PropTypes.object.isRequired,
 };
 
+const StyledValueContainer = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  overflow: hidden;
+`;
+
 const ValueContainer = props => {
-  return (
-    <div className={props.selectProps.classes.valueContainer}>
-      {props.children}
-    </div>
-  );
+  return <StyledValueContainer>{props.children}</StyledValueContainer>;
 };
 
 ValueContainer.propTypes = {
@@ -234,40 +185,19 @@ ValueContainer.propTypes = {
   selectProps: PropTypes.object.isRequired,
 };
 
-const MultiValue = props => {
-  return (
-    <Chip
-      tabIndex={-1}
-      label={props.children}
-      className={clsx(props.selectProps.classes.chip, {
-        [props.selectProps.classes.chipFocused]: props.isFocused,
-      })}
-      onDelete={props.removeProps.onClick}
-      deleteIcon={<CancelIcon {...props.removeProps} />}
-    />
-  );
-};
-
-MultiValue.propTypes = {
-  children: PropTypes.node,
-  isFocused: PropTypes.bool.isRequired,
-  removeProps: PropTypes.shape({
-    onClick: PropTypes.func.isRequired,
-    onMouseDown: PropTypes.func.isRequired,
-    onTouchEnd: PropTypes.func.isRequired,
-  }).isRequired,
-  selectProps: PropTypes.object.isRequired,
-};
+const StyledMenu = styled(Paper)`
+  position: absolute;
+  z-index: 1;
+  margin-top: ${PADDING.BASE};
+  left: 0;
+  right: 0;
+`;
 
 const Menu = props => {
   return (
-    <Paper
-      square
-      className={props.selectProps.classes.paper}
-      {...props.innerProps}
-    >
+    <StyledMenu square {...props.innerProps}>
       {props.children}
-    </Paper>
+    </StyledMenu>
   );
 };
 
@@ -280,12 +210,15 @@ Menu.propTypes = {
 const components = {
   Control,
   Menu,
-  MultiValue,
   NoOptionsMessage,
   Option,
   Placeholder,
   SingleValue,
   ValueContainer,
+};
+
+const noOptions = () => {
+  return `Nie znaleziono.`;
 };
 
 const Select = ({
@@ -298,20 +231,12 @@ const Select = ({
   label,
   isClearable,
 }) => {
-  const classes = useStyles();
-
-  const noOptions = () => {
-    return `Nie znaleziono`;
-  };
-
   return (
     <StyledContainer className={className}>
       <Selects
-        classes={classes}
         TextFieldProps={{
           label: label,
           InputLabelProps: {
-            htmlFor: 'react-select-single',
             shrink: true,
           },
         }}

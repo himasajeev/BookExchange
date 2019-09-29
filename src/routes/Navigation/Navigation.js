@@ -109,7 +109,7 @@ const StyledButton = styled(Button)`
     bottom: 0;
     content: '';
     width: 100%;
-    border-bottom: solid 3px ${COLORS.NAVBAR_BORDER};
+    border-bottom: solid 3px #fff;
     transform: scaleX(0);
     transition: transform 250ms ease-in-out;
     @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
