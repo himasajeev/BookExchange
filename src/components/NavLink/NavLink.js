@@ -42,6 +42,7 @@ const StyledNavLink = styled.a`
 
   &:hover {
     cursor: pointer;
+    color:#fff;
     &::after {
       transform: scaleX(1);
     }

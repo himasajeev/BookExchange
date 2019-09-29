@@ -1,5 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { isEmpty } from 'lodash';
+import { toast } from 'react-toastify';
 import {
   fetchGetBooksSell,
   fetchGetBooksBuy,
@@ -8,8 +9,12 @@ import {
 } from './booksApi';
 import * as actionTypes from '../actionTypes';
 import { isBuy, isSell } from '../../utils/phaseToBool';
-// import data from '../../../cypress/support/bookResponse';
-// import datas from '../../../cypress/support/bookResponse.json';
+import { isResponseWithArrayValid } from '../../utils/validateResponse';
+import {
+  sessionError,
+  sessionExpired,
+} from '../../constants/sessionExpiredMessage';
+import { removeToken } from '../../utils/removeToken';
 
 export function* getBooksSaga({ token, search, phase }) {
   try {
@@ -32,9 +37,17 @@ export function* getBooksSaga({ token, search, phase }) {
         yield put({ type: actionTypes.GET_BOOKS_FAILED, error: 'error' });
     }
     const data = response.result;
-    // const data = datas.result;
 
-    yield put({ type: actionTypes.GET_BOOKS_SUCCEEDED, data });
+    if (isResponseWithArrayValid(data)) {
+      yield put({ type: actionTypes.GET_BOOKS_SUCCEEDED, data });
+    } else {
+      yield put({ type: actionTypes.GET_BOOKS_FAILED, error: sessionError });
+      removeToken();
+      yield put({
+        type: actionTypes.REMOVE_TOKEN,
+      });
+      toast.error(sessionExpired);
+    }
   } catch (error) {
     yield put({ type: actionTypes.GET_BOOKS_FAILED, error });
   }

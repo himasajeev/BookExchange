@@ -8,6 +8,7 @@ import categories from './categories/categoriesReducer';
 import publishers from './publishers/publishersReducer';
 import overview from './overview/overviewReducer';
 import phase from './phase/phaseReducer';
+import recommended from './recommended/recommendedReducer';
 
 export default combineReducers({
   books,
@@ -18,4 +19,5 @@ export default combineReducers({
   publishers,
   overview,
   phase,
+  recommended,
 });

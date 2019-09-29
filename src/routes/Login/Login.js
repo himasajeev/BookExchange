@@ -9,6 +9,9 @@ import {
   StyledButton,
   StyledLoginLink,
   StyledBackground,
+  StyledUjImage,
+  StyledElsa,
+  StyledSiteTitle,
 } from './LoginStyled';
 import NamedInput from '../../components/NamedInput/NamedInput';
 import PassInput from '../../components/PasswordInput/PassInput';
@@ -37,6 +40,10 @@ const Login = ({ loginUser, token, history }) => {
 
   return (
     <StyledBackground>
+      <StyledUjImage src="./images/logo.png" alt="logo" />
+      <StyledSiteTitle variant="h1" component="h3">
+        Giełda Podręczników WPiA UJ
+      </StyledSiteTitle>
       <StyledWrapper>
         <StyledTitle variant="h1" component="h3">
           Login
@@ -52,13 +59,11 @@ const Login = ({ loginUser, token, history }) => {
           label="Hasło"
           onChange={handleInputChange}
           value={loginValue.password}
-          autoComplete="current-password"
         />
         <StyledLoginLink to="/register">Nie masz konta?</StyledLoginLink>
-        <StyledButton variant="primary" onClick={onLogin}>
-          Zaloguj
-        </StyledButton>
+        <StyledButton onClick={onLogin}>Zaloguj</StyledButton>
       </StyledWrapper>
+      <StyledElsa src="./images/elsa.png" alt="elsa" />
     </StyledBackground>
   );
 };

@@ -2,11 +2,7 @@ import React from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import {
-  createMuiTheme,
-  createGenerateClassName,
-  jssPreset,
-} from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { Global, css } from '@emotion/core';
 import { toast } from 'react-toastify';
@@ -22,16 +18,11 @@ toast.configure();
 const theme = createMuiTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
       main: COLORS.MAIN,
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      main: '#FFEE58',
-      // dark: will be calculated from palette.secondary.main,
+      main: COLORS.OVERLAY_COLOR,
     },
-    // error: will use the default color
   },
 });
 

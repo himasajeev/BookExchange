@@ -11,17 +11,12 @@ const Book = ({ phase, type, ...rest }) => {
     case type === BOOK_POSITION.BASKET:
       return <BookBasket {...rest} />;
     case isSell(phase):
-      return <BookSell {...rest} />;
+      return <BookSell phase={phase} {...rest} />;
     case isBuy(phase):
-      return <BookBuy {...rest} />;
+      return <BookBuy phase={phase} {...rest} />;
     default:
       return null;
   }
-};
-
-Book.defaultProps = {
-  phase: 0,
-  type: 0,
 };
 
 Book.propTypes = {

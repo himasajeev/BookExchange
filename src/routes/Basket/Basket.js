@@ -5,16 +5,21 @@ import { isEmpty } from 'lodash';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import { TransitionGroup } from 'react-transition-group';
+
+import Paper from '@material-ui/core/Paper';
 import Book from '../../components/Book/Book';
 import { BOOK_POSITION } from '../../constants/bookPosition';
 
 import { PADDING } from '../../styles/padding';
-import { COLORS, FONT_SIZE } from '../../styles/globalVariables';
+import { COLORS, FONT_SIZE, MAX_WIDTH } from '../../styles/globalVariables';
 import { isBuy, isSell } from '../../utils/phaseToBool';
+import Select from '../../components/Select/Select';
+import { PAY_SELECT_VALUES } from '../../constants/paySelectValues';
 
 const StyledWrapper = styled.section`
   width: 90%;
-  margin: ${PADDING.BASE} auto;
+  margin: ${PADDING.BASE_LARGER} auto;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -48,6 +53,29 @@ export const StyledButton = styled(Button)`
   }
 `;
 
+const StyledTransitionGroup = styled(TransitionGroup)`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledPaper = styled(Paper)`
+  max-width: ${MAX_WIDTH};
+  width: 100%;
+  margin: ${PADDING.BASE} auto;
+  padding: ${PADDING.BASE};
+`;
+
+const paySelectOptions = [
+  {
+    value: PAY_SELECT_VALUES.AT_LOCATION,
+    label: PAY_SELECT_VALUES.AT_LOCATION,
+  },
+  {
+    value: PAY_SELECT_VALUES.WIRE_TRANSFER,
+    label: PAY_SELECT_VALUES.WIRE_TRANSFER,
+  },
+];
+
 const Basket = ({
   basket,
   removeFromBasket,
@@ -57,11 +85,19 @@ const Basket = ({
   history,
   payAmount,
 }) => {
+  const [paySelectValue, setPaySelectValue] = React.useState('');
   const onOrderBasket = React.useCallback(() => {
-    if (phase) orderBasket(basket, phase, token, history);
-  }, [basket, history, orderBasket, phase, token]);
+    if (phase) orderBasket(basket, phase, token, history, paySelectValue);
+  }, [basket, history, orderBasket, paySelectValue, phase, token]);
 
   const buttonText = isSell(phase) ? 'Potwierdź sprzedaż' : 'Potwierdź zakup';
+
+  const handlePaySelectChange = (selected, element) => {
+    const { action } = element;
+    if (action === 'select-option') {
+      setPaySelectValue(selected.value);
+    }
+  };
 
   if (isEmpty(basket))
     return (
@@ -73,23 +109,36 @@ const Basket = ({
 
   return (
     <StyledWrapper>
-      {Object.keys(basket).map(basketId => (
-        <Book
-          book={basket[basketId]}
-          onButtonClick={removeFromBasket}
-          key={basketId}
-          phase={phase}
-          type={BOOK_POSITION.BASKET}
-          basketId={basketId}
-        />
-      ))}
-      <StyledToPay>
-        <span>Ksiażek w koszyku: {Object.keys(basket).length} </span>
-        {isBuy(phase) && <span>Do zapłaty: {payAmount} zł</span>}
-      </StyledToPay>
-      <StyledButton onClick={onOrderBasket} testId="order_basket">
-        {buttonText}
-      </StyledButton>
+      <StyledTransitionGroup>
+        {Object.keys(basket).map(basketId => (
+          <Book
+            key={basketId}
+            book={basket[basketId]}
+            onButtonClick={removeFromBasket}
+            phase={phase}
+            type={BOOK_POSITION.BASKET}
+            basketId={basketId}
+          />
+        ))}
+      </StyledTransitionGroup>
+      <StyledPaper>
+        <StyledToPay>
+          <span>Ksiażek w koszyku: {Object.keys(basket).length} </span>
+          {isBuy(phase) && <span>Do zapłaty: {payAmount} zł</span>}
+        </StyledToPay>
+        {isBuy(phase) && (
+          <Select
+            name="payment"
+            onChange={handlePaySelectChange}
+            options={paySelectOptions}
+            placeholder="Wybierz rodzaj płatności"
+            label="Rodzaj płatności"
+          />
+        )}
+        <StyledButton onClick={onOrderBasket} testId="order_basket">
+          {buttonText}
+        </StyledButton>
+      </StyledPaper>
     </StyledWrapper>
   );
 };

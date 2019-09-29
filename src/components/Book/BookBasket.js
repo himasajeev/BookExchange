@@ -2,47 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CardActions from '@material-ui/core/CardActions';
+import AnimateHeight from 'react-animate-height';
 import BookButtonBasket from './BookButtonBasket';
-import {
-  StyledSelectedState,
-  StyledCard,
-  StyledTopography,
-  StyledCardContent,
-} from './BookStyled';
+import { StyledSelectedState, StyledCard } from './BookStyled';
+import BookContent from './BookContent';
+
+const animationDuration = 500;
 
 const BookBasket = ({ book, ...rest }) => {
-  const { iSBN, title, category, author, selectedState, publisher } = book;
-
+  const { title, selectedState } = book;
+  const height = rest.in ? 'auto' : 0;
   return (
-    <StyledCard>
-      <StyledCardContent>
-        <StyledTopography variant="h5" component="h2">
-          {title}
-        </StyledTopography>
-        <StyledTopography color="textSecondary" gutterBottom>
-          {author}
-        </StyledTopography>
-        <StyledTopography isFirst variant="body2" component="p">
-          {category}
-        </StyledTopography>
-        <StyledTopography variant="body2" component="p">
-          {publisher}
-        </StyledTopography>
-        <StyledTopography variant="body2" component="p">
-          {iSBN}
-        </StyledTopography>
-      </StyledCardContent>
-      <CardActions>
-        {selectedState ? (
-          <StyledSelectedState>{selectedState.label}</StyledSelectedState>
-        ) : (
-          <StyledSelectedState />
-        )}
-        <BookButtonBasket bookTitle={title} isFloatingRight {...rest}>
-          Usuń
-        </BookButtonBasket>
-      </CardActions>
-    </StyledCard>
+    <AnimateHeight duration={animationDuration} height={height} animateOpacity>
+      <StyledCard>
+        <BookContent {...book} />
+        <CardActions>
+          {selectedState ? (
+            <StyledSelectedState>{selectedState.label}</StyledSelectedState>
+          ) : (
+            <StyledSelectedState />
+          )}
+          <BookButtonBasket bookTitle={title} isFloatingRight {...rest}>
+            Usuń
+          </BookButtonBasket>
+        </CardActions>
+      </StyledCard>
+    </AnimateHeight>
   );
 };
 
@@ -54,11 +39,12 @@ BookBasket.propTypes = {
     category: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     selectedState: PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string,
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }).isRequired,
     publisher: PropTypes.string.isRequired,
   }).isRequired,
+  in: PropTypes.bool,
 };
 
 export default BookBasket;

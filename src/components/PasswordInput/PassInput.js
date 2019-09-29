@@ -11,7 +11,7 @@ import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
 
 const StyledFormControl = styled(FormControl)`
-  margin: ${PADDING.BASE} 0;
+  margin: ${PADDING.SMALL} 0;
 `;
 
 const PassInput = ({ value, name, onChange, label }) => {
@@ -30,7 +30,6 @@ const PassInput = ({ value, name, onChange, label }) => {
         label={label}
         value={value}
         onChange={onChange}
-        margin="normal"
         name={name}
         type={showPassword ? 'text' : 'password'}
         endAdornment={

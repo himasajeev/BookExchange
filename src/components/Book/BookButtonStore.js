@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import { createBasketBook } from '../../utils/createBasketBook';
 import { StyledButton } from './BookStyled';
 
 const BookButtonStore = ({
@@ -11,14 +10,15 @@ const BookButtonStore = ({
   children,
   isFloatingRight,
   isUnavailable,
+  phase,
+  token,
 }) => {
   const onClick = React.useCallback(() => {
-    onButtonClick(createBasketBook(book));
-    toast.success(`Dodano do koszyka "${book.title}".`);
-  }, [book, onButtonClick]);
+    onButtonClick(book, token, phase);
+  }, [book, onButtonClick, phase, token]);
 
   const displayError = () => {
-    toast.error('Wybierz stan książki');
+    toast.error('Wybierz stan książki!');
   };
 
   if (isUnavailable) return null;
@@ -46,13 +46,15 @@ const BookButtonStore = ({
 };
 
 BookButtonStore.propTypes = {
-  book: PropTypes.shape({ title: PropTypes.string }).isRequired,
+  book: PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
+    .isRequired,
   onButtonClick: PropTypes.func,
   children: PropTypes.node.isRequired,
   isSelected: PropTypes.bool,
-  title: PropTypes.string.isRequired,
   isFloatingRight: PropTypes.bool,
   isUnavailable: PropTypes.bool,
+  phase: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  token: PropTypes.string,
 };
 
 export default BookButtonStore;

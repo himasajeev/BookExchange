@@ -1,21 +1,19 @@
-import { omit } from 'lodash';
 import * as actionTypes from '../actionTypes';
 
-const booksReducer = (state = {}, action) => {
+const recommendedReducer = (state = {}, action) => {
   const { data } = action;
   switch (action.type) {
-    case actionTypes.GET_BOOKS_REQUESTED:
-      return {
-        ...omit(state, ['error']),
-        isLoading: true,
-      };
-    case actionTypes.GET_BOOKS_SUCCEEDED:
+    case actionTypes.GET_RECOMMENDED_REQUESTED:
       return {
         ...state,
+        isLoading: true,
+      };
+    case actionTypes.GET_RECOMMENDED_SUCCEEDED:
+      return {
         data,
         isLoading: false,
       };
-    case actionTypes.GET_BOOKS_FAILED:
+    case actionTypes.GET_RECOMMENDED_FAILED:
       return {
         ...state,
         isLoading: false,
@@ -25,4 +23,4 @@ const booksReducer = (state = {}, action) => {
   }
 };
 
-export default booksReducer;
+export default recommendedReducer;

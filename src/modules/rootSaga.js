@@ -14,8 +14,9 @@ import {
   setUserTokenSaga,
 } from './user/userSaga';
 import { getPhaseSaga } from './phase/phaseSaga';
-import { orderBasketSaga } from './basket/basketSaga';
+import { addToBasketSaga, orderBasketSaga } from './basket/basketSaga';
 import { loadInitialDataSaga } from './user/loadInitialDataSaga';
+import { getRecommendedSaga } from './recommended/recommendedSaga';
 
 export function* rootSaga() {
   yield all([
@@ -32,5 +33,7 @@ export function* rootSaga() {
     yield takeEvery(actionTypes.SET_USER_TOKEN_REQUESTED, setUserTokenSaga),
     yield takeEvery(actionTypes.ORDER_BASKET_REQUESTED, orderBasketSaga),
     yield takeEvery(actionTypes.LOAD_INITIAL_DATA, loadInitialDataSaga),
+    yield takeEvery(actionTypes.GET_RECOMMENDED_REQUESTED, getRecommendedSaga),
+    yield takeEvery(actionTypes.ADD_TO_BASKET_REQUESTED, addToBasketSaga),
   ]);
 }

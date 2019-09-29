@@ -9,6 +9,7 @@ import {
 } from './userApi';
 import * as actionTypes from '../actionTypes';
 import { USER_ERROR_TYPES } from '../../constants/userErrorTypes';
+import { removeToken } from '../../utils/removeToken';
 
 export function* loginUserSaga({ user }) {
   try {
@@ -35,11 +36,12 @@ export function* loginUserSaga({ user }) {
   }
 }
 
+const errorMessage = 'Konto o podanym emailu już istnieje.';
+
 export function* registerUserSaga({ user }) {
   try {
     const response = yield call(fetchRegisterUser, user);
-
-    const { message, token } = response.result;
+    const { token } = response.result;
     const { operation_successful } = response.result;
 
     if (operation_successful) {
@@ -49,16 +51,16 @@ export function* registerUserSaga({ user }) {
     } else {
       yield put({
         type: actionTypes.REGISTER_USER_FAILED,
-        error: { type: USER_ERROR_TYPES.REGISTER, message },
+        error: { type: USER_ERROR_TYPES.REGISTER, message: errorMessage },
       });
-      toast.error(message);
+      toast.error(errorMessage);
     }
   } catch (error) {
     yield put({
       type: actionTypes.REGISTER_USER_FAILED,
-      error: { type: USER_ERROR_TYPES.REGISTER, error },
+      error: { type: USER_ERROR_TYPES.REGISTER, message: errorMessage },
     });
-    toast.error(error);
+    toast.error(errorMessage);
   }
 }
 
@@ -81,9 +83,8 @@ export function* getUserInfoSaga({ token }) {
 
 export function* logoutUserSaga(token) {
   try {
-    const response = yield call(fetchLogoutUser, token);
-    window.localStorage.removeItem('token');
-
+    yield call(fetchLogoutUser, token);
+    removeToken();
     yield put({
       type: actionTypes.LOGOUT_USER_SUCCEEDED,
     });

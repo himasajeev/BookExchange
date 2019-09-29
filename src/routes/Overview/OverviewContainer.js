@@ -12,15 +12,16 @@ const mapStateToProps = state => {
   const booksToSell = get(state, 'overview.booksToSell');
   const sell = get(state, 'overview.sell');
   const buy = get(state, 'overview.buy');
+  const payments = get(state, 'overview.payments');
 
   return {
-    // token,
     userInfo,
     isLoading,
     booksToBuy,
     booksToSell,
     sell,
     buy,
+    payments,
   };
 };
 

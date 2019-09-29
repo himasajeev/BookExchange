@@ -66,3 +66,19 @@ export const fetchGetOverviewBooksToBuy = async token => {
     return error;
   }
 };
+
+export const fetchGetPayments = async token => {
+  try {
+    const urlParams = {
+      action: API_ACTIONS.PAYMENTS,
+      user_token: token,
+    };
+
+    const response = await axios.get(
+      `${apiUrl}/${getRequestUrlBuilder(urlParams)}`,
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

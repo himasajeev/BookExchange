@@ -5,11 +5,14 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import isPropValid from '@emotion/is-prop-valid';
 import Select from '../Select/Select';
 import { PADDING } from '../../styles/padding';
 import { COLORS } from '../../styles/globalVariables';
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(Button, {
+  shouldForwardProp: prop => isPropValid(prop),
+})`
   margin: ${props =>
     props.isFloatingRight
       ? `${PADDING.BASE} 16px ${PADDING.BASE} auto`
@@ -41,7 +44,9 @@ export const StyledSelect = styled(Select)`
   align-self: flex-start;
 `;
 
-export const StyledTopography = styled(Typography)`
+export const StyledTopography = styled(Typography, {
+  shouldForwardProp: prop => isPropValid(prop),
+})`
   padding-top: ${props => props.isFirst && PADDING.SMALL};
   margin: ${PADDING.X_SMALL};
 `;

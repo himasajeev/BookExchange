@@ -1,6 +1,13 @@
 import { put, call } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 import { fetchGetPhase } from './phaseApi';
 import * as actionTypes from '../actionTypes';
+import { isResponseWithArrayValid } from '../../utils/validateResponse';
+import {
+  sessionError,
+  sessionExpired,
+} from '../../constants/sessionExpiredMessage';
+import { removeToken } from '../../utils/removeToken';
 
 export function* getPhaseSaga({ token }) {
   try {
@@ -9,14 +16,27 @@ export function* getPhaseSaga({ token }) {
     const [value] = response.result;
 
     const phase = { value: Number(value.value) };
-    // const phase = { value: 2 };
-    yield put({
-      type: actionTypes.GET_PHASE_SUCCEEDED,
-      phase,
-    });
+
+    if (isResponseWithArrayValid(response.result)) {
+      yield put({
+        type: actionTypes.GET_PHASE_SUCCEEDED,
+        phase,
+      });
+    } else {
+      yield put({
+        type: actionTypes.GET_PHASE_FAILED,
+        error: sessionError,
+      });
+      yield put({
+        type: actionTypes.REMOVE_TOKEN,
+      });
+      removeToken();
+      toast.error(sessionExpired);
+    }
   } catch (error) {
     yield put({
       type: actionTypes.GET_PHASE_FAILED,
+      error,
     });
   }
 }

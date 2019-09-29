@@ -11,11 +11,13 @@ import Loading from '../../components/Loading/Loading';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import Select from '../../components/Select/Select';
 import { PADDING } from '../../styles/padding';
-import { COLORS } from '../../styles/globalVariables';
+import { COLORS, MAX_WIDTH } from '../../styles/globalVariables';
+import Recommended from './Recommended/RecommendedContainer';
+import Instructions from './Instructions/Instructions';
 
 const StyledWrapper = styled.div`
   width: 90%;
-  margin: ${PADDING.LARGE} auto;
+  margin: ${PADDING.BASE_LARGER} auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,6 +42,11 @@ const StyledPaper = styled(Paper)`
   flex-direction: column;
 `;
 
+const StyledInputContainer = styled.div`
+  max-width: ${MAX_WIDTH};
+  margin: ${PADDING.BASE_LARGER} auto 0;
+`;
+
 const LOAD_AMOUNT = 20;
 
 const Store = ({
@@ -54,7 +61,7 @@ const Store = ({
   phase,
 }) => {
   const [searchValue, setSearchValue] = React.useState({});
-  const [loadedBooks, setLoadedBooks] = React.useState(0);
+  const [loadedBooksAmount, setLoadedBooksAmount] = React.useState(0);
 
   const getBooksWithData = React.useCallback(() => {
     getBooks(token, searchValue, phase);
@@ -83,63 +90,70 @@ const Store = ({
   };
 
   const loadMore = () => {
-    setLoadedBooks(loadedBooks + LOAD_AMOUNT);
+    setLoadedBooksAmount(loadedBooksAmount + LOAD_AMOUNT);
   };
 
-  const bookItems = [...books.slice(0, loadedBooks + LOAD_AMOUNT)].map(book => (
-    <Book
-      book={book}
-      onButtonClick={addToBasket}
-      key={book.id}
-      type={BOOK_POSITION.STORE}
-      phase={phase}
-    />
-  ));
+  const bookItems = [...books.slice(0, loadedBooksAmount + LOAD_AMOUNT)].map(
+    book => (
+      <Book
+        key={book.id}
+        book={book}
+        onButtonClick={addToBasket}
+        type={BOOK_POSITION.STORE}
+        phase={phase}
+        token={token}
+      />
+    ),
+  );
 
   const hasMore = bookItems.length < books.length;
 
-  const { search, publisher, category, author } = searchValue;
   return (
     <StyledWrapper>
-      <Loading isLoading={isLoading}>
-        <StyledPaper>
-          <SearchInput
-            name="search"
-            setValue={handleSearchInputChange}
-            onClick={getBooksWithData}
-            type="text"
-          />
-          <Select
-            name="publisher"
-            onChange={handleSearchChange}
-            placeholder="Wybierz wydawnictwo"
-            options={publishers}
-            label="Wydawnictwo"
-            isClearable
-          />
-          <Select
-            name="category"
-            onChange={handleSearchChange}
-            placeholder="Wybierz przedmiot"
-            options={categories}
-            label="Przedmiot"
-            isClearable
-          />
-          <Select
-            name="author"
-            onChange={handleSearchChange}
-            placeholder="Wybierz autora"
-            options={authors}
-            label="Autor"
-            isClearable
-          />
-        </StyledPaper>
+      <Instructions phase={phase} />
+      <Recommended token={token} phase={phase} addToBasket={addToBasket} />
+      <Loading isLoading={isLoading} isRelative>
+        <StyledInputContainer>
+          <StyledPaper>
+            <SearchInput
+              name="search"
+              setValue={handleSearchInputChange}
+              onClick={getBooksWithData}
+              type="text"
+            />
+            <Select
+              name="publisher"
+              onChange={handleSearchChange}
+              placeholder="Wybierz wydawnictwo"
+              options={publishers}
+              label="Wydawnictwo"
+              isClearable
+            />
+            <Select
+              name="category"
+              onChange={handleSearchChange}
+              placeholder="Wybierz przedmiot"
+              options={categories}
+              label="Przedmiot"
+              isClearable
+            />
+            <Select
+              name="author"
+              onChange={handleSearchChange}
+              placeholder="Wybierz autora"
+              options={authors}
+              label="Autor"
+              isClearable
+            />
+          </StyledPaper>
+        </StyledInputContainer>
+
         <InfiniteScroll
           pageStart={0}
           loadMore={loadMore}
           hasMore={hasMore}
           loader={
-            <StyledLoaderContainer>
+            <StyledLoaderContainer key={loadedBooksAmount}>
               <BounceLoader
                 loading
                 color={COLORS.LOADER_COLOR}

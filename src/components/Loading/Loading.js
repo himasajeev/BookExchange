@@ -5,11 +5,11 @@ import BounceLoader from 'react-spinners/BounceLoader';
 import { COLORS } from '../../styles/globalVariables';
 
 const Wrapper = styled.div`
-  //position: relative;
+  ${props => props.isRelative && 'position: relative;'}
 `;
 
 const SpinnerWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
@@ -21,9 +21,9 @@ const SpinnerWrapper = styled.div`
   z-index: 100;
 `;
 
-const Loading = ({ isLoading, children }) => {
+const Loading = ({ isLoading, children, isRelative }) => {
   return (
-    <Wrapper>
+    <Wrapper isRelative={isRelative}>
       {isLoading && (
         <SpinnerWrapper>
           <BounceLoader
@@ -46,6 +46,7 @@ Loading.defaultProps = {
 Loading.propTypes = {
   isLoading: PropTypes.bool,
   children: PropTypes.node,
+  isRelative: PropTypes.bool,
 };
 
 export default Loading;

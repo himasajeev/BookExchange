@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Selects from 'react-select';
-
-/*eslint-disable */
-
-import { emphasize, makeStyles, useTheme } from '@material-ui/core/styles';
+import { emphasize, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +10,8 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { PADDING } from '../../styles/padding';
+
+/*eslint-disable */
 
 const StyledContainer = styled.div`
   margin: ${PADDING.BASE} 0;
@@ -70,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function NoOptionsMessage(props) {
+const NoOptionsMessage = props => {
   return (
     <Typography
       color="textSecondary"
@@ -80,7 +79,7 @@ function NoOptionsMessage(props) {
       {props.children}
     </Typography>
   );
-}
+};
 
 NoOptionsMessage.propTypes = {
   children: PropTypes.node,
@@ -88,9 +87,9 @@ NoOptionsMessage.propTypes = {
   selectProps: PropTypes.PropTypes.shape({}).isRequired,
 };
 
-function inputComponent({ inputRef, ...props }) {
+const inputComponent = ({ inputRef, ...props }) => {
   return <div ref={inputRef} {...props} />;
-}
+};
 
 inputComponent.propTypes = {
   inputRef: PropTypes.oneOfType([
@@ -101,7 +100,7 @@ inputComponent.propTypes = {
   ]),
 };
 
-function Control(props) {
+const Control = props => {
   const {
     children,
     innerProps,
@@ -124,7 +123,7 @@ function Control(props) {
       {...TextFieldProps}
     />
   );
-}
+};
 
 Control.propTypes = {
   children: PropTypes.node,
@@ -139,27 +138,37 @@ Control.propTypes = {
   selectProps: PropTypes.object.isRequired,
 };
 
-function Option(props) {
-  return (
-    <MenuItem
-      ref={props.innerRef}
-      selected={props.isFocused}
-      component="div"
-      style={{
-        fontWeight: props.isSelected ? 500 : 400,
-      }}
-      {...props.innerProps}
-    >
-      {props.children}
-    </MenuItem>
-  );
+class Option extends React.PureComponent {
+  render() {
+    const {
+      innerProps,
+      isFocused,
+      isSelected,
+      innerRef,
+      children,
+    } = this.props;
+    const { onClick, id } = innerProps;
+    return (
+      <MenuItem
+        ref={innerRef}
+        selected={isFocused}
+        component="div"
+        style={{
+          fontWeight: isSelected ? 500 : 400,
+        }}
+        key={id}
+        onClick={onClick}
+      >
+        {children}
+      </MenuItem>
+    );
+  }
 }
 
 Option.propTypes = {
   children: PropTypes.node,
   innerProps: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
     onMouseMove: PropTypes.func.isRequired,
     onMouseOver: PropTypes.func.isRequired,
@@ -171,12 +180,12 @@ Option.propTypes = {
     PropTypes.shape({
       current: PropTypes.any.isRequired,
     }),
-  ]).isRequired,
+  ]),
   isFocused: PropTypes.bool.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
 
-function Placeholder(props) {
+const Placeholder = props => {
   const { selectProps, innerProps = {}, children } = props;
   return (
     <Typography
@@ -187,7 +196,7 @@ function Placeholder(props) {
       {children}
     </Typography>
   );
-}
+};
 
 Placeholder.propTypes = {
   children: PropTypes.node,
@@ -195,7 +204,7 @@ Placeholder.propTypes = {
   selectProps: PropTypes.object.isRequired,
 };
 
-function SingleValue(props) {
+const SingleValue = props => {
   return (
     <Typography
       className={props.selectProps.classes.singleValue}
@@ -204,28 +213,28 @@ function SingleValue(props) {
       {props.children}
     </Typography>
   );
-}
+};
 
 SingleValue.propTypes = {
   children: PropTypes.node,
-  innerProps: PropTypes.any.isRequired,
+  innerProps: PropTypes.any,
   selectProps: PropTypes.object.isRequired,
 };
 
-function ValueContainer(props) {
+const ValueContainer = props => {
   return (
     <div className={props.selectProps.classes.valueContainer}>
       {props.children}
     </div>
   );
-}
+};
 
 ValueContainer.propTypes = {
   children: PropTypes.node,
   selectProps: PropTypes.object.isRequired,
 };
 
-function MultiValue(props) {
+const MultiValue = props => {
   return (
     <Chip
       tabIndex={-1}
@@ -237,7 +246,7 @@ function MultiValue(props) {
       deleteIcon={<CancelIcon {...props.removeProps} />}
     />
   );
-}
+};
 
 MultiValue.propTypes = {
   children: PropTypes.node,
@@ -250,7 +259,7 @@ MultiValue.propTypes = {
   selectProps: PropTypes.object.isRequired,
 };
 
-function Menu(props) {
+const Menu = props => {
   return (
     <Paper
       square
@@ -260,7 +269,7 @@ function Menu(props) {
       {props.children}
     </Paper>
   );
-}
+};
 
 Menu.propTypes = {
   children: PropTypes.element.isRequired,
@@ -287,26 +296,18 @@ const Select = ({
   className,
   placeholder,
   label,
+  isClearable,
 }) => {
   const classes = useStyles();
-  const theme = useTheme();
 
-  const selectStyles = {
-    input: base => ({
-      ...base,
-      color: theme.palette.text.primary,
-      '& input': {
-        font: 'inherit',
-      },
-    }),
+  const noOptions = () => {
+    return `Nie znaleziono`;
   };
 
   return (
     <StyledContainer className={className}>
       <Selects
         classes={classes}
-        styles={selectStyles}
-        inputId="react-select-single"
         TextFieldProps={{
           label: label,
           InputLabelProps: {
@@ -320,7 +321,8 @@ const Select = ({
         onChange={onChange}
         name={name}
         defaultValue={defaultValue}
-        isClearable
+        noOptionsMessage={noOptions}
+        isClearable={isClearable}
       />
     </StyledContainer>
   );
@@ -330,6 +332,7 @@ Select.defaultProps = {
   defaultValue: '',
   className: '',
   placeholder: '',
+  isClearable: false,
 };
 
 Select.propTypes = {
@@ -344,6 +347,8 @@ Select.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   label: PropTypes.string,
+  value: PropTypes.string,
+  isClearable: PropTypes.bool,
 };
 
 export default Select;

@@ -10,14 +10,16 @@ import NamedInput from '../../components/NamedInput/NamedInput';
 import { fetchAddBook } from '../../modules/add/addApi';
 import Select from '../../components/Select/Select';
 import { PADDING } from '../../styles/padding';
-import { successMessage } from '../../constants/successMessage';
-import { COLORS } from '../../styles/globalVariables';
+import { COLORS, MAX_WIDTH } from '../../styles/globalVariables';
+import { isResponseWithArrayValid } from '../../utils/validateResponse';
+import { isFormValid } from '../../utils/validateForm';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: ${PADDING.LARGE} auto;
+  margin: ${PADDING.BASE_LARGER} auto;
+  max-width: ${MAX_WIDTH};
 `;
 
 const StyledPaper = styled(Paper)`
@@ -31,6 +33,7 @@ const StyledButton = styled(Button)`
   font-size: 16px;
   color: #fff;
   background: ${COLORS.MAIN};
+  margin-top: ${PADDING.BASE};
   &:hover,
   &:active {
     background: ${COLORS.MAIN_SECONDARY};
@@ -39,16 +42,22 @@ const StyledButton = styled(Button)`
 
 const numberOfInputFields = 5;
 
-const Add = ({ token, categories }) => {
+const Add = ({ token, categories, addToBasket }) => {
   const [addValue, setAddValue] = React.useState({});
 
   const onAdd = async () => {
-    if (Object.values(addValue).length === numberOfInputFields) {
+    if (isFormValid(addValue, numberOfInputFields)) {
       setAddValue({ categories: addValue.categories });
-      const response = await fetchAddBook(token, { ...addValue });
-      if (response.result === successMessage) {
-        toast.success(RESPONSES.SUCCESS.text);
-      } else {
+      try {
+        const response = await fetchAddBook(token, { ...addValue });
+        const [responseBook] = response.result;
+
+        if (isResponseWithArrayValid(response.result)) {
+          addToBasket(responseBook, token);
+        } else {
+          toast.error(RESPONSES.SERVER_ERROR.text);
+        }
+      } catch (error) {
         toast.error(RESPONSES.SERVER_ERROR.text);
       }
     } else {
@@ -94,6 +103,7 @@ const Add = ({ token, categories }) => {
           options={categories}
           id="add-select"
           label="Przedmiot"
+          isClearable
         />
         <StyledButton variant="contained" onClick={onAdd}>
           Dodaj ksiażkę
@@ -111,6 +121,7 @@ Add.defaultProps = {
 Add.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape({})),
   token: PropTypes.string,
+  addToBasket: PropTypes.func,
 };
 
 export default Add;

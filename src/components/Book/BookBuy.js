@@ -7,11 +7,10 @@ import { findStateVariant } from '../../utils/findStateVariant';
 import {
   StyledCard,
   StyledCardActions,
-  StyledCardContent,
   StyledSelect,
-  StyledTopography,
   StyledUnavailable,
 } from './BookStyled';
+import BookContent from './BookContent';
 
 const getSelectOptions = (prices, quants) => {
   const options = [];
@@ -26,8 +25,8 @@ const getSelectOptions = (prices, quants) => {
   return options;
 };
 
-const BookBuy = ({ book, ...rest }) => {
-  const { iSBN, title, category, author, prices, quants, publisher } = book;
+const BookBuy = ({ book, phase, ...rest }) => {
+  const { prices, quants } = book;
 
   const [selectedState, setSelectedState] = React.useState(null);
 
@@ -40,23 +39,7 @@ const BookBuy = ({ book, ...rest }) => {
   const isUnavailable = options.length <= 0;
   return (
     <StyledCard>
-      <StyledCardContent>
-        <StyledTopography variant="h5" component="h2">
-          {title}
-        </StyledTopography>
-        <StyledTopography color="textSecondary" gutterBottom>
-          {author}
-        </StyledTopography>
-        <StyledTopography isFirst variant="body2" component="p">
-          {category}
-        </StyledTopography>
-        <StyledTopography variant="body2" component="p">
-          {publisher}
-        </StyledTopography>
-        <StyledTopography variant="body2" component="p">
-          {iSBN}
-        </StyledTopography>
-      </StyledCardContent>
+      <BookContent {...book} />
       <StyledCardActions>
         {isUnavailable ? (
           <StyledUnavailable>Niedostępna</StyledUnavailable>
@@ -70,11 +53,11 @@ const BookBuy = ({ book, ...rest }) => {
             isClearable
           />
         )}
-
         <BookButtonStoreBuy
           book={{ ...book, selectedState }}
           isSelected={selectedState !== null}
           isUnavailable={isUnavailable}
+          phase={phase}
           {...rest}
         >
           Kup
@@ -95,6 +78,7 @@ BookBuy.propTypes = {
     quants: PropTypes.arrayOf.isRequired,
     publisher: PropTypes.string.isRequired,
   }).isRequired,
+  phase: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default BookBuy;

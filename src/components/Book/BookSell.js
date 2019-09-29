@@ -3,32 +3,21 @@ import PropTypes from 'prop-types';
 
 import CardActions from '@material-ui/core/CardActions';
 import BookButtonStore from './BookButtonStore';
-import { StyledCard, StyledCardContent, StyledTopography } from './BookStyled';
+import { StyledCard } from './BookStyled';
+import BookContent from './BookContent';
 
-const BookSell = ({ book, ...rest }) => {
-  const { iSBN, title, category, author, publisher } = book;
-
+const BookSell = ({ phase, book, ...rest }) => {
   return (
     <StyledCard>
-      <StyledCardContent>
-        <StyledTopography variant="h5" component="h2">
-          {title}
-        </StyledTopography>
-        <StyledTopography color="textSecondary" gutterBottom>
-          {author}
-        </StyledTopography>
-        <StyledTopography isFirst variant="body2" component="p">
-          {category}
-        </StyledTopography>
-        <StyledTopography variant="body2" component="p">
-          {publisher}
-        </StyledTopography>
-        <StyledTopography variant="body2" component="p">
-          {iSBN}
-        </StyledTopography>
-      </StyledCardContent>
+      <BookContent {...book} />
       <CardActions>
-        <BookButtonStore isFloatingRight isSelected book={book} {...rest}>
+        <BookButtonStore
+          phase={phase}
+          isFloatingRight
+          isSelected
+          book={book}
+          {...rest}
+        >
           Sprzedaj
         </BookButtonStore>
       </CardActions>
@@ -45,30 +34,7 @@ BookSell.propTypes = {
     author: PropTypes.string.isRequired,
     publisher: PropTypes.string.isRequired,
   }).isRequired,
+  phase: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default BookSell;
-
-// {/*<StyledContainer>*/}
-// {/*  <StyledTopContainer>*/}
-// {/*    <div>*/}
-// {/*      <img src="/images/book-placeholder.jpg" alt="xd" />*/}
-// {/*    </div>*/}
-// {/*    <StyledDescription>*/}
-// {/*      <StyledTitle>{title}</StyledTitle>*/}
-// {/*      <StyledAuthor>{author}</StyledAuthor>*/}
-// {/*      <StyledSelectedState />*/}
-// {/*      <StyledBottomSection>*/}
-// {/*        <StyledIcon onClick={handleCollapse} />*/}
-// {/*        <BookButtonStore book={book} {...rest}>*/}
-// {/*          Sprzedaj*/}
-// {/*        </BookButtonStore>*/}
-// {/*      </StyledBottomSection>*/}
-// {/*    </StyledDescription>*/}
-// {/*  </StyledTopContainer>*/}
-// {/*  <StyledCollapsedMenu isCollapsed={isCollapsed}>*/}
-// {/*    <span>ISBN: {iSBN}</span>*/}
-// {/*    <span>Kategoria: {category}</span>*/}
-// {/*    <span>Wydawnictwo: {publisher}</span>*/}
-// {/*  </StyledCollapsedMenu>*/}
-// {/*</StyledContainer>*/}

@@ -4,7 +4,7 @@ import * as actionTypes from '../actionTypes';
 const basketReducer = (state = {}, action) => {
   const { error, id } = action;
   switch (action.type) {
-    case actionTypes.ADD_TO_BASKET:
+    case actionTypes.ADD_TO_BASKET_SUCCEEDED:
       return {
         ...omit(state, ['error']),
         data: { ...state.data, ...action.book },

@@ -2,7 +2,7 @@ import { omit } from 'lodash';
 import * as actionTypes from '../actionTypes';
 
 const overviewReducer = (state = {}, action) => {
-  const { booksToBuy, booksToSell, sell, buy, error } = action;
+  const { booksToBuy, booksToSell, sell, buy, payments, error } = action;
   switch (action.type) {
     case actionTypes.GET_OVERVIEW_REQUESTED:
       return {
@@ -16,10 +16,11 @@ const overviewReducer = (state = {}, action) => {
         booksToSell,
         sell,
         buy,
+        payments,
         isLoading: false,
       };
     case actionTypes.GET_OVERVIEW_FAILED:
-      return { error, isLoading: true };
+      return { error, isLoading: false };
     default:
       return state;
   }

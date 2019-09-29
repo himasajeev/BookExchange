@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 module.exports = env => {
   return {
@@ -53,6 +54,9 @@ module.exports = env => {
       new MiniCssExtractPlugin({
         filename: 'bundle.[hash].css',
         chunkFilename: 'chunk.[chunkhash].css',
+      }),
+      new webpack.BannerPlugin({
+        banner: 'Copyright (c) 2019 Krzysztof Olipra and Karol Oleszek.\n',
       }),
     ],
     performance: {
