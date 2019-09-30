@@ -27,19 +27,14 @@ const Overview = ({
   return (
     <StyledWrapper>
       <Loading isLoading={isLoading}>
-        {!isLoading && (
-          <StyledPaper>
-            <StyledTitle>Podsumowanie konta</StyledTitle>
-            <AccountData userInfo={userInfo} />
-            <OrderOverview sell={sell} buy={buy} />
-            <Payments payments={payments} />
-            <OrderHistory bookData={booksToBuy} title="Książki do kupienia" />
-            <OrderHistory
-              bookData={booksToSell}
-              title="Książki do sprzedania"
-            />
-          </StyledPaper>
-        )}
+        <StyledPaper>
+          <StyledTitle>Podsumowanie konta</StyledTitle>
+          <AccountData userInfo={userInfo} />
+          <OrderOverview sell={sell} buy={buy} />
+          <Payments payments={payments} />
+          <OrderHistory bookData={booksToBuy} title="Książki do kupienia" />
+          <OrderHistory bookData={booksToSell} title="Książki do sprzedania" />
+        </StyledPaper>
       </Loading>
     </StyledWrapper>
   );
