@@ -19,5 +19,5 @@ export const INSTRUCTIONS = {
     '      „Administracja - inne” i „PWI - inne”. Wybierz także stan zużycia książki,' +
     '      jaki Cię interesuje. Płatności możesz dokonać online lub gotówką przy' +
     '      odbiorze. Aktualny stan Twojego konta możesz sprawdzić w zakładce „Konto”.' +
-    '      Pytania prosimy kierować na adres mailowy kontakt@wpiauj.pl',
+    '      Pytania prosimy kierować na adres mailowy kontakt@wpiauj.pl.',
 };

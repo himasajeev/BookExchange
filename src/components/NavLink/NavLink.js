@@ -4,21 +4,17 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { PADDING } from '../../styles/padding';
-import { COLORS, SCREEN_SIZES } from '../../styles/globalVariables';
+import { COLORS } from '../../styles/globalVariables';
 
-const StyledNavLink = styled.a`
+export const StyledNavLink = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 ${PADDING.BASE_LARGER};
   color: #fff;
+  background: ${COLORS.MAIN};
   position: relative;
   min-height: 20px;
-
-  @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
-    padding: ${PADDING.SMALL} 0;
-    margin: ${PADDING.X_SMALL} 0;
-  }
 
   &::after {
     position: absolute;
@@ -32,19 +28,29 @@ const StyledNavLink = styled.a`
     transition: transform 250ms ease-in-out;
     border-top-right-radius: 1px;
     border-top-left-radius: 1px;
-    @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
-      width: calc(50% - ${PADDING.SMALL});
-      margin: 0 auto;
-      align-items: unset;
-    }
   }
+
   &:hover {
     cursor: pointer;
     color: #fff;
+
     &::after {
       transform: scaleX(1);
     }
   }
+
+  ${props =>
+    props.isViewportMobile &&
+    `
+    padding: ${PADDING.SMALL} 0;
+    margin: ${PADDING.X_SMALL} 0;
+    
+    &::after {
+      width: calc(50% - ${PADDING.SMALL});
+      margin: 0 auto;
+      align-items: unset;
+    }
+    `}
 `;
 
 const NavLink = ({
@@ -55,6 +61,7 @@ const NavLink = ({
   location,
   className,
   handleHideMenu,
+  isViewportMobile,
 }) => {
   const onClick = () => {
     history.push(to);
@@ -69,6 +76,7 @@ const NavLink = ({
       exact={exact}
       isActive={isActive}
       className={className}
+      isViewportMobile={isViewportMobile}
     >
       {children}
     </StyledNavLink>
@@ -88,6 +96,7 @@ NavLink.propTypes = {
   location: ReactRouterPropTypes.location.isRequired,
   className: PropTypes.string,
   handleHideMenu: PropTypes.func.isRequired,
+  isViewportMobile: PropTypes.bool,
 };
 
 export default withRouter(NavLink);

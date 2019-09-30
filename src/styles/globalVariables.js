@@ -14,12 +14,14 @@ export const MAX_WIDTH = '450px';
 export const BUTTON_GRADIENT =
   'linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)';
 
+export const mobileWidth = 600;
+
 export const SCREEN_SIZES = {
-  MOBILE: '600px',
+  MOBILE: `${mobileWidth}px`,
 };
 
 export const NAVBAR_HEIGHT = {
-  DESKTOP: '64px',
+  DESKTOP: `64px`,
   MOBILE: '56px',
 };
 

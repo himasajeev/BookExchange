@@ -14,6 +14,7 @@ import Overview from './Overview/OverviewContainer';
 import BasketOverlay from './Overlay/OverlayContainer';
 import 'react-toastify/dist/ReactToastify.css';
 import { NAVBAR_OFFSET, SCREEN_SIZES } from '../styles/globalVariables';
+import { isSell } from '../utils/phaseToBool';
 
 const StyledContainer = styled.div`
   padding-top: ${NAVBAR_OFFSET};
@@ -27,7 +28,7 @@ const StyledToast = styled(ToastContainer)`
   }
 `;
 
-const MainView = ({ token, stateToken, setUserToken }) => {
+const MainView = ({ token, stateToken, setUserToken, phase }) => {
   React.useEffect(() => {
     if (!stateToken) {
       const windowToken = window.localStorage.getItem('token');
@@ -37,10 +38,12 @@ const MainView = ({ token, stateToken, setUserToken }) => {
 
   return (
     <StyledContainer>
-      {token && <Navigation token={token} />}
+      {token && <Navigation token={token} phase={phase} />}
       {token && <BasketOverlay />}
       <PrivateRoute path="/" token={token} exact component={Store} />
-      <PrivateRoute path="/add" token={token} component={Add} />
+      {isSell(phase) && (
+        <PrivateRoute path="/add" token={token} component={Add} />
+      )}
       <PrivateRoute path="/basket" token={token} component={Basket} />
       <PrivateRoute path="/overview" token={token} component={Overview} />
       <Route path="/login" component={Login} />
@@ -59,6 +62,7 @@ MainView.propTypes = {
   token: PropTypes.string,
   setUserToken: PropTypes.func.isRequired,
   stateToken: PropTypes.string,
+  phase: PropTypes.number,
 };
 
 export default MainView;

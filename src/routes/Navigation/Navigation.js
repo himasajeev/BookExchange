@@ -5,14 +5,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import { ClickAwayListener } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import NavLink from '../../components/NavLink/NavLink';
+import AnimateHeight from 'react-animate-height';
+import { throttle } from 'lodash';
+import NavLink, { StyledNavLink } from '../../components/NavLink/NavLink';
 import { PADDING } from '../../styles/padding';
 import {
   COLORS,
+  mobileWidth,
   NAVBAR_HEIGHT,
-  SCREEN_SIZES,
 } from '../../styles/globalVariables';
-import Button from '../../components/Button/Button';
+import { isSell } from '../../utils/phaseToBool';
 
 const StyledNavigation = styled.nav`
   width: 100%;
@@ -26,11 +28,12 @@ const StyledNavigation = styled.nav`
   min-height: ${NAVBAR_HEIGHT.DESKTOP};
   display: flex;
   flex-direction: row;
-
-  @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
+  ${props =>
+    props.isViewportMobile &&
+    `
     min-height: ${NAVBAR_HEIGHT.MOBILE};
     flex-direction: column;
-  }
+  `}
 `;
 
 const StyledWrapper = styled.div`
@@ -39,20 +42,16 @@ const StyledWrapper = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: row;
+  min-height: ${NAVBAR_HEIGHT.DESKTOP};
 
-  @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
+  ${props =>
+    props.isViewportMobile &&
+    `
     margin: auto;
     flex-direction: column;
     background: ${COLORS.MAIN};
-    ${props =>
-      props.isMenuOpen
-        ? `
-      height: 196px;
-        `
-        : `
-      height:0;
-    `};
-  }
+    padding-bottom: ${PADDING.BASE};
+    `}
 `;
 
 const StyledTitle = styled(Link)`
@@ -77,61 +76,47 @@ const StyledHamburger = styled(MenuIcon)`
   }
 `;
 
-const StyledMenuItem = styled(MenuItem)`
-  display: none;
-  @media only screen and (max-width: 600px) {
-    display: flex;
-  }
-`;
-
 const StyledContainer = styled.div`
   min-height: ${NAVBAR_HEIGHT.MOBILE};
   display: inline-flex;
   flex-direction: row;
 `;
 
-const StyledButton = styled(Button)`
-  color: #fff;
-  align-items: center;
-  justify-content: center;
-  padding: 0 ${PADDING.SMALL};
-  position: relative;
-  background: inherit;
-  height: auto;
-  display: flex;
-  @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
-    padding: ${PADDING.X_SMALL} 0;
-    margin: ${PADDING.SMALL} 0;
-  }
-
-  &::after {
-    position: absolute;
-    bottom: 0;
-    content: '';
-    width: 100%;
-    border-bottom: solid 3px #fff;
-    transform: scaleX(0);
-    transition: transform 250ms ease-in-out;
-    @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
-      width: calc(50% - ${PADDING.SMALL});
-    }
-  }
-
-  &:hover {
-    &::after {
-      transform: scaleX(1);
-    }
-  }
+const StyledButton = styled(StyledNavLink)`
   margin-left: auto;
   margin-right: ${PADDING.BASE};
-
-  @media only screen and (max-width: ${SCREEN_SIZES.MOBILE}) {
-    margin-left: 0;
-  }
+  outline: none;
+  ${props =>
+    props.isViewportMobile &&
+    `
+    padding: ${PADDING.SMALL} 0;
+    margin: ${PADDING.X_SMALL} 0;
+    `}
 `;
 
-const Navigation = ({ token, logoutUser }) => {
+const StyledAnimateHeight = styled(AnimateHeight)`
+  width: 100%;
+`;
+
+const animationDuration = 500;
+const throttleTimer = 300;
+
+const Navigation = ({ token, logoutUser, phase }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const [isViewportMobile, setIsViewportMobile] = React.useState(true);
+
+  const onResize = () => {
+    if (window.innerWidth <= mobileWidth) setIsViewportMobile(true);
+    else setIsViewportMobile(false);
+  };
+
+  React.useEffect(() => {
+    window.addEventListener('resize', throttle(onResize, throttleTimer));
+    onResize();
+    return () =>
+      window.removeEventListener('resize', throttle(onResize, throttleTimer));
+  }, []);
 
   const handleMenuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -146,39 +131,75 @@ const Navigation = ({ token, logoutUser }) => {
     handleHideMenu();
   }, [logoutUser, token]);
 
+  const navbarContent = (
+    <StyledWrapper isViewportMobile={isViewportMobile}>
+      <NavLink
+        to="/"
+        exact
+        isViewportMobile={isViewportMobile}
+        handleHideMenu={handleHideMenu}
+      >
+        Sklep
+      </NavLink>
+      {isSell(phase) && (
+        <NavLink
+          to="/add"
+          isViewportMobile={isViewportMobile}
+          handleHideMenu={handleHideMenu}
+        >
+          Dodaj
+        </NavLink>
+      )}
+      <NavLink
+        to="/overview"
+        isViewportMobile={isViewportMobile}
+        handleHideMenu={handleHideMenu}
+      >
+        Konto
+      </NavLink>
+      <NavLink
+        to="/basket"
+        isViewportMobile={isViewportMobile}
+        handleHideMenu={handleHideMenu}
+      >
+        Koszyk
+      </NavLink>
+      {token && (
+        <StyledButton
+          as="button"
+          type="button"
+          onClick={handleLogoutUser}
+          data-testid="logout-button"
+          isViewportMobile={isViewportMobile}
+        >
+          Wyloguj
+        </StyledButton>
+      )}
+    </StyledWrapper>
+  );
+
+  const height = isMenuOpen ? 'auto' : 0;
   return (
     <ClickAwayListener onClickAway={handleHideMenu}>
-      <StyledNavigation isMenuOpen={isMenuOpen}>
+      <StyledNavigation
+        isMenuOpen={isMenuOpen}
+        isViewportMobile={isViewportMobile}
+      >
         <StyledContainer>
-          <StyledMenuItem onClick={handleMenuOpen}>
-            <StyledHamburger />
-          </StyledMenuItem>
+          {isViewportMobile && (
+            <MenuItem onClick={handleMenuOpen}>
+              <StyledHamburger />
+            </MenuItem>
+          )}
           <StyledTitle to="/">Giełda WPiAUJ</StyledTitle>
         </StyledContainer>
-        <StyledWrapper isMenuOpen={isMenuOpen}>
-          <NavLink to="/" exact handleHideMenu={handleHideMenu}>
-            Sklep
-          </NavLink>
-          <NavLink to="/add" handleHideMenu={handleHideMenu}>
-            Dodaj
-          </NavLink>
-          <NavLink to="/overview" handleHideMenu={handleHideMenu}>
-            Konto
-          </NavLink>
-          <NavLink to="/basket" handleHideMenu={handleHideMenu}>
-            Koszyk
-          </NavLink>
-          {token && (
-            <StyledButton
-              as="button"
-              type="button"
-              onClick={handleLogoutUser}
-              data-testid="logout-button"
-            >
-              Wyloguj
-            </StyledButton>
-          )}
-        </StyledWrapper>
+        {isViewportMobile ? (
+          <StyledAnimateHeight height={height} duration={animationDuration}>
+            {navbarContent}
+          </StyledAnimateHeight>
+        ) : (
+          navbarContent
+        )}
       </StyledNavigation>
     </ClickAwayListener>
   );
@@ -191,5 +212,6 @@ Navigation.defaultProps = {
 Navigation.propTypes = {
   token: PropTypes.string,
   logoutUser: PropTypes.func.isRequired,
+  phase: PropTypes.number,
 };
 export default Navigation;
