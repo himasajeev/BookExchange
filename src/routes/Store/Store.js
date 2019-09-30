@@ -43,7 +43,6 @@ const StyledPaper = styled(Paper)`
 `;
 
 const StyledInputContainer = styled.div`
-  max-width: ${MAX_WIDTH};
   margin: ${PADDING.BASE_LARGER} auto 0;
 `;
 
