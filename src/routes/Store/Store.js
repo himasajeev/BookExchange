@@ -11,7 +11,7 @@ import Loading from '../../components/Loading/Loading';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import Select from '../../components/Select/Select';
 import { PADDING } from '../../styles/padding';
-import { COLORS, MAX_WIDTH } from '../../styles/globalVariables';
+import { COLORS } from '../../styles/globalVariables';
 import Recommended from './Recommended/RecommendedContainer';
 import Instructions from './Instructions/Instructions';
 
