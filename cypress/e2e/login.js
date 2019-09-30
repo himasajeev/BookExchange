@@ -3,8 +3,6 @@ import { setupMainRoutes } from '../support/setupMainRoutes';
 import { token } from '../support/token';
 
 describe('Login page', () => {
-  const user = { email: 'xd@gmail.com', password: 'Hurhul69' };
-
   it('Should redirect to login page without token', () => {
     cy.visit('/overview').assertLogin();
   });
@@ -20,7 +18,7 @@ describe('Login page', () => {
     cy.visit('/')
       .findByText(/Zaloguj/)
       .click()
-      .findByTestId(/login-error/)
+      .getErrorToast()
       .assertLogin();
   });
 
@@ -36,15 +34,10 @@ describe('Login page', () => {
     });
 
     cy.visit('/')
-      .findByPlaceholderText(/E-mail/)
-      .click()
-      .type(user.email)
-      .findByPlaceholderText(/Hasło/)
-      .click()
-      .type(user.password)
+      .typeLoginCredentials()
       .findByText(/Zaloguj/)
       .click()
-      .findByTestId(/login-error/)
+      .getErrorToast()
       .assertLogin();
   });
 
@@ -60,12 +53,7 @@ describe('Login page', () => {
     });
 
     cy.visit('/')
-      .findByPlaceholderText(/E-mail/)
-      .click()
-      .type(user.email)
-      .findByPlaceholderText(/Hasło/)
-      .click()
-      .type(user.password)
+      .typeLoginCredentials()
       .findByText(/Zaloguj/)
       .click()
       .assertStore()
@@ -85,16 +73,13 @@ describe('Login page', () => {
     });
 
     cy.visit('/')
-      .findByPlaceholderText(/E-mail/)
-      .click()
-      .type(user.email)
-      .findByPlaceholderText(/Hasło/)
-      .click()
-      .type(user.password)
+      .typeLoginCredentials()
       .findByText(/Zaloguj/)
       .click()
       .assertStore()
       .checkToken()
+      .get('[role="menuitem"]')
+      .click()
       .findByText(/Wyloguj/)
       .click()
       .assertLogin()

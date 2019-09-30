@@ -2,5 +2,6 @@
   "baseUrl": "http://localhost:3000",
   "integrationFolder": "cypress/e2e",
   "viewportHeight": 900,
-  "viewportWidth": 400
+  "viewportWidth": 400,
+  "blacklistHosts": ["https://www.authorization.wpiauj.pl/*","https://www.api.wpiauj.pl/*"]
 }

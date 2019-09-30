@@ -42,3 +42,18 @@ Cypress.Commands.add('checkToken', () => {
     .its('localStorage.token')
     .should('be.a', 'string');
 });
+
+Cypress.Commands.add('getErrorToast', () => {
+  cy.get('div [role="alert"]');
+});
+
+Cypress.Commands.add('typeLoginCredentials', () => {
+  const user = { email: 'xd@gmail.com', password: 'Hurhul69' };
+  return cy
+    .get('input[name=email]')
+    .click()
+    .type(user.email)
+    .get('input[name=password]')
+    .click()
+    .type(user.password);
+});
