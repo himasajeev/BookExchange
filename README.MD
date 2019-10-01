@@ -39,7 +39,7 @@ Screens made with google's dev tools iPhone 6/7/8 view.
   - components - Reusable components.
   - constants - Constant values and enums used throughout the app.
   - modules - Sagas, rest api calls, action creators and reducers.
-  - routes - Routes with components used at these routes.
+  - routes - Routes with components rendered.
   - styles - Styles constants like colors or padding.
   - utils - Utility functions used throughout the app.
 
