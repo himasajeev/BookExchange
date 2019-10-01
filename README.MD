@@ -6,13 +6,21 @@ Designed with mobile first principles in mind. Uses REST API to communicate with
 Screens made with google's dev tools iPhone 6/7/8 view.
 
 - Login
+
 ![Login](https://github.com/Nalhin/BookExchange/blob/master/showcase/Login.JPG)
+
 - Shop
+
 ![Shop](https://github.com/Nalhin/BookExchange/blob/master/showcase//Shop.JPG)
+
 - Basket
+
 ![Basket](https://github.com/Nalhin/BookExchange/blob/master/showcase//Basket.JPG)
+
 - Navigation
+
 ![Navigation](https://github.com/Nalhin/BookExchange/blob/master/showcase//Navigation.JPG)
+
 
 ## Stack
 
