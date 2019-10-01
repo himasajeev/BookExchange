@@ -58,7 +58,7 @@ module.exports = env => {
       new webpack.BannerPlugin({
         banner:
           'Copyright (c) 2019 Krzysztof Olipra and Karol Oleszek.\n' +
-          'Source Code available @ https://github.com/Nalhin/BookAuction \n',
+          'Source Code available @ https://github.com/Nalhin/BookExchange \n',
       }),
     ],
     performance: {

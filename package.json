@@ -1,7 +1,7 @@
 {
-  "name": "book-auction",
+  "name": "book-exchange",
   "version": "1.0.0",
-  "description": "auction",
+  "description": "Book exchange website",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src",

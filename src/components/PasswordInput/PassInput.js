@@ -25,9 +25,8 @@ const PassInput = ({ value, name, onChange, label }) => {
   };
   return (
     <StyledFormControl>
-      <InputLabel htmlFor="adornment-password">Password</InputLabel>
+      <InputLabel>{label}</InputLabel>
       <Input
-        label={label}
         value={value}
         onChange={onChange}
         name={name}
