@@ -7,19 +7,19 @@ Screens made with google's dev tools iPhone 6/7/8 view.
 
 - Login
 
-![Login](https://github.com/Nalhin/BookExchange/blob/master/showcase/Login.JPG)
+![Login](showcase/Login.JPG)
 
 - Shop
 
-![Shop](https://github.com/Nalhin/BookExchange/blob/master/showcase//Shop.JPG)
+![Shop](showcase/Shop.JPG)
 
 - Basket
 
-![Basket](https://github.com/Nalhin/BookExchange/blob/master/showcase//Basket.JPG)
+![Basket](showcase//Basket.JPG)
 
 - Navigation
 
-![Navigation](https://github.com/Nalhin/BookExchange/blob/master/showcase//Navigation.JPG)
+![Navigation](showcase/Navigation.JPG)
 
 
 ## Stack
