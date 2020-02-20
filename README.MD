@@ -1,9 +1,8 @@
 # Book Exchange
-Website written for Book Exchange event hosted at UJ WPiA in 2019.
-Designed with mobile first principles in mind. Uses REST API to communicate with backend.
+WPiA UJ Book Exchange official website.
+Designed with mobile first principles in mind. Utilizes REST API to communicate with backend.
 
-## Showcase
-Screens made with google's dev tools iPhone 6/7/8 view.
+## Presentation
 
 - Login
 
@@ -29,19 +28,29 @@ Screens made with google's dev tools iPhone 6/7/8 view.
 - Redux Saga
 - React Router
 - Emotion
-- Custom Webpack Config
-- E2E Tests with Cypress
+- Webpack
+- Cypress
 - Material UI
 
-## JS Folder structure
+## Folder structure
 
-* src
-  - components - Reusable components.
-  - constants - Constant values and enums used throughout the app.
-  - modules - Sagas, rest api calls, action creators and reducers.
-  - routes - Routes with components rendered.
-  - styles - Styles constants like colors or padding.
-  - utils - Utility functions used throughout the app.
+```
+src
+├── components (reusable components)
+├── constants (constant values)
+├── routes (routing with associated pages and components)
+├── modules (redux store)
+│   ├── chat
+│   ├── customRouter
+│   ├── game
+│   ├── gameHistory
+│   ├── queue
+│   ├── toaster
+│   └── user
+│
+├── styles (style variables)
+└──  utils (utility functions)
+```
 
 ## Requirements
 
@@ -66,8 +75,3 @@ npm install
 ```bash
 npm run start
 ```
-
-#### Disclaimer
-
-This websites requires it's backend to be up and running and so do e2e tests.
-
