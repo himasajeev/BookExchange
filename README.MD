@@ -1,6 +1,6 @@
 # Book Exchange
 WPiA UJ Book Exchange official website.
-Designed with mobile first principles in mind. Utilizes REST API to communicate with backend.
+Designed with mobile first principles in mind.
 
 ## Presentation
 
